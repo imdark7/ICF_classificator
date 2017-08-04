@@ -33,43 +33,52 @@
             this.listBox4 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox5 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox1 = new ICF_classificator.Extensions.ListBoxExtension();
+            this.listBox6 = new ICF_classificator.Extensions.ListBoxExtension();
             this.SuspendLayout();
             // 
             // listBox2
             // 
+            this.listBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Location = new System.Drawing.Point(187, 29);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(134, 199);
+            this.listBox2.Size = new System.Drawing.Size(271, 173);
             this.listBox2.TabIndex = 0;
             this.listBox2.Visible = false;
+            this.listBox2.SelectedValueChanged += new System.EventHandler(this.listBox2_SelectedValueChanged);
             // 
             // listBox3
             // 
+            this.listBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(327, 29);
+            this.listBox3.Location = new System.Drawing.Point(464, 29);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(134, 199);
+            this.listBox3.Size = new System.Drawing.Size(241, 173);
             this.listBox3.TabIndex = 0;
             this.listBox3.Visible = false;
+            this.listBox3.SelectedValueChanged += new System.EventHandler(this.listBox3_SelectedValueChanged);
             // 
             // listBox4
             // 
+            this.listBox4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.listBox4.FormattingEnabled = true;
-            this.listBox4.Location = new System.Drawing.Point(467, 29);
+            this.listBox4.Location = new System.Drawing.Point(711, 29);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(134, 199);
+            this.listBox4.Size = new System.Drawing.Size(234, 173);
             this.listBox4.TabIndex = 0;
             this.listBox4.Visible = false;
+            this.listBox4.SelectedValueChanged += new System.EventHandler(this.listBox4_SelectedValueChanged);
             // 
             // listBox5
             // 
+            this.listBox5.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.listBox5.FormattingEnabled = true;
-            this.listBox5.Location = new System.Drawing.Point(607, 29);
+            this.listBox5.Location = new System.Drawing.Point(951, 29);
             this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(134, 199);
+            this.listBox5.Size = new System.Drawing.Size(229, 173);
             this.listBox5.TabIndex = 0;
             this.listBox5.Visible = false;
+            this.listBox5.SelectedValueChanged += new System.EventHandler(this.listBox5_SelectedValueChanged);
             // 
             // listBox1
             // 
@@ -81,11 +90,22 @@
             this.listBox1.TabIndex = 2;
             this.listBox1.SelectedValueChanged += new System.EventHandler(this.listBox1_SelectedValueChanged);
             // 
+            // listBox6
+            // 
+            this.listBox6.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.listBox6.FormattingEnabled = true;
+            this.listBox6.Location = new System.Drawing.Point(1186, 29);
+            this.listBox6.Name = "listBox6";
+            this.listBox6.Size = new System.Drawing.Size(229, 173);
+            this.listBox6.TabIndex = 3;
+            this.listBox6.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1192, 649);
+            this.ClientSize = new System.Drawing.Size(1491, 649);
+            this.Controls.Add(this.listBox6);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.listBox5);
             this.Controls.Add(this.listBox4);
@@ -104,6 +124,7 @@
         private Extensions.ListBoxExtension listBox4;
         private Extensions.ListBoxExtension listBox5;
         private Extensions.ListBoxExtension listBox1;
+        private Extensions.ListBoxExtension listBox6;
     }
 }
 
