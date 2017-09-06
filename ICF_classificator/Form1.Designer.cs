@@ -136,6 +136,7 @@
             this.врачаToolStripMenuItem.Name = "врачаToolStripMenuItem";
             this.врачаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.врачаToolStripMenuItem.Text = "Врача";
+            this.врачаToolStripMenuItem.Click += new System.EventHandler(this.врачаToolStripMenuItem_Click);
             // 
             // MainForm
             // 

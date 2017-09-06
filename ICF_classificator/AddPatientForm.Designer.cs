@@ -28,95 +28,95 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LastNameLabel = new System.Windows.Forms.Label();
-            this.FirstNameLabel = new System.Windows.Forms.Label();
-            this.SurNameLabel = new System.Windows.Forms.Label();
-            this.BirthDateLabel = new System.Windows.Forms.Label();
-            this.DoctorLabel = new System.Windows.Forms.Label();
-            this.LastNameTextBox = new System.Windows.Forms.TextBox();
-            this.FirstNameTextBox = new System.Windows.Forms.TextBox();
-            this.SurNameTextBox = new System.Windows.Forms.TextBox();
-            this.BirthDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.PatientLastNameLabel = new System.Windows.Forms.Label();
+            this.PatientFirstNameLabel = new System.Windows.Forms.Label();
+            this.PatientSurNameLabel = new System.Windows.Forms.Label();
+            this.PatientBirthDateLabel = new System.Windows.Forms.Label();
+            this.PatientDoctorLabel = new System.Windows.Forms.Label();
+            this.PatientLastNameTextBox = new System.Windows.Forms.TextBox();
+            this.PatientFirstNameTextBox = new System.Windows.Forms.TextBox();
+            this.PatientSurNameTextBox = new System.Windows.Forms.TextBox();
+            this.PatientBirthDatePicker = new System.Windows.Forms.DateTimePicker();
             this.DoctorComboBox = new System.Windows.Forms.ComboBox();
             this.CreatePatientButton = new System.Windows.Forms.Button();
             this.WarningLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // LastNameLabel
+            // PatientLastNameLabel
             // 
-            this.LastNameLabel.AutoSize = true;
-            this.LastNameLabel.Location = new System.Drawing.Point(24, 29);
-            this.LastNameLabel.Name = "LastNameLabel";
-            this.LastNameLabel.Size = new System.Drawing.Size(63, 13);
-            this.LastNameLabel.TabIndex = 0;
-            this.LastNameLabel.Text = "Фамилия *";
+            this.PatientLastNameLabel.AutoSize = true;
+            this.PatientLastNameLabel.Location = new System.Drawing.Point(24, 29);
+            this.PatientLastNameLabel.Name = "PatientLastNameLabel";
+            this.PatientLastNameLabel.Size = new System.Drawing.Size(63, 13);
+            this.PatientLastNameLabel.TabIndex = 0;
+            this.PatientLastNameLabel.Text = "Фамилия *";
             // 
-            // FirstNameLabel
+            // PatientFirstNameLabel
             // 
-            this.FirstNameLabel.AutoSize = true;
-            this.FirstNameLabel.Location = new System.Drawing.Point(24, 55);
-            this.FirstNameLabel.Name = "FirstNameLabel";
-            this.FirstNameLabel.Size = new System.Drawing.Size(36, 13);
-            this.FirstNameLabel.TabIndex = 1;
-            this.FirstNameLabel.Text = "Имя *";
+            this.PatientFirstNameLabel.AutoSize = true;
+            this.PatientFirstNameLabel.Location = new System.Drawing.Point(24, 55);
+            this.PatientFirstNameLabel.Name = "PatientFirstNameLabel";
+            this.PatientFirstNameLabel.Size = new System.Drawing.Size(36, 13);
+            this.PatientFirstNameLabel.TabIndex = 1;
+            this.PatientFirstNameLabel.Text = "Имя *";
             // 
-            // SurNameLabel
+            // PatientSurNameLabel
             // 
-            this.SurNameLabel.AutoSize = true;
-            this.SurNameLabel.Location = new System.Drawing.Point(24, 81);
-            this.SurNameLabel.Name = "SurNameLabel";
-            this.SurNameLabel.Size = new System.Drawing.Size(54, 13);
-            this.SurNameLabel.TabIndex = 2;
-            this.SurNameLabel.Text = "Отчество";
+            this.PatientSurNameLabel.AutoSize = true;
+            this.PatientSurNameLabel.Location = new System.Drawing.Point(24, 81);
+            this.PatientSurNameLabel.Name = "PatientSurNameLabel";
+            this.PatientSurNameLabel.Size = new System.Drawing.Size(54, 13);
+            this.PatientSurNameLabel.TabIndex = 2;
+            this.PatientSurNameLabel.Text = "Отчество";
             // 
-            // BirthDateLabel
+            // PatientBirthDateLabel
             // 
-            this.BirthDateLabel.AutoSize = true;
-            this.BirthDateLabel.Location = new System.Drawing.Point(24, 108);
-            this.BirthDateLabel.Name = "BirthDateLabel";
-            this.BirthDateLabel.Size = new System.Drawing.Size(86, 13);
-            this.BirthDateLabel.TabIndex = 3;
-            this.BirthDateLabel.Text = "Дата рождения";
+            this.PatientBirthDateLabel.AutoSize = true;
+            this.PatientBirthDateLabel.Location = new System.Drawing.Point(24, 108);
+            this.PatientBirthDateLabel.Name = "PatientBirthDateLabel";
+            this.PatientBirthDateLabel.Size = new System.Drawing.Size(86, 13);
+            this.PatientBirthDateLabel.TabIndex = 3;
+            this.PatientBirthDateLabel.Text = "Дата рождения";
             // 
-            // DoctorLabel
+            // PatientDoctorLabel
             // 
-            this.DoctorLabel.AutoSize = true;
-            this.DoctorLabel.Location = new System.Drawing.Point(24, 133);
-            this.DoctorLabel.Name = "DoctorLabel";
-            this.DoctorLabel.Size = new System.Drawing.Size(45, 13);
-            this.DoctorLabel.TabIndex = 4;
-            this.DoctorLabel.Text = "Доктор";
+            this.PatientDoctorLabel.AutoSize = true;
+            this.PatientDoctorLabel.Location = new System.Drawing.Point(24, 133);
+            this.PatientDoctorLabel.Name = "PatientDoctorLabel";
+            this.PatientDoctorLabel.Size = new System.Drawing.Size(45, 13);
+            this.PatientDoctorLabel.TabIndex = 4;
+            this.PatientDoctorLabel.Text = "Доктор";
             // 
-            // LastNameTextBox
+            // PatientLastNameTextBox
             // 
-            this.LastNameTextBox.Location = new System.Drawing.Point(116, 26);
-            this.LastNameTextBox.Name = "LastNameTextBox";
-            this.LastNameTextBox.Size = new System.Drawing.Size(172, 20);
-            this.LastNameTextBox.TabIndex = 5;
+            this.PatientLastNameTextBox.Location = new System.Drawing.Point(116, 26);
+            this.PatientLastNameTextBox.Name = "PatientLastNameTextBox";
+            this.PatientLastNameTextBox.Size = new System.Drawing.Size(172, 20);
+            this.PatientLastNameTextBox.TabIndex = 5;
             // 
-            // FirstNameTextBox
+            // PatientFirstNameTextBox
             // 
-            this.FirstNameTextBox.Location = new System.Drawing.Point(116, 52);
-            this.FirstNameTextBox.Name = "FirstNameTextBox";
-            this.FirstNameTextBox.Size = new System.Drawing.Size(172, 20);
-            this.FirstNameTextBox.TabIndex = 6;
+            this.PatientFirstNameTextBox.Location = new System.Drawing.Point(116, 52);
+            this.PatientFirstNameTextBox.Name = "PatientFirstNameTextBox";
+            this.PatientFirstNameTextBox.Size = new System.Drawing.Size(172, 20);
+            this.PatientFirstNameTextBox.TabIndex = 6;
             // 
-            // SurNameTextBox
+            // PatientSurNameTextBox
             // 
-            this.SurNameTextBox.Location = new System.Drawing.Point(116, 78);
-            this.SurNameTextBox.Name = "SurNameTextBox";
-            this.SurNameTextBox.Size = new System.Drawing.Size(172, 20);
-            this.SurNameTextBox.TabIndex = 7;
+            this.PatientSurNameTextBox.Location = new System.Drawing.Point(116, 78);
+            this.PatientSurNameTextBox.Name = "PatientSurNameTextBox";
+            this.PatientSurNameTextBox.Size = new System.Drawing.Size(172, 20);
+            this.PatientSurNameTextBox.TabIndex = 7;
             // 
-            // BirthDatePicker
+            // PatientBirthDatePicker
             // 
-            this.BirthDatePicker.Location = new System.Drawing.Point(116, 104);
-            this.BirthDatePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
-            this.BirthDatePicker.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
-            this.BirthDatePicker.Name = "BirthDatePicker";
-            this.BirthDatePicker.Size = new System.Drawing.Size(172, 20);
-            this.BirthDatePicker.TabIndex = 8;
-            this.BirthDatePicker.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.PatientBirthDatePicker.Location = new System.Drawing.Point(116, 104);
+            this.PatientBirthDatePicker.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.PatientBirthDatePicker.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.PatientBirthDatePicker.Name = "PatientBirthDatePicker";
+            this.PatientBirthDatePicker.Size = new System.Drawing.Size(172, 20);
+            this.PatientBirthDatePicker.TabIndex = 8;
+            this.PatientBirthDatePicker.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // DoctorComboBox
             // 
@@ -156,15 +156,15 @@
             this.Controls.Add(this.WarningLabel);
             this.Controls.Add(this.CreatePatientButton);
             this.Controls.Add(this.DoctorComboBox);
-            this.Controls.Add(this.BirthDatePicker);
-            this.Controls.Add(this.SurNameTextBox);
-            this.Controls.Add(this.FirstNameTextBox);
-            this.Controls.Add(this.LastNameTextBox);
-            this.Controls.Add(this.DoctorLabel);
-            this.Controls.Add(this.BirthDateLabel);
-            this.Controls.Add(this.SurNameLabel);
-            this.Controls.Add(this.FirstNameLabel);
-            this.Controls.Add(this.LastNameLabel);
+            this.Controls.Add(this.PatientBirthDatePicker);
+            this.Controls.Add(this.PatientSurNameTextBox);
+            this.Controls.Add(this.PatientFirstNameTextBox);
+            this.Controls.Add(this.PatientLastNameTextBox);
+            this.Controls.Add(this.PatientDoctorLabel);
+            this.Controls.Add(this.PatientBirthDateLabel);
+            this.Controls.Add(this.PatientSurNameLabel);
+            this.Controls.Add(this.PatientFirstNameLabel);
+            this.Controls.Add(this.PatientLastNameLabel);
             this.Name = "AddPatientForm";
             this.Text = "Новый пациент";
             this.ResumeLayout(false);
@@ -174,15 +174,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Label LastNameLabel;
-        private System.Windows.Forms.Label FirstNameLabel;
-        private System.Windows.Forms.Label SurNameLabel;
-        private System.Windows.Forms.Label BirthDateLabel;
-        private System.Windows.Forms.Label DoctorLabel;
-        private System.Windows.Forms.TextBox LastNameTextBox;
-        private System.Windows.Forms.TextBox FirstNameTextBox;
-        private System.Windows.Forms.TextBox SurNameTextBox;
-        private System.Windows.Forms.DateTimePicker BirthDatePicker;
+        private System.Windows.Forms.Label PatientLastNameLabel;
+        private System.Windows.Forms.Label PatientFirstNameLabel;
+        private System.Windows.Forms.Label PatientSurNameLabel;
+        private System.Windows.Forms.Label PatientBirthDateLabel;
+        private System.Windows.Forms.Label PatientDoctorLabel;
+        private System.Windows.Forms.TextBox PatientLastNameTextBox;
+        private System.Windows.Forms.TextBox PatientFirstNameTextBox;
+        private System.Windows.Forms.TextBox PatientSurNameTextBox;
+        private System.Windows.Forms.DateTimePicker PatientBirthDatePicker;
         private System.Windows.Forms.ComboBox DoctorComboBox;
         private System.Windows.Forms.Button CreatePatientButton;
         private System.Windows.Forms.Label WarningLabel;

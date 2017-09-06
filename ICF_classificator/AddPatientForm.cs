@@ -7,7 +7,7 @@ namespace ICF_classificator
 {
     public partial class AddPatientForm : Form
     {
-        private SqlConnection sqlConnection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Dark\Documents\GitHub\ICF_classificator\ICF_classificator\Database1.mdf;Integrated Security=True");//TODO: Нужен абсолютный путь;
+        private readonly SqlConnection _sqlConnection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Dark\Documents\GitHub\ICF_classificator\ICF_classificator\Database1.mdf;Integrated Security=True");//TODO: Нужен абсолютный путь;
 
         public AddPatientForm()
         {
@@ -16,15 +16,15 @@ namespace ICF_classificator
 
         private void CreatePatientButton_Click(object sender, EventArgs e)
         {
-            if (LastNameTextBox.Text.Length > 0 && FirstNameTextBox.Text.Length > 0)
+            if (PatientLastNameTextBox.Text.Length > 0 && PatientFirstNameTextBox.Text.Length > 0)
             {
                 var command = new SqlCommand("INSERT INTO [Patients] (LastName,FirstName,SurName,BirthDate,DoctorId)" +
-                                             "VALUES (@LastName, @FirstName, @SurName, @BirthDate, @DoctorId)", sqlConnection);
+                                             "VALUES (@LastName, @FirstName, @SurName, @BirthDate, @DoctorId)", _sqlConnection);
                 
-                command.Parameters.AddWithValue("LastName", LastNameTextBox.Text);
-                command.Parameters.AddWithValue("FirstName", FirstNameTextBox.Text);
-                command.Parameters.AddWithValue("SurName", SurNameTextBox.Text ?? "NULL");
-                command.Parameters.AddWithValue("BirthDate", BirthDatePicker.Value);
+                command.Parameters.AddWithValue("LastName", PatientLastNameTextBox.Text);
+                command.Parameters.AddWithValue("FirstName", PatientFirstNameTextBox.Text);
+                command.Parameters.AddWithValue("SurName", PatientSurNameTextBox.Text ?? "NULL");
+                command.Parameters.AddWithValue("BirthDate", PatientBirthDatePicker.Value);
                 command.Parameters.AddWithValue("DoctorId", ((Doctor)DoctorComboBox.SelectedItem)?.Id ?? (object) DBNull.Value);
 
                 command.Connection.Open();
@@ -34,7 +34,7 @@ namespace ICF_classificator
             }
             else
             {
-                WarningLabel.Visible = true;
+                WarningLabel.Show();
             }
         }
     }

@@ -110,9 +110,16 @@ namespace ICF_classificator
 
         private void пациентаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var addPAtientForm = new AddPatientForm();
-            addPAtientForm.Hide();
-            addPAtientForm.Show();
+            var addPatientForm = new AddPatientForm();
+            addPatientForm.Hide();
+            addPatientForm.Show();
+        }
+
+        private void врачаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var addDoctorForm = new AddDoctorForm();
+            addDoctorForm.Hide();
+            addDoctorForm.Show();
         }
     }
 }
