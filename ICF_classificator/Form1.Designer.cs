@@ -34,6 +34,11 @@
             this.listBox5 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox1 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox6 = new ICF_classificator.Extensions.ListBoxExtension();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.пациентаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.врачаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBox2
@@ -100,6 +105,38 @@
             this.listBox6.TabIndex = 3;
             this.listBox6.Visible = false;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.добавитьToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1491, 24);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // добавитьToolStripMenuItem
+            // 
+            this.добавитьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.пациентаToolStripMenuItem,
+            this.врачаToolStripMenuItem});
+            this.добавитьToolStripMenuItem.Name = "добавитьToolStripMenuItem";
+            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.добавитьToolStripMenuItem.Text = "Добавить...";
+            // 
+            // пациентаToolStripMenuItem
+            // 
+            this.пациентаToolStripMenuItem.Name = "пациентаToolStripMenuItem";
+            this.пациентаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.пациентаToolStripMenuItem.Text = "Пациента";
+            this.пациентаToolStripMenuItem.Click += new System.EventHandler(this.пациентаToolStripMenuItem_Click);
+            // 
+            // врачаToolStripMenuItem
+            // 
+            this.врачаToolStripMenuItem.Name = "врачаToolStripMenuItem";
+            this.врачаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.врачаToolStripMenuItem.Text = "Врача";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -111,10 +148,15 @@
             this.Controls.Add(this.listBox4);
             this.Controls.Add(this.listBox3);
             this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "ICF Classificator";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -125,6 +167,10 @@
         private Extensions.ListBoxExtension listBox5;
         private Extensions.ListBoxExtension listBox1;
         private Extensions.ListBoxExtension listBox6;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem добавитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem пациентаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem врачаToolStripMenuItem;
     }
 }
 

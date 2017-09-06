@@ -60,17 +60,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddPatientForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddPatientForm.Designer.cs">
+      <DependentUpon>AddPatientForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ListBoxExtension.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Extensions\SqlHelper.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Doctor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddPatientForm.resx">
+      <DependentUpon>AddPatientForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extensions\ListBoxExtension.resx">
       <DependentUpon>ListBoxExtension.cs</DependentUpon>
     </EmbeddedResource>
