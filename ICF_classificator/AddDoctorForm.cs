@@ -17,7 +17,7 @@ namespace ICF_classificator
         {
             if (DoctorLastNameTextBox.Text.Length > 0 && DoctorFirstNameTextBox.Text.Length > 0)
             {
-                var command = new SqlCommand("INSERT INTO [Doctor] (LastName,FirstName,SurName)" +
+                var command = new SqlCommand("INSERT INTO [Doctors] (LastName,FirstName,SurName)" +
                                              "VALUES (@LastName, @FirstName, @SurName)", _sqlConnection);
 
                 command.Parameters.AddWithValue("LastName", DoctorLastNameTextBox.Text);

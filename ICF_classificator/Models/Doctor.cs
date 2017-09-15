@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ICF_classificator.Models
+﻿namespace ICF_classificator.Models
 {
     public class Doctor
     {
@@ -13,12 +7,17 @@ namespace ICF_classificator.Models
         public string FirstName;
         public string SurName;
 
-        public Doctor(int Id, string LastName, string FirstName, string SurName)
+        public Doctor(int id, string lastName, string firstName, string surName)
         {
-            this.Id = Id;
-            this.LastName = LastName;
-            this.FirstName = FirstName;
-            this.SurName = SurName;
+            Id = id;
+            LastName = lastName;
+            FirstName = firstName;
+            SurName = surName;
+        }
+
+        public override string ToString()
+        {
+            return LastName + " " + FirstName + " " + SurName;
         }
     }
 }

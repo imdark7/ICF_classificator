@@ -82,7 +82,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Derangement.cs" />
+    <Compile Include="Models\DerangementState.cs" />
     <Compile Include="Models\Doctor.cs" />
+    <Compile Include="Models\MedicalReport.cs" />
+    <Compile Include="Models\MedicalReportItem.cs" />
+    <Compile Include="Models\Patient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddDoctorForm.resx">
