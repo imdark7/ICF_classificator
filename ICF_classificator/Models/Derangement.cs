@@ -14,5 +14,10 @@
             Description = description;
             ParentCode = parentCode;
         }
+
+        public override string ToString()
+        {
+            return System.Text.RegularExpressions.Regex.Replace(Code + " " + Name, @"\s+", " ");
+        }
     }
 }

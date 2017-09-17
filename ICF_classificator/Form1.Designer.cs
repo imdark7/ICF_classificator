@@ -1,4 +1,7 @@
-﻿namespace ICF_classificator
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace ICF_classificator
 {
     partial class MainForm
     {
@@ -28,82 +31,116 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.listBox1 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox2 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox3 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox4 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox5 = new ICF_classificator.Extensions.ListBoxExtension();
-            this.listBox1 = new ICF_classificator.Extensions.ListBoxExtension();
             this.listBox6 = new ICF_classificator.Extensions.ListBoxExtension();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.пациентаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.врачаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.patientComboBox = new System.Windows.Forms.ComboBox();
+            this.reportsGroupBox = new System.Windows.Forms.GroupBox();
+            this.createNewReport = new System.Windows.Forms.Button();
+            this.reportsListView = new System.Windows.Forms.ListView();
+            this.DateReport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CommentReport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.commentReportTextBox = new System.Windows.Forms.TextBox();
+            this.newReportGroupBox = new System.Windows.Forms.GroupBox();
+            this.newReportDataGridView = new System.Windows.Forms.DataGridView();
+            this.saveReportButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dateLabel = new System.Windows.Forms.Label();
+            this.patientGroupBox = new System.Windows.Forms.GroupBox();
+            this.reportItemGroupBox = new System.Windows.Forms.GroupBox();
+            this.doctorGroupBox = new System.Windows.Forms.GroupBox();
+            this.doctorComboBox = new System.Windows.Forms.ComboBox();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
+            this.reportsGroupBox.SuspendLayout();
+            this.newReportGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.newReportDataGridView)).BeginInit();
+            this.patientGroupBox.SuspendLayout();
+            this.reportItemGroupBox.SuspendLayout();
+            this.doctorGroupBox.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // listBox2
-            // 
-            this.listBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(187, 29);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(271, 173);
-            this.listBox2.TabIndex = 0;
-            this.listBox2.Visible = false;
-            this.listBox2.SelectedValueChanged += new System.EventHandler(this.listBox2_SelectedValueChanged);
-            // 
-            // listBox3
-            // 
-            this.listBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(464, 29);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(241, 173);
-            this.listBox3.TabIndex = 0;
-            this.listBox3.Visible = false;
-            this.listBox3.SelectedValueChanged += new System.EventHandler(this.listBox3_SelectedValueChanged);
-            // 
-            // listBox4
-            // 
-            this.listBox4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.listBox4.FormattingEnabled = true;
-            this.listBox4.Location = new System.Drawing.Point(711, 29);
-            this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(234, 173);
-            this.listBox4.TabIndex = 0;
-            this.listBox4.Visible = false;
-            this.listBox4.SelectedValueChanged += new System.EventHandler(this.listBox4_SelectedValueChanged);
-            // 
-            // listBox5
-            // 
-            this.listBox5.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.listBox5.FormattingEnabled = true;
-            this.listBox5.Location = new System.Drawing.Point(951, 29);
-            this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(229, 173);
-            this.listBox5.TabIndex = 0;
-            this.listBox5.Visible = false;
-            this.listBox5.SelectedValueChanged += new System.EventHandler(this.listBox5_SelectedValueChanged);
             // 
             // listBox1
             // 
             this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(36, 29);
+            this.listBox1.Location = new System.Drawing.Point(7, 19);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(145, 174);
+            this.listBox1.Size = new System.Drawing.Size(145, 200);
             this.listBox1.TabIndex = 2;
             this.listBox1.SelectedValueChanged += new System.EventHandler(this.listBox1_SelectedValueChanged);
+            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            // 
+            // listBox2
+            // 
+            this.listBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.IntegralHeight = false;
+            this.listBox2.Location = new System.Drawing.Point(158, 19);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(271, 200);
+            this.listBox2.TabIndex = 0;
+            this.listBox2.Visible = false;
+            this.listBox2.SelectedValueChanged += new System.EventHandler(this.listBox2_SelectedValueChanged);
+            this.listBox2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            // 
+            // listBox3
+            // 
+            this.listBox3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.Location = new System.Drawing.Point(435, 19);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.Size = new System.Drawing.Size(241, 200);
+            this.listBox3.TabIndex = 0;
+            this.listBox3.Visible = false;
+            this.listBox3.SelectedValueChanged += new System.EventHandler(this.listBox3_SelectedValueChanged);
+            this.listBox3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            // 
+            // listBox4
+            // 
+            this.listBox4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.listBox4.FormattingEnabled = true;
+            this.listBox4.Location = new System.Drawing.Point(682, 19);
+            this.listBox4.Name = "listBox4";
+            this.listBox4.Size = new System.Drawing.Size(234, 200);
+            this.listBox4.TabIndex = 0;
+            this.listBox4.Visible = false;
+            this.listBox4.SelectedValueChanged += new System.EventHandler(this.listBox4_SelectedValueChanged);
+            this.listBox4.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
+            // 
+            // listBox5
+            // 
+            this.listBox5.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.listBox5.FormattingEnabled = true;
+            this.listBox5.Location = new System.Drawing.Point(922, 19);
+            this.listBox5.Name = "listBox5";
+            this.listBox5.Size = new System.Drawing.Size(229, 200);
+            this.listBox5.TabIndex = 0;
+            this.listBox5.Visible = false;
+            this.listBox5.SelectedValueChanged += new System.EventHandler(this.listBox5_SelectedValueChanged);
+            this.listBox5.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
             // 
             // listBox6
             // 
             this.listBox6.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.listBox6.FormattingEnabled = true;
-            this.listBox6.Location = new System.Drawing.Point(1186, 29);
+            this.listBox6.Location = new System.Drawing.Point(1157, 19);
             this.listBox6.Name = "listBox6";
-            this.listBox6.Size = new System.Drawing.Size(229, 173);
+            this.listBox6.Size = new System.Drawing.Size(229, 200);
             this.listBox6.TabIndex = 3;
             this.listBox6.Visible = false;
+            this.listBox6.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDoubleClick);
             // 
             // menuStrip1
             // 
@@ -111,7 +148,7 @@
             this.добавитьToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1491, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1417, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -127,35 +164,252 @@
             // пациентаToolStripMenuItem
             // 
             this.пациентаToolStripMenuItem.Name = "пациентаToolStripMenuItem";
-            this.пациентаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.пациентаToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.пациентаToolStripMenuItem.Text = "Пациента";
             this.пациентаToolStripMenuItem.Click += new System.EventHandler(this.пациентаToolStripMenuItem_Click);
             // 
             // врачаToolStripMenuItem
             // 
             this.врачаToolStripMenuItem.Name = "врачаToolStripMenuItem";
-            this.врачаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.врачаToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.врачаToolStripMenuItem.Text = "Врача";
             this.врачаToolStripMenuItem.Click += new System.EventHandler(this.врачаToolStripMenuItem_Click);
+            // 
+            // patientComboBox
+            // 
+            this.patientComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.patientComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.patientComboBox.Location = new System.Drawing.Point(10, 19);
+            this.patientComboBox.Name = "patientComboBox";
+            this.patientComboBox.Size = new System.Drawing.Size(343, 21);
+            this.patientComboBox.TabIndex = 5;
+            this.patientComboBox.TabStop = false;
+            this.patientComboBox.Text = "Выбрать..";
+            this.patientComboBox.SelectedIndexChanged += new System.EventHandler(this.patientComboBox_SelectedIndexChanged);
+            // 
+            // reportsGroupBox
+            // 
+            this.reportsGroupBox.Controls.Add(this.createNewReport);
+            this.reportsGroupBox.Controls.Add(this.reportsListView);
+            this.reportsGroupBox.Location = new System.Drawing.Point(12, 141);
+            this.reportsGroupBox.Name = "reportsGroupBox";
+            this.reportsGroupBox.Size = new System.Drawing.Size(359, 242);
+            this.reportsGroupBox.TabIndex = 6;
+            this.reportsGroupBox.TabStop = false;
+            this.reportsGroupBox.Text = "Заведенные отчеты";
+            this.reportsGroupBox.Visible = false;
+            // 
+            // createNewReport
+            // 
+            this.createNewReport.Location = new System.Drawing.Point(110, 205);
+            this.createNewReport.Name = "createNewReport";
+            this.createNewReport.Size = new System.Drawing.Size(137, 23);
+            this.createNewReport.TabIndex = 1;
+            this.createNewReport.Text = "Добавить новый отчет";
+            this.createNewReport.UseVisualStyleBackColor = true;
+            this.createNewReport.Click += new System.EventHandler(this.createNewReport_Click);
+            // 
+            // reportsListView
+            // 
+            this.reportsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.DateReport,
+            this.CommentReport});
+            this.reportsListView.Location = new System.Drawing.Point(7, 20);
+            this.reportsListView.Name = "reportsListView";
+            this.reportsListView.Size = new System.Drawing.Size(346, 179);
+            this.reportsListView.TabIndex = 0;
+            this.reportsListView.UseCompatibleStateImageBehavior = false;
+            this.reportsListView.View = System.Windows.Forms.View.Details;
+            // 
+            // DateReport
+            // 
+            this.DateReport.Tag = "";
+            this.DateReport.Text = "Дата";
+            this.DateReport.Width = 104;
+            // 
+            // CommentReport
+            // 
+            this.CommentReport.Tag = "";
+            this.CommentReport.Text = "Комментарий";
+            this.CommentReport.Width = 236;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(66, 20);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(156, 20);
+            this.dateTimePicker1.TabIndex = 7;
+            // 
+            // commentReportTextBox
+            // 
+            this.commentReportTextBox.Location = new System.Drawing.Point(6, 280);
+            this.commentReportTextBox.Multiline = true;
+            this.commentReportTextBox.Name = "commentReportTextBox";
+            this.commentReportTextBox.Size = new System.Drawing.Size(430, 52);
+            this.commentReportTextBox.TabIndex = 0;
+            // 
+            // newReportGroupBox
+            // 
+            this.newReportGroupBox.Controls.Add(this.newReportDataGridView);
+            this.newReportGroupBox.Controls.Add(this.saveReportButton);
+            this.newReportGroupBox.Controls.Add(this.label1);
+            this.newReportGroupBox.Controls.Add(this.dateLabel);
+            this.newReportGroupBox.Controls.Add(this.commentReportTextBox);
+            this.newReportGroupBox.Controls.Add(this.dateTimePicker1);
+            this.newReportGroupBox.Location = new System.Drawing.Point(381, 37);
+            this.newReportGroupBox.Name = "newReportGroupBox";
+            this.newReportGroupBox.Size = new System.Drawing.Size(791, 346);
+            this.newReportGroupBox.TabIndex = 8;
+            this.newReportGroupBox.TabStop = false;
+            this.newReportGroupBox.Text = "Новый отчет";
+            this.newReportGroupBox.Visible = false;
+            // 
+            // newReportDataGridView
+            // 
+            this.newReportDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.newReportDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4});
+            this.newReportDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
+            this.newReportDataGridView.Location = new System.Drawing.Point(9, 46);
+            this.newReportDataGridView.Name = "newReportDataGridView";
+            this.newReportDataGridView.Size = new System.Drawing.Size(764, 215);
+            this.newReportDataGridView.TabIndex = 12;
+            // 
+            // saveReportButton
+            // 
+            this.saveReportButton.Location = new System.Drawing.Point(493, 280);
+            this.saveReportButton.Name = "saveReportButton";
+            this.saveReportButton.Size = new System.Drawing.Size(139, 52);
+            this.saveReportButton.TabIndex = 11;
+            this.saveReportButton.Text = "Сохранить отчет";
+            this.saveReportButton.UseVisualStyleBackColor = true;
+            this.saveReportButton.Click += new System.EventHandler(this.saveReportButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 264);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(124, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Комментарий к отчету:";
+            // 
+            // dateLabel
+            // 
+            this.dateLabel.AutoSize = true;
+            this.dateLabel.Location = new System.Drawing.Point(27, 23);
+            this.dateLabel.Name = "dateLabel";
+            this.dateLabel.Size = new System.Drawing.Size(39, 13);
+            this.dateLabel.TabIndex = 8;
+            this.dateLabel.Text = "Дата: ";
+            // 
+            // patientGroupBox
+            // 
+            this.patientGroupBox.Controls.Add(this.patientComboBox);
+            this.patientGroupBox.Location = new System.Drawing.Point(12, 89);
+            this.patientGroupBox.Name = "patientGroupBox";
+            this.patientGroupBox.Size = new System.Drawing.Size(359, 46);
+            this.patientGroupBox.TabIndex = 9;
+            this.patientGroupBox.TabStop = false;
+            this.patientGroupBox.Text = "Пациент";
+            // 
+            // reportItemGroupBox
+            // 
+            this.reportItemGroupBox.Controls.Add(this.listBox1);
+            this.reportItemGroupBox.Controls.Add(this.listBox2);
+            this.reportItemGroupBox.Controls.Add(this.listBox6);
+            this.reportItemGroupBox.Controls.Add(this.listBox3);
+            this.reportItemGroupBox.Controls.Add(this.listBox4);
+            this.reportItemGroupBox.Controls.Add(this.listBox5);
+            this.reportItemGroupBox.Location = new System.Drawing.Point(12, 389);
+            this.reportItemGroupBox.Name = "reportItemGroupBox";
+            this.reportItemGroupBox.Size = new System.Drawing.Size(1393, 232);
+            this.reportItemGroupBox.TabIndex = 10;
+            this.reportItemGroupBox.TabStop = false;
+            this.reportItemGroupBox.Visible = false;
+            // 
+            // doctorGroupBox
+            // 
+            this.doctorGroupBox.Controls.Add(this.doctorComboBox);
+            this.doctorGroupBox.Location = new System.Drawing.Point(12, 37);
+            this.doctorGroupBox.Name = "doctorGroupBox";
+            this.doctorGroupBox.Size = new System.Drawing.Size(359, 46);
+            this.doctorGroupBox.TabIndex = 10;
+            this.doctorGroupBox.TabStop = false;
+            this.doctorGroupBox.Text = "Врач";
+            // 
+            // doctorComboBox
+            // 
+            this.doctorComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.doctorComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.doctorComboBox.Location = new System.Drawing.Point(10, 19);
+            this.doctorComboBox.Name = "doctorComboBox";
+            this.doctorComboBox.Size = new System.Drawing.Size(343, 21);
+            this.doctorComboBox.TabIndex = 5;
+            this.doctorComboBox.TabStop = false;
+            this.doctorComboBox.Text = "Выбрать..";
+            this.doctorComboBox.SelectedIndexChanged += new System.EventHandler(this.doctorComboBox_SelectedIndexChanged);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Код";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 50;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Название";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 200;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "DerangementState";
+            this.Column3.HeaderText = "Состояние";
+            this.Column3.Items.AddRange(new object[] {
+            "Не задано",
+            "Норма",
+            "Нарушено"});
+            this.Column3.Name = "Column3";
+            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column3.Width = 70;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Комментарий";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 400;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1491, 649);
-            this.Controls.Add(this.listBox6);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.listBox5);
-            this.Controls.Add(this.listBox4);
-            this.Controls.Add(this.listBox3);
-            this.Controls.Add(this.listBox2);
+            this.ClientSize = new System.Drawing.Size(1417, 633);
+            this.Controls.Add(this.doctorGroupBox);
+            this.Controls.Add(this.newReportGroupBox);
+            this.Controls.Add(this.reportsGroupBox);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.patientGroupBox);
+            this.Controls.Add(this.reportItemGroupBox);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "ICF Classificator";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.reportsGroupBox.ResumeLayout(false);
+            this.newReportGroupBox.ResumeLayout(false);
+            this.newReportGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.newReportDataGridView)).EndInit();
+            this.patientGroupBox.ResumeLayout(false);
+            this.reportItemGroupBox.ResumeLayout(false);
+            this.doctorGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,6 +426,27 @@
         private System.Windows.Forms.ToolStripMenuItem добавитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem пациентаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem врачаToolStripMenuItem;
+        private System.Windows.Forms.ComboBox patientComboBox;
+        private System.Windows.Forms.GroupBox reportsGroupBox;
+        private System.Windows.Forms.TextBox commentReportTextBox;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button createNewReport;
+        private System.Windows.Forms.ListView reportsListView;
+        private System.Windows.Forms.GroupBox newReportGroupBox;
+        private System.Windows.Forms.Label dateLabel;
+        private System.Windows.Forms.GroupBox patientGroupBox;
+        private System.Windows.Forms.GroupBox reportItemGroupBox;
+        private System.Windows.Forms.ColumnHeader DateReport;
+        private System.Windows.Forms.ColumnHeader CommentReport;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button saveReportButton;
+        private System.Windows.Forms.DataGridView newReportDataGridView;
+        private GroupBox doctorGroupBox;
+        private ComboBox doctorComboBox;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewComboBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
     }
 }
 

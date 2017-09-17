@@ -9,7 +9,7 @@ namespace ICF_classificator.Models
         public string FirstName;
         public string SurName;
         public DateTime BirthDate;
-        public int DoctorId;
+        public int? DoctorId;
 
         public Patient(int id, string lastName, string firstName, string surName, DateTime birthDate, int doctorId)
         {
@@ -19,6 +19,15 @@ namespace ICF_classificator.Models
             SurName = surName;
             BirthDate = birthDate;
             DoctorId = doctorId;
+        }
+
+        public Patient()
+        {
+        }
+
+        public override string ToString()
+        {
+            return System.Text.RegularExpressions.Regex.Replace(LastName + " " + FirstName + " " + SurName, @"\s+", " ");
         }
     }
 }

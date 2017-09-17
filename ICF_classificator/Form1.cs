@@ -1,16 +1,16 @@
 ﻿using ICF_classificator.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Collections;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ICF_classificator.Models;
 
 namespace ICF_classificator
 {
     public partial class MainForm : Form
     {
-        private readonly SqlConnection _sqlConnection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Dark\Documents\GitHub\ICF_classificator\ICF_classificator\Database1.mdf;Integrated Security=True");//TODO: Нужен абсолютный путь;
+        private int patientId;
+        private int doctorId;
 
         public MainForm()
         {
@@ -19,53 +19,60 @@ namespace ICF_classificator
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            RefreshDoctorCombobox();
+            RefreshPatientCombobox(true);
+
             RefreshListBoxData(listBox1, "LEN(Code) < 2");
         }
 
         private void listBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            RefreshListBoxData(listBox2, $"ParentCode = '{listBox1.SelectedItem.ToString().Split(' ')[0]}'");
+            RefreshListBoxData(listBox2, $"ParentCode = '{((Derangement)((ListBoxExtension)sender).SelectedItem).Code}'");
             ClearListbox(listBox3, listBox4, listBox5, listBox6);
         }
 
         private void listBox2_SelectedValueChanged(object sender, EventArgs e)
         {
-            RefreshListBoxData(listBox3, $"ParentCode = '{listBox2.SelectedItem.ToString().Split(' ')[0]}'");
+            RefreshListBoxData(listBox3, $"ParentCode = '{((Derangement)((ListBoxExtension)sender).SelectedItem).Code}'");
             ClearListbox(listBox4, listBox5, listBox6);
         }
 
         private void listBox3_SelectedValueChanged(object sender, EventArgs e)
         {
-            RefreshListBoxData(listBox4, $"ParentCode = '{listBox3.SelectedItem.ToString().Split(' ')[0]}'");
+            RefreshListBoxData(listBox4, $"ParentCode = '{((Derangement)((ListBoxExtension)sender).SelectedItem).Code}'");
             ClearListbox(listBox5, listBox6);
         }
 
         private void listBox4_SelectedValueChanged(object sender, EventArgs e)
         {
-            RefreshListBoxData(listBox5, $"ParentCode = '{listBox4.SelectedItem.ToString().Split(' ')[0]}'");
+            RefreshListBoxData(listBox5, $"ParentCode = '{((Derangement)((ListBoxExtension)sender).SelectedItem).Code}'");
             ClearListbox(listBox6);
         }
 
         private void listBox5_SelectedValueChanged(object sender, EventArgs e)
         {
-            RefreshListBoxData(listBox6, $"ParentCode = '{listBox5.SelectedItem.ToString().Split(' ')[0]}'");
+            RefreshListBoxData(listBox6, $"ParentCode = '{((Derangement)((ListBoxExtension)sender).SelectedItem).Code}'");
         }
 
-        public async void RefreshListBoxData(ListBoxExtension listbox, string requestCondition)
+        private async void RefreshListBoxData(ListBoxExtension listbox, string requestCondition)
         {
             listbox.Items.Clear();
-            var dict = await GetICFResponseAsync(requestCondition);
-            if (dict.Count > 0)
+            var list = await SqlHelper.ReadAsync<Derangement>(requestCondition);
+            if (list.Count > 0)
             {
-                for (var i = 0; i < dict.Count; i++) { listbox.Items.Add(dict.ElementAt(i).Key + " " + dict.ElementAt(i).Value); }
+                foreach (var item in list)
+                {
+                    listbox.Items.Add(item);
+                }
                 listbox.Visible = true;
-            } else
+            }
+            else
             {
                 listbox.Visible = false;
             }
         }
 
-        private void ClearListbox(params ListBoxExtension[] listBoxes)
+        private static void ClearListbox(params ListBoxExtension[] listBoxes)
         {
             foreach (var listBox in listBoxes)
             {
@@ -74,52 +81,137 @@ namespace ICF_classificator
             }
         }
 
-        /// <summary>        
-        /// 
-        /// </summary>
-        /// <param name="requestCondition">Условие в sql-запросе, то что идет после where</param>
-        /// <param name="columnNames"></param>
-        /// <returns></returns>
-        private async Task<Dictionary<string, string>> GetICFResponseAsync(string requestCondition)
-        {
-            await _sqlConnection.OpenAsync();
-
-            SqlDataReader sqlReader = null;
-            var command = new SqlCommand($"SELECT [Code],[Name] FROM [ICFElements] WHERE {requestCondition}", _sqlConnection);
-            var dictionary = new Dictionary<string, string>();
-            try
-            {
-                sqlReader = await command.ExecuteReaderAsync();
-
-                while (await sqlReader.ReadAsync())
-                {
-                    dictionary.Add(sqlReader["Code"].ToString(), sqlReader["Name"].ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                sqlReader?.Close();
-                _sqlConnection.Close();
-            }
-            return dictionary;
-        }
-
         private void пациентаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var addPatientForm = new AddPatientForm();
+            var addPatientForm = new AddPatientForm(this);
             addPatientForm.Hide();
             addPatientForm.Show();
         }
 
         private void врачаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var addDoctorForm = new AddDoctorForm();
+            var addDoctorForm = new AddDoctorForm(this);
             addDoctorForm.Hide();
             addDoctorForm.Show();
+        }
+
+        private async void patientComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            reportsListView.Items.Clear();
+            reportsGroupBox.Visible = !(((ComboBox)sender).SelectedIndex < 0);
+            if (patientComboBox.SelectedIndex < 0)
+            {
+                patientId = 0;
+                return;
+            }
+            patientId = (patientComboBox.SelectedItem as Patient).Id;
+            var reports = await SqlHelper.ReadAsync<MedicalReport>($"PatientId = {patientId}");
+            foreach (MedicalReport report in reports)
+            {
+                var item = new ListViewItem(report.Date.ToShortDateString());
+                item.SubItems.Add(report.Diagnosis);
+                reportsListView.Items.Add(item);
+            }
+        }
+
+        private void doctorComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (doctorComboBox.SelectedIndex < 0)
+            {
+                doctorId = 0;
+                reportsGroupBox.Visible = false;
+                return;
+            }
+            doctorId = (doctorComboBox.SelectedItem as Doctor).Id;
+        }
+
+        private void createNewReport_Click(object sender, EventArgs e)
+        {
+            newReportGroupBox.Visible = true;
+            reportItemGroupBox.Visible = true;
+            ((Button) sender).Enabled = false;
+        }
+
+        private void saveReportButton_Click(object sender, EventArgs e)
+        {
+            var report = new MedicalReport
+            {
+                PatientId = patientId,
+                Date = dateTimePicker1.Value,
+                Diagnosis = commentReportTextBox.Text,
+                DoctorId = doctorId
+            };
+            var reportId = SqlHelper.TryInsert<MedicalReport>(new[] {report})[0];
+            var reportItems = new MedicalReportItem[newReportDataGridView.RowCount - 1];
+            var i = 0;
+            foreach (DataGridViewRow row in newReportDataGridView.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    DerangementState state;
+                    switch (row.Cells[2].Value as string)
+                    {
+                        case "Нарушено":
+                            state = DerangementState.Deranged;
+                            break;
+                        case "Норма":
+                            state = DerangementState.Normal;
+                            break;
+                        default:
+                            state = DerangementState.Unknown;
+                            break;
+                    }
+                    reportItems[i] = new MedicalReportItem
+                    {
+                        DerangementCode = row.Cells[0].Value as string,
+                        ReportId = reportId,
+                        DerangementState = state,
+                        Commentary = row.Cells[3].Value as string
+                    };
+                    i++;
+                }
+            }
+            SqlHelper.TryInsert<MedicalReportItem>(reportItems);
+
+            RefreshReportsListView();
+        }
+
+        private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var derangement = (((ListBoxExtension) sender).SelectedItem as Derangement);
+            newReportDataGridView.Rows.Insert(0, derangement.Code, derangement.Name);
+        }
+
+        public async void RefreshPatientCombobox(bool unselect = false)
+        {
+            patientComboBox.DataSource = await SqlHelper.ReadAsync<Patient>();
+            if (unselect)
+            {
+                patientComboBox.SelectedIndex = -1;
+            }
+        }
+
+        public async void RefreshDoctorCombobox(bool unselect = false)
+        {
+            doctorComboBox.DataSource = await SqlHelper.ReadAsync<Doctor>();
+            if (unselect)
+            {
+                doctorComboBox.SelectedIndex = -1;
+            }
+        }
+
+        public async void RefreshReportsListView()
+        {
+            reportsListView.Items.Clear();
+            var reports = await SqlHelper.ReadAsync<MedicalReport>($"PatientId = {patientId}");
+            foreach (MedicalReport report in reports)
+            {
+                var item = new ListViewItem(report.Date.ToShortDateString());
+                item.SubItems.Add(report.Diagnosis);
+                reportsListView.Items.Add(item);
+            }
+            reportsListView.Sorting = SortOrder.Descending;
+            reportsListView.Sort();
         }
     }
 }

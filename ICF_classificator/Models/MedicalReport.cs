@@ -18,5 +18,10 @@ namespace ICF_classificator.Models
             Diagnosis = diagnosis;
             DoctorId = doctorId;
         }
+
+        public MedicalReport()
+        {
+            
+        }
     }
 }

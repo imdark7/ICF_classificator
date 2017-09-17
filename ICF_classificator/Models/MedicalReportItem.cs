@@ -16,5 +16,9 @@
             DerangementState = derangementState;
             Commentary = commentary;
         }
+
+        public MedicalReportItem()
+        {
+        }
     }
 }
