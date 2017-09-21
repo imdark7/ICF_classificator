@@ -1,7 +1,5 @@
 ﻿using ICF_classificator.Extensions;
 using System;
-using System.Collections;
-using System.Linq;
 using System.Windows.Forms;
 using ICF_classificator.Models;
 
@@ -11,6 +9,7 @@ namespace ICF_classificator
     {
         private int patientId;
         private int doctorId;
+        private int? reportId;
 
         public MainForm()
         {
@@ -95,7 +94,7 @@ namespace ICF_classificator
             addDoctorForm.Show();
         }
 
-        private async void patientComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void patientComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             reportsListView.Items.Clear();
             reportsGroupBox.Visible = !(((ComboBox)sender).SelectedIndex < 0);
@@ -105,13 +104,8 @@ namespace ICF_classificator
                 return;
             }
             patientId = (patientComboBox.SelectedItem as Patient).Id;
-            var reports = await SqlHelper.ReadAsync<MedicalReport>($"PatientId = {patientId}");
-            foreach (MedicalReport report in reports)
-            {
-                var item = new ListViewItem(report.Date.ToShortDateString());
-                item.SubItems.Add(report.Diagnosis);
-                reportsListView.Items.Add(item);
-            }
+
+            RefreshReportsListView();
         }
 
         private void doctorComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -129,51 +123,77 @@ namespace ICF_classificator
         {
             newReportGroupBox.Visible = true;
             reportItemGroupBox.Visible = true;
-            ((Button) sender).Enabled = false;
+            reportId = null;
         }
 
         private void saveReportButton_Click(object sender, EventArgs e)
         {
-            var report = new MedicalReport
+            if (((Button) sender).Text == @"Редактировать отчет")
             {
-                PatientId = patientId,
-                Date = dateTimePicker1.Value,
-                Diagnosis = commentReportTextBox.Text,
-                DoctorId = doctorId
-            };
-            var reportId = SqlHelper.TryInsert<MedicalReport>(new[] {report})[0];
-            var reportItems = new MedicalReportItem[newReportDataGridView.RowCount - 1];
-            var i = 0;
-            foreach (DataGridViewRow row in newReportDataGridView.Rows)
-            {
-                if (row.Cells[0].Value != null)
-                {
-                    DerangementState state;
-                    switch (row.Cells[2].Value as string)
-                    {
-                        case "Нарушено":
-                            state = DerangementState.Deranged;
-                            break;
-                        case "Норма":
-                            state = DerangementState.Normal;
-                            break;
-                        default:
-                            state = DerangementState.Unknown;
-                            break;
-                    }
-                    reportItems[i] = new MedicalReportItem
-                    {
-                        DerangementCode = row.Cells[0].Value as string,
-                        ReportId = reportId,
-                        DerangementState = state,
-                        Commentary = row.Cells[3].Value as string
-                    };
-                    i++;
-                }
+                dateLabel.Enabled = true;
+                dateTimePicker1.Enabled = true;
+                reportItemGroupBox.Enabled = true;
+                commentReportTextBox.Enabled = true;
+                newReportDataGridView.Enabled = true;
+                saveReportButton.Text = @"Cохранить отчет";
+                reportItemGroupBox.Visible = true;
             }
-            SqlHelper.TryInsert<MedicalReportItem>(reportItems);
+            else
+            {
+                int newReportId;
+                var report = new MedicalReport
+                {
+                    PatientId = patientId,
+                    Date = dateTimePicker1.Value,
+                    Diagnosis = commentReportTextBox.Text,
+                    DoctorId = doctorId
+                };
+                if (reportId != null)
+                {
+                    report.Id = reportId.Value;
+                    SqlHelper.TryUpdate<MedicalReport>(new[] {report});
+                    SqlHelper.Delete<MedicalReportItem>("ReportId", reportId.Value);
+                    newReportId = reportId.Value;
+                    reportId = null;
+                }
+                else
+                {
+                    newReportId = SqlHelper.TryInsert<MedicalReport>(new[] {report})[0];
+                }
+                var reportItems = new MedicalReportItem[newReportDataGridView.RowCount - 1];
+                var i = 0;
+                foreach (DataGridViewRow row in newReportDataGridView.Rows)
+                {
+                    if (row.Cells[0].Value != null)
+                    {
+                        DerangementState state;
+                        switch (row.Cells[2].Value as string)
+                        {
+                            case "Нарушено":
+                                state = DerangementState.Deranged;
+                                break;
+                            case "Норма":
+                                state = DerangementState.Normal;
+                                break;
+                            default:
+                                state = DerangementState.Unknown;
+                                break;
+                        }
+                        reportItems[i] = new MedicalReportItem
+                        {
+                            DerangementCode = row.Cells[0].Value as string,
+                            ReportId = newReportId,
+                            DerangementState = state,
+                            Commentary = row.Cells[3].Value as string
+                        };
+                        i++;
+                    }
+                }
 
-            RefreshReportsListView();
+                SqlHelper.TryInsert<MedicalReportItem>(reportItems);
+
+                RefreshReportsListView();
+            }
         }
 
         private void listBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -206,12 +226,52 @@ namespace ICF_classificator
             var reports = await SqlHelper.ReadAsync<MedicalReport>($"PatientId = {patientId}");
             foreach (MedicalReport report in reports)
             {
-                var item = new ListViewItem(report.Date.ToShortDateString());
+                var item = new ListViewItem(report.Id.ToString());
+                item.SubItems.Add(report.Date.ToShortDateString());
                 item.SubItems.Add(report.Diagnosis);
                 reportsListView.Items.Add(item);
             }
             reportsListView.Sorting = SortOrder.Descending;
             reportsListView.Sort();
+        }
+
+        private void reportsListView_DoubleClick(object sender, EventArgs e)
+        {
+            if (((ListView) sender).SelectedIndices.Count == 0)
+            {
+                return;
+            }
+            var x = ((ListView) sender).SelectedItems[0];
+            if (x.Text != null)
+            {
+                reportId = int.Parse(x.Text);
+                newReportDataGridView.Rows.Clear();
+                readReportDetails(reportId);
+            }
+        }
+
+        private async void readReportDetails(int? reportId)
+        {
+            var report = (MedicalReport)(await SqlHelper.ReadAsync<MedicalReport>($"Id = {reportId}"))[0];
+            newReportGroupBox.Text = $@"Отчет за {report.Date.ToShortDateString()}";
+            dateTimePicker1.Value = report.Date;
+            dateLabel.Enabled = false;
+            dateTimePicker1.Enabled = false;
+            reportItemGroupBox.Enabled = false;
+            commentReportTextBox.Text = report.Diagnosis;
+            commentReportTextBox.Enabled = false;
+
+            var reportItems = await SqlHelper.ReadAsync<MedicalReportItem>($"ReportId = {reportId}");
+            foreach (var item in reportItems)
+            {
+                var reportItem = (MedicalReportItem) item;
+                var derangement = (Derangement)(await SqlHelper.ReadAsync<Derangement>($"[Code] = '{reportItem.DerangementCode}'"))[0];
+                newReportDataGridView.Rows.Add(reportItem.DerangementCode, derangement.Name, reportItem.DerangementState.DisplayedName(), reportItem.Commentary);
+            }
+            newReportDataGridView.Enabled = false;
+            saveReportButton.Text = @"Редактировать отчет";
+            newReportGroupBox.Visible = true;
+            reportItemGroupBox.Visible = false;
         }
     }
 }

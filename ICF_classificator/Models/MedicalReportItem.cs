@@ -1,4 +1,6 @@
-﻿namespace ICF_classificator.Models
+﻿using System;
+
+namespace ICF_classificator.Models
 {
     public class MedicalReportItem
     {
