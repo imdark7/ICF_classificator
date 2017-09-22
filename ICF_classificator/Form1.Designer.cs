@@ -255,6 +255,7 @@ namespace ICF_classificator
             this.commentReportTextBox.Location = new System.Drawing.Point(6, 280);
             this.commentReportTextBox.Multiline = true;
             this.commentReportTextBox.Name = "commentReportTextBox";
+            this.commentReportTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.commentReportTextBox.Size = new System.Drawing.Size(430, 52);
             this.commentReportTextBox.TabIndex = 0;
             // 
