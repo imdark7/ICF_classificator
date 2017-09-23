@@ -1,4 +1,6 @@
-﻿namespace ICF_classificator.Models
+﻿using static System.Text.RegularExpressions.Regex;
+
+namespace ICF_classificator.Models
 {
     public class Doctor
     {
@@ -19,9 +21,8 @@
         {
         }
 
-        public override string ToString()
-        {
-            return System.Text.RegularExpressions.Regex.Replace(LastName + " " + FirstName + " " + SurName, @"\s+", " ");
-        }
+        public override string ToString() => Replace(LastName + " " + FirstName + " " + SurName, @"\s+", " ");
+
+        public string ToShortString() => Replace(LastName + " " + FirstName.Substring(0,1).ToUpper() + " " + SurName?.Substring(0, 1).ToUpper(), @"\s+", " ");
     }
 }

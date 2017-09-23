@@ -1,4 +1,6 @@
-﻿namespace ICF_classificator
+﻿using System;
+
+namespace ICF_classificator
 {
     partial class AddPatientForm
     {
@@ -40,6 +42,8 @@
             this.DoctorComboBox = new System.Windows.Forms.ComboBox();
             this.CreatePatientButton = new System.Windows.Forms.Button();
             this.WarningLabel = new System.Windows.Forms.Label();
+            this.PatientAddressTextBox = new System.Windows.Forms.TextBox();
+            this.addressLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // PatientLastNameLabel
@@ -116,7 +120,7 @@
             this.PatientBirthDatePicker.Name = "PatientBirthDatePicker";
             this.PatientBirthDatePicker.Size = new System.Drawing.Size(172, 20);
             this.PatientBirthDatePicker.TabIndex = 8;
-            this.PatientBirthDatePicker.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.PatientBirthDatePicker.Value = DateTime.Today;
             // 
             // DoctorComboBox
             // 
@@ -129,7 +133,7 @@
             // CreatePatientButton
             // 
             this.CreatePatientButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CreatePatientButton.Location = new System.Drawing.Point(131, 169);
+            this.CreatePatientButton.Location = new System.Drawing.Point(128, 193);
             this.CreatePatientButton.Name = "CreatePatientButton";
             this.CreatePatientButton.Size = new System.Drawing.Size(144, 47);
             this.CreatePatientButton.TabIndex = 10;
@@ -140,7 +144,7 @@
             // WarningLabel
             // 
             this.WarningLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.WarningLabel.Location = new System.Drawing.Point(27, 169);
+            this.WarningLabel.Location = new System.Drawing.Point(24, 193);
             this.WarningLabel.Name = "WarningLabel";
             this.WarningLabel.Size = new System.Drawing.Size(100, 47);
             this.WarningLabel.TabIndex = 11;
@@ -148,11 +152,29 @@
             this.WarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.WarningLabel.Visible = false;
             // 
+            // PatientAddressTextBox
+            // 
+            this.PatientAddressTextBox.Location = new System.Drawing.Point(116, 157);
+            this.PatientAddressTextBox.Name = "PatientAddressTextBox";
+            this.PatientAddressTextBox.Size = new System.Drawing.Size(172, 20);
+            this.PatientAddressTextBox.TabIndex = 13;
+            // 
+            // addressLabel
+            // 
+            this.addressLabel.AutoSize = true;
+            this.addressLabel.Location = new System.Drawing.Point(24, 160);
+            this.addressLabel.Name = "addressLabel";
+            this.addressLabel.Size = new System.Drawing.Size(89, 13);
+            this.addressLabel.TabIndex = 12;
+            this.addressLabel.Text = "Адрес прописки";
+            // 
             // AddPatientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(320, 239);
+            this.ClientSize = new System.Drawing.Size(320, 264);
+            this.Controls.Add(this.PatientAddressTextBox);
+            this.Controls.Add(this.addressLabel);
             this.Controls.Add(this.WarningLabel);
             this.Controls.Add(this.CreatePatientButton);
             this.Controls.Add(this.DoctorComboBox);
@@ -186,5 +208,7 @@
         private System.Windows.Forms.ComboBox DoctorComboBox;
         private System.Windows.Forms.Button CreatePatientButton;
         private System.Windows.Forms.Label WarningLabel;
+        private System.Windows.Forms.TextBox PatientAddressTextBox;
+        private System.Windows.Forms.Label addressLabel;
     }
 }

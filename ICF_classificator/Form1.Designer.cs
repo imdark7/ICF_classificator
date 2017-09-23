@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ICF_classificator
@@ -63,6 +64,7 @@ namespace ICF_classificator
             this.reportItemGroupBox = new System.Windows.Forms.GroupBox();
             this.doctorGroupBox = new System.Windows.Forms.GroupBox();
             this.doctorComboBox = new System.Windows.Forms.ComboBox();
+            this.Doctor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.reportsGroupBox.SuspendLayout();
             this.newReportGroupBox.SuspendLayout();
@@ -215,7 +217,8 @@ namespace ICF_classificator
             this.reportsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ReportId,
             this.DateReport,
-            this.CommentReport});
+            this.CommentReport,
+            this.Doctor});
             this.reportsListView.FullRowSelect = true;
             this.reportsListView.Location = new System.Drawing.Point(7, 20);
             this.reportsListView.MultiSelect = false;
@@ -225,6 +228,7 @@ namespace ICF_classificator
             this.reportsListView.UseCompatibleStateImageBehavior = false;
             this.reportsListView.View = System.Windows.Forms.View.Details;
             this.reportsListView.DoubleClick += new System.EventHandler(this.reportsListView_DoubleClick);
+            this.reportsListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.reportsListView_MouseDown);
             // 
             // ReportId
             // 
@@ -235,13 +239,13 @@ namespace ICF_classificator
             // 
             this.DateReport.Tag = "";
             this.DateReport.Text = "Дата";
-            this.DateReport.Width = 104;
+            this.DateReport.Width = 70;
             // 
             // CommentReport
             // 
             this.CommentReport.Tag = "";
             this.CommentReport.Text = "Комментарий";
-            this.CommentReport.Width = 236;
+            this.CommentReport.Width = 196;
             // 
             // dateTimePicker1
             // 
@@ -394,8 +398,13 @@ namespace ICF_classificator
             this.doctorComboBox.Size = new System.Drawing.Size(343, 21);
             this.doctorComboBox.TabIndex = 5;
             this.doctorComboBox.TabStop = false;
-            this.doctorComboBox.Text = "Выбрать..";
+            this.doctorComboBox.SelectedIndex = -1;
             this.doctorComboBox.SelectedIndexChanged += new System.EventHandler(this.doctorComboBox_SelectedIndexChanged);
+            // 
+            // Doctor
+            // 
+            this.Doctor.Text = "Врач";
+            this.Doctor.Width = 76;
             // 
             // MainForm
             // 
@@ -459,6 +468,7 @@ namespace ICF_classificator
         private DataGridViewComboBoxColumn Column3;
         private DataGridViewTextBoxColumn Column4;
         private ColumnHeader ReportId;
+        private ColumnHeader Doctor;
     }
 }
 

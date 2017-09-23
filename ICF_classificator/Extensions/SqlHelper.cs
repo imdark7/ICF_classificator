@@ -56,7 +56,8 @@ namespace ICF_classificator.Extensions
                             reader.IsDBNull(2) ? null : reader.GetString(2),
                             reader.IsDBNull(3) ? null : reader.GetString(3),
                             reader.GetDateTime(4),
-                            reader.IsDBNull(5) ? -1 : reader.GetInt32(5)
+                            reader.IsDBNull(5) ? -1 : reader.GetInt32(5),
+                            reader.IsDBNull(6) ? null : reader.GetString(6)
                             ));
                     }
                     if (type.IsEquivalentTo(typeof(Derangement)))
@@ -218,14 +219,15 @@ namespace ICF_classificator.Extensions
                     {
                         command =
                             new SqlCommand(
-                                $"INSERT INTO [{table}] (LastName, FirstName, SurName, BirthDate, DoctorId)" +
+                                $"INSERT INTO [{table}] (LastName, FirstName, SurName, BirthDate, DoctorId, Address)" +
                                  "OUTPUT INSERTED.Id " +
-                                "VALUES (@LastName, @FirstName, @SurName, @BirthDate, @DoctorId)", sqlConnection);
+                                "VALUES (@LastName, @FirstName, @SurName, @BirthDate, @DoctorId, @Address)", sqlConnection);
                         command.Parameters.AddWithValue("LastName", patient.LastName);
                         command.Parameters.AddWithValue("FirstName", patient.FirstName);
                         command.Parameters.AddWithValue("SurName", patient.SurName ?? (object) DBNull.Value);
                         command.Parameters.AddWithValue("BirthDate", patient.BirthDate);
                         command.Parameters.AddWithValue("DoctorId", patient.DoctorId ?? (object) DBNull.Value);
+                        command.Parameters.AddWithValue("Address", patient.Address ?? (object) DBNull.Value);
 
                         ids.Add((int)command.ExecuteScalar());
                     }

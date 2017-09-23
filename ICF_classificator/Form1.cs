@@ -1,6 +1,9 @@
 ﻿using ICF_classificator.Extensions;
 using System;
-using System.Threading;
+using System.ComponentModel;
+using System.Configuration;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using ICF_classificator.Models;
 
@@ -111,13 +114,14 @@ namespace ICF_classificator
 
         private void doctorComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (doctorComboBox.SelectedIndex < 0)
+            if (doctorComboBox.SelectedIndex > 0)
             {
-                doctorId = 0;
-                reportsGroupBox.Visible = false;
-                return;
+                doctorId = (doctorComboBox.SelectedItem as Doctor).Id;
+                var config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+                config.AppSettings.Settings.Remove("DoctorId");
+                config.AppSettings.Settings.Add("DoctorId", $"{doctorId}");
+                config.Save(ConfigurationSaveMode.Minimal);
             }
-            doctorId = (doctorComboBox.SelectedItem as Doctor).Id;
         }
 
         private void createNewReport_Click(object sender, EventArgs e)
@@ -212,19 +216,51 @@ namespace ICF_classificator
         public async void RefreshPatientCombobox(bool unselect = false)
         {
             patientComboBox.DataSource = await SqlHelper.ReadAsync<Patient>();
-            if (unselect)
-            {
-                patientComboBox.SelectedIndex = -1;
-            }
+            patientComboBox.SelectedIndex = -1;
         }
 
         public async void RefreshDoctorCombobox(bool unselect = false)
         {
-            doctorComboBox.DataSource = await SqlHelper.ReadAsync<Doctor>();
-            if (unselect)
+            var arrayList = await SqlHelper.ReadAsync<Doctor>();
+            doctorComboBox.DataSource = arrayList;
+
+            var config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            if (config.AppSettings.Settings.AllKeys.Contains("DoctorId"))
+            {
+                var id = int.Parse(config.AppSettings.Settings["DoctorId"].Value);
+                if (id > 0)
+                {
+                    doctorComboBox.SelectedItem = (from Doctor doctor in arrayList where doctor.Id == id select doctor).First();
+                }
+            }
+            else
             {
                 doctorComboBox.SelectedIndex = -1;
             }
+        }
+
+        public ContextMenuStrip GetReportsContextMenu()
+        {
+            var contextMenu = new ContextMenuStrip();
+            contextMenu.Items.Add(new ToolStripMenuItem {Text = @"Удалить отчет"});
+            contextMenu.Items[0].Click += (sender, args) =>
+            {
+                var reportId = int.Parse(reportsListView.SelectedItems[0].Text);
+                var reportDate = reportsListView.SelectedItems[0].SubItems[1].Text;
+                var patientName = patientComboBox.SelectedItem.ToString();
+                var dialog = MessageBox.Show(reportsListView, $@"Вы действительно хотите удалить отчет пациента {patientName} за {reportDate} ?", @"Удаление отчета", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                if (dialog == DialogResult.No)
+                {
+                    return;
+                }
+                if (dialog == DialogResult.Yes)
+                {
+                    SqlHelper.Delete<MedicalReport>("Id", reportId);
+                    RefreshReportsListView();
+                }
+            };
+            return contextMenu;
         }
 
         public async void RefreshReportsListView()
@@ -236,6 +272,8 @@ namespace ICF_classificator
                 var item = new ListViewItem(report.Id.ToString());
                 item.SubItems.Add(report.Date.ToShortDateString());
                 item.SubItems.Add(report.Diagnosis);
+                var doctor = (Doctor)(await SqlHelper.ReadAsync<Doctor>($"Id = {report.DoctorId}"))[0];
+                item.SubItems.Add(doctor.ToShortString());
                 reportsListView.Items.Add(item);
             }
             reportsListView.Sorting = SortOrder.Descending;
@@ -279,6 +317,14 @@ namespace ICF_classificator
             saveReportButton.Text = @"Редактировать отчет";
             newReportGroupBox.Visible = true;
             reportItemGroupBox.Visible = false;
+        }
+
+        private void reportsListView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && reportsListView.SelectedItems.Count > 0)
+            {
+                GetReportsContextMenu().Show(reportsListView, e.Location);
+            }
         }
     }
 }

@@ -24,6 +24,7 @@ namespace ICF_classificator
         {
             var doctors = await SqlHelper.ReadAsync<Doctor>();
             DoctorComboBox.DataSource = doctors;
+            DoctorComboBox.SelectedIndex = -1;
         }
 
         private void CreatePatientButton_Click(object sender, EventArgs e)
@@ -38,7 +39,8 @@ namespace ICF_classificator
                         FirstName = PatientFirstNameTextBox.Text,
                         SurName = PatientSurNameTextBox.Text,
                         BirthDate = PatientBirthDatePicker.Value,
-                        DoctorId = ((Doctor)DoctorComboBox.SelectedItem)?.Id
+                        DoctorId = ((Doctor)DoctorComboBox.SelectedItem)?.Id,
+                        Address = PatientAddressTextBox.Text
                     }
                 });
                 
