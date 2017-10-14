@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 using ICF_classificator.Extensions;
 using ICF_classificator.Models;
@@ -8,21 +7,18 @@ namespace ICF_classificator
 {
     public partial class AddPatientForm : Form
     {
-        private readonly Form PForm;
-        //todo: для рабочего приложения - раскомментить
-        //private readonly SqlConnection _sqlConnection = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={Application.StartupPath}\Database1.mdf;Integrated Security=True");//TODO: Нужен абсолютный путь;
-        private readonly SqlConnection _sqlConnection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Dark\Documents\GitHub\ICF_classificator\ICF_classificator\Database1.mdf;Integrated Security=True");//TODO: Нужен абсолютный путь;
+        private readonly Form _pForm;
 
-        public AddPatientForm(Form ParentForm)
+        public AddPatientForm(Form parentForm)
         {
             InitializeComponent();
             SetDoctors();
-            PForm = ParentForm;
+            _pForm = parentForm;
         }
 
-        public async void SetDoctors()
+        public void SetDoctors()
         {
-            var doctors = await SqlHelper.ReadAsync<Doctor>();
+            var doctors = SqlHelper.Read<Doctor>();
             DoctorComboBox.DataSource = doctors;
             DoctorComboBox.SelectedIndex = -1;
         }
@@ -45,7 +41,7 @@ namespace ICF_classificator
                 });
                 
                 Close();
-                ((MainForm)PForm).RefreshPatientCombobox();
+                ((MainForm)_pForm).RefreshPatientCombobox();
             }
             else
             {

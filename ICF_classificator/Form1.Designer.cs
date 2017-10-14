@@ -49,14 +49,11 @@ namespace ICF_classificator
             this.ReportId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DateReport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CommentReport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Doctor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.commentReportTextBox = new System.Windows.Forms.TextBox();
             this.newReportGroupBox = new System.Windows.Forms.GroupBox();
             this.newReportDataGridView = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.saveReportButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dateLabel = new System.Windows.Forms.Label();
@@ -64,7 +61,10 @@ namespace ICF_classificator
             this.reportItemGroupBox = new System.Windows.Forms.GroupBox();
             this.doctorGroupBox = new System.Windows.Forms.GroupBox();
             this.doctorComboBox = new System.Windows.Forms.ComboBox();
-            this.Doctor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.reportsGroupBox.SuspendLayout();
             this.newReportGroupBox.SuspendLayout();
@@ -247,6 +247,11 @@ namespace ICF_classificator
             this.CommentReport.Text = "Комментарий";
             this.CommentReport.Width = 196;
             // 
+            // Doctor
+            // 
+            this.Doctor.Text = "Врач";
+            this.Doctor.Width = 76;
+            // 
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(66, 20);
@@ -273,7 +278,7 @@ namespace ICF_classificator
             this.newReportGroupBox.Controls.Add(this.dateTimePicker1);
             this.newReportGroupBox.Location = new System.Drawing.Point(381, 37);
             this.newReportGroupBox.Name = "newReportGroupBox";
-            this.newReportGroupBox.Size = new System.Drawing.Size(791, 346);
+            this.newReportGroupBox.Size = new System.Drawing.Size(1024, 346);
             this.newReportGroupBox.TabIndex = 8;
             this.newReportGroupBox.TabStop = false;
             this.newReportGroupBox.Text = "Новый отчет";
@@ -290,41 +295,8 @@ namespace ICF_classificator
             this.newReportDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.newReportDataGridView.Location = new System.Drawing.Point(9, 46);
             this.newReportDataGridView.Name = "newReportDataGridView";
-            this.newReportDataGridView.Size = new System.Drawing.Size(764, 215);
+            this.newReportDataGridView.Size = new System.Drawing.Size(1008, 215);
             this.newReportDataGridView.TabIndex = 12;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Код";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 50;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Название";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 200;
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "DerangementState";
-            this.Column3.HeaderText = "Состояние";
-            this.Column3.Items.AddRange(new object[] {
-            "Не задано",
-            "Норма",
-            "Нарушено"});
-            this.Column3.Name = "Column3";
-            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Column3.Width = 70;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Комментарий";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 400;
             // 
             // saveReportButton
             // 
@@ -398,13 +370,39 @@ namespace ICF_classificator
             this.doctorComboBox.Size = new System.Drawing.Size(343, 21);
             this.doctorComboBox.TabIndex = 5;
             this.doctorComboBox.TabStop = false;
-            this.doctorComboBox.SelectedIndex = -1;
             this.doctorComboBox.SelectedIndexChanged += new System.EventHandler(this.doctorComboBox_SelectedIndexChanged);
             // 
-            // Doctor
+            // Column1
             // 
-            this.Doctor.Text = "Врач";
-            this.Doctor.Width = 76;
+            this.Column1.HeaderText = "Код";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 50;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Название";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 200;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "DerangementState";
+            this.Column3.HeaderText = "Состояние";
+            this.Column3.Items.AddRange(new object[] {
+            "Не задано",
+            "Норма",
+            "Нарушено"});
+            this.Column3.Name = "Column3";
+            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Комментарий";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 590;
             // 
             // MainForm
             // 
@@ -463,12 +461,12 @@ namespace ICF_classificator
         private System.Windows.Forms.DataGridView newReportDataGridView;
         private GroupBox doctorGroupBox;
         private ComboBox doctorComboBox;
+        private ColumnHeader ReportId;
+        private ColumnHeader Doctor;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewComboBoxColumn Column3;
         private DataGridViewTextBoxColumn Column4;
-        private ColumnHeader ReportId;
-        private ColumnHeader Doctor;
     }
 }
 

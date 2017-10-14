@@ -1,8 +1,6 @@
 ﻿using ICF_classificator.Extensions;
 using System;
-using System.ComponentModel;
 using System.Configuration;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ICF_classificator.Models;
@@ -11,9 +9,9 @@ namespace ICF_classificator
 {
     public partial class MainForm : Form
     {
-        private int patientId;
-        private int doctorId;
-        private int? reportId;
+        private long patientId;
+        private long doctorId;
+        private long? reportId;
 
         public MainForm()
         {
@@ -23,9 +21,10 @@ namespace ICF_classificator
         private void MainForm_Load(object sender, EventArgs e)
         {
             RefreshDoctorCombobox();
-            RefreshPatientCombobox(true);
+            RefreshPatientCombobox();
+            reportsGroupBox.Visible = false;
 
-            RefreshListBoxData(listBox1, "LEN(Code) < 2");
+            RefreshListBoxData(listBox1, "length(Code) < 2");
         }
 
         private void listBox1_SelectedValueChanged(object sender, EventArgs e)
@@ -57,10 +56,10 @@ namespace ICF_classificator
             RefreshListBoxData(listBox6, $"ParentCode = '{((Derangement)((ListBoxExtension)sender).SelectedItem).Code}'");
         }
 
-        private async void RefreshListBoxData(ListBoxExtension listbox, string requestCondition)
+        private void RefreshListBoxData(ListBoxExtension listbox, string requestCondition)
         {
             listbox.Items.Clear();
-            var list = await SqlHelper.ReadAsync<Derangement>(requestCondition);
+            var list = SqlHelper.Read<Derangement>(requestCondition);
             if (list.Count > 0)
             {
                 foreach (var item in list)
@@ -101,26 +100,31 @@ namespace ICF_classificator
         private void patientComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             reportsListView.Items.Clear();
-            reportsGroupBox.Visible = !(((ComboBox)sender).SelectedIndex < 0);
             if (patientComboBox.SelectedIndex < 0)
             {
-                patientId = 0;
+                patientId = -1;
                 return;
             }
             patientId = (patientComboBox.SelectedItem as Patient).Id;
-
-            RefreshReportsListView();
+            if (doctorId > -1)
+            {
+                RefreshReportsListView();
+            }
         }
 
         private void doctorComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (doctorComboBox.SelectedIndex > 0)
+            if (doctorComboBox.SelectedIndex > -1)
             {
                 doctorId = (doctorComboBox.SelectedItem as Doctor).Id;
                 var config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
                 config.AppSettings.Settings.Remove("DoctorId");
                 config.AppSettings.Settings.Add("DoctorId", $"{doctorId}");
                 config.Save(ConfigurationSaveMode.Minimal);
+            }
+            if (patientId > -1)
+            {
+                RefreshReportsListView();
             }
         }
 
@@ -211,31 +215,44 @@ namespace ICF_classificator
         {
             var derangement = (((ListBoxExtension) sender).SelectedItem as Derangement);
             newReportDataGridView.Rows.Insert(0, derangement.Code, derangement.Name);
+            newReportDataGridView.ClearSelection();
+            newReportDataGridView.Rows[0].Selected = true;
         }
 
-        public async void RefreshPatientCombobox(bool unselect = false)
+        public void RefreshPatientCombobox()
         {
-            patientComboBox.DataSource = await SqlHelper.ReadAsync<Patient>();
+            patientComboBox.DataSource = SqlHelper.Read<Patient>();
             patientComboBox.SelectedIndex = -1;
+            patientId = -1;
         }
 
-        public async void RefreshDoctorCombobox(bool unselect = false)
+        public void RefreshDoctorCombobox()
         {
-            var arrayList = await SqlHelper.ReadAsync<Doctor>();
+            var arrayList = SqlHelper.Read<Doctor>();
             doctorComboBox.DataSource = arrayList;
 
             var config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
             if (config.AppSettings.Settings.AllKeys.Contains("DoctorId"))
             {
-                var id = int.Parse(config.AppSettings.Settings["DoctorId"].Value);
-                if (id > 0)
+                var id = long.Parse(config.AppSettings.Settings["DoctorId"].Value);
+                var list = from Doctor doctor in arrayList select doctor;
+                if (id > 0 && list.Any(doctor => doctor.Id == id))
                 {
-                    doctorComboBox.SelectedItem = (from Doctor doctor in arrayList where doctor.Id == id select doctor).First();
+                    doctorComboBox.SelectedItem = list.First(doctor => doctor.Id == id);
+                    doctorId = id;
+                }
+                else
+                {
+                    config.AppSettings.Settings.Remove("DoctorId");
+                    config.Save(ConfigurationSaveMode.Minimal);
+                    doctorComboBox.SelectedIndex = -1;
+                    doctorId = -1;
                 }
             }
             else
             {
                 doctorComboBox.SelectedIndex = -1;
+                doctorId = -1;
             }
         }
 
@@ -263,16 +280,17 @@ namespace ICF_classificator
             return contextMenu;
         }
 
-        public async void RefreshReportsListView()
+        public void RefreshReportsListView()
         {
+            reportsGroupBox.Visible = !(doctorComboBox.SelectedIndex < 0) && !(patientComboBox.SelectedIndex < 0);
             reportsListView.Items.Clear();
-            var reports = await SqlHelper.ReadAsync<MedicalReport>($"PatientId = {patientId}");
+            var reports = SqlHelper.Read<MedicalReport>($"PatientId = {patientId}");
             foreach (MedicalReport report in reports)
             {
                 var item = new ListViewItem(report.Id.ToString());
                 item.SubItems.Add(report.Date.ToShortDateString());
                 item.SubItems.Add(report.Diagnosis);
-                var doctor = (Doctor)(await SqlHelper.ReadAsync<Doctor>($"Id = {report.DoctorId}"))[0];
+                var doctor = (Doctor)SqlHelper.Read<Doctor>($"Id = {report.DoctorId}")[0];
                 item.SubItems.Add(doctor.ToShortString());
                 reportsListView.Items.Add(item);
             }
@@ -289,15 +307,15 @@ namespace ICF_classificator
             var x = ((ListView) sender).SelectedItems[0];
             if (x.Text != null)
             {
-                reportId = int.Parse(x.Text);
+                reportId = long.Parse(x.Text);
                 newReportDataGridView.Rows.Clear();
                 readReportDetails(reportId);
             }
         }
 
-        private async void readReportDetails(int? reportId)
+        private void readReportDetails(long? reportId)
         {
-            var report = (MedicalReport)(await SqlHelper.ReadAsync<MedicalReport>($"Id = {reportId}"))[0];
+            var report = (MedicalReport)(SqlHelper.Read<MedicalReport>($"Id = {reportId}"))[0];
             newReportGroupBox.Text = $@"Отчет за {report.Date.ToShortDateString()}";
             dateTimePicker1.Value = report.Date;
             dateLabel.Enabled = false;
@@ -306,11 +324,11 @@ namespace ICF_classificator
             commentReportTextBox.Text = report.Diagnosis;
             commentReportTextBox.Enabled = false;
 
-            var reportItems = await SqlHelper.ReadAsync<MedicalReportItem>($"ReportId = {reportId}");
+            var reportItems = SqlHelper.Read<MedicalReportItem>($"ReportId = {reportId}");
             foreach (var item in reportItems)
             {
                 var reportItem = (MedicalReportItem) item;
-                var derangement = (Derangement)(await SqlHelper.ReadAsync<Derangement>($"[Code] = '{reportItem.DerangementCode}'"))[0];
+                var derangement = (Derangement)(SqlHelper.Read<Derangement>($"[Code] = '{reportItem.DerangementCode}'"))[0];
                 newReportDataGridView.Rows.Add(reportItem.DerangementCode, derangement.Name, reportItem.DerangementState.DisplayedName(), reportItem.Commentary);
             }
             newReportDataGridView.Enabled = false;

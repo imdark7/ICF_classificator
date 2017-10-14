@@ -4,15 +4,15 @@ namespace ICF_classificator.Models
 {
     public class Patient
     {
-        public int Id;
+        public long Id;
         public string LastName;
         public string FirstName;
         public string SurName;
         public DateTime BirthDate;
-        public int? DoctorId;
+        public long? DoctorId;
         public string Address;
 
-        public Patient(int id, string lastName, string firstName, string surName, DateTime birthDate, int doctorId, string address)
+        public Patient(long id, string lastName, string firstName, string surName, DateTime birthDate, long doctorId, string address)
         {
             Id = id;
             LastName = lastName;

@@ -30,7 +30,7 @@ namespace ICF_classificator.Models
                 typeof(DerangementState).GetField(state.ToString())
                     .GetCustomAttributes(typeof(DisplayedNameAttribute), false);
 
-            if (attributes != null && attributes.Length > 0)
+            if (attributes.Length > 0)
             {
                 return ((DisplayedNameAttribute) attributes[attributes.Length - 1]).DisplayedName;
             }

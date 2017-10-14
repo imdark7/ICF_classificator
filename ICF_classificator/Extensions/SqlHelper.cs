@@ -1,43 +1,66 @@
 ﻿using System;
 using System.Collections;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
+using System.Data;
 using System.Windows.Forms;
 using ICF_classificator.Models;
+using System.Data.SQLite;
+using System.IO;
+using ICF_classificator.Properties;
 
 namespace ICF_classificator.Extensions
 {
     public static class SqlHelper
     {
-        private static SqlConnection NewConnection()
+        private static SQLiteConnection NewSqLiteConnection()
         {
-            var connectionStringBuilder = new SqlConnectionStringBuilder
+            var stringBuilder = new SQLiteConnectionStringBuilder
             {
-                AttachDBFilename = @"C:\Users\Dark\Documents\GitHub\ICF_classificator\ICF_classificator\Database1.mdf",
-                DataSource = @"(LocalDB)\MSSQLLocalDB",
-                IntegratedSecurity = true
+                DataSource = "database.sqlite3"
             };
+            var connection = new SQLiteConnection(stringBuilder.ConnectionString);
+            if (!File.Exists($"./{stringBuilder.DataSource}"))
+            {
+                SQLiteConnection.CreateFile(stringBuilder.DataSource);
+                connection.CreateDb();
+            }
+            return connection;
+        }
 
-            return new SqlConnection(connectionStringBuilder.ConnectionString);
-
-    }
-
-        public static async Task<ArrayList> ReadAsync<T>(string requestCondition = null)
+        private static void CreateDb(this SQLiteConnection connection)
         {
-            var sqlConnection = NewConnection();
-            await sqlConnection.OpenAsync();
-            SqlDataReader reader = null;
+            try
+            {
+                connection.Open();
+                var command = new SQLiteCommand(Resources.createDb, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception)
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+                throw;
+            }
+        }
+
+        public static ArrayList Read<T>(string requestCondition = null)
+        {
+            var sqlConnection = NewSqLiteConnection();
+            sqlConnection.Open();
+            SQLiteDataReader reader = null;
 
             var table = GetTableNameFor<T>();
             var type = typeof(T);
-            var command = requestCondition == null
-                ? new SqlCommand($"SELECT * FROM [{table}]", sqlConnection)
-                : new SqlCommand($"SELECT * FROM [{table}] WHERE {requestCondition}", sqlConnection);
+            var command = requestCondition == null 
+                ? new SQLiteCommand($"SELECT * FROM [{table}]", sqlConnection)
+                : new SQLiteCommand($"SELECT * FROM [{table}] WHERE {requestCondition}", sqlConnection);
             var list = new ArrayList();
             try
             {
-                reader = await command.ExecuteReaderAsync();
-                while (await reader.ReadAsync())
+                reader = command.ExecuteReader();
+                while (reader.Read())
                 {
                     if (type.IsEquivalentTo(typeof(Doctor)))
                     {
@@ -103,62 +126,6 @@ namespace ICF_classificator.Extensions
             return list;
         }
 
-        //public static T[] Read<T>(string requestCondition = null)
-        //{
-        //    var sqlConnection = NewConnection();
-        //    sqlConnection.OpenAsync();
-        //    SqlDataReader reader = null;
-
-        //    var table = GetTableNameFor<T>();
-        //    var type = typeof(T);
-        //    var command = requestCondition == null
-        //        ? new SqlCommand($"SELECT * FROM [{table}]", sqlConnection)
-        //        : new SqlCommand($"SELECT * FROM [{table}] WHERE {requestCondition}", sqlConnection);
-        //    var list = new ArrayList();
-        //    try
-        //    {
-        //        reader = command.ExecuteReader();
-        //        while (reader.Read())
-        //        {
-        //            if (type.IsEquivalentTo(typeof(Doctor)))
-        //            {
-        //                list.Add(new Doctor(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),
-        //                    reader.GetString(3)));
-        //            }
-        //            if (type.IsEquivalentTo(typeof(Patient)))
-        //            {
-        //                list.Add(new Patient(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),
-        //                    reader.GetString(3), reader.GetDateTime(4), reader.GetInt32(5)));
-        //            }
-        //            if (type.IsEquivalentTo(typeof(Derangement)))
-        //            {
-        //                list.Add(new Derangement(reader.GetString(0), reader.GetString(1), reader.GetString(2),
-        //                    reader.GetString(3)));
-        //            }
-        //            if (type.IsEquivalentTo(typeof(MedicalReport)))
-        //            {
-        //                list.Add(new MedicalReport(reader.GetInt32(0), reader.GetInt32(1),
-        //                    reader.GetDateTime(2), reader.GetString(3), reader.GetInt32(4)));
-        //            }
-        //            if (type.IsEquivalentTo(typeof(MedicalReportItem)))
-        //            {
-        //                list.Add(new MedicalReportItem(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2),
-        //                    (DerangementState)reader.GetInt16(3), reader.GetString(4)));
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message, ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //    finally
-        //    {
-        //        reader?.Close();
-        //        sqlConnection.Close();
-        //    }
-        //    return list.ToArray() as T[];
-        //}
-
         private static string GetTableNameFor<T>()
         {
             var type = typeof(T);
@@ -189,28 +156,27 @@ namespace ICF_classificator.Extensions
             throw new Exception("Не удалось найти подходящую таблицу данных");
         }
 
-        public static int[] TryInsert<T>(object[] objects)
+        public static long[] TryInsert<T>(object[] objects)
         {
-            var sqlConnection = NewConnection();
+            var sqlConnection = NewSqLiteConnection();
             sqlConnection.Open();
             var table = GetTableNameFor<T>();
             var type = typeof(T);
             var ids = new ArrayList();
-            SqlCommand command = null;
             try
             {
+                SQLiteCommand command;
                 if (type.IsEquivalentTo(typeof(Doctor)))
                 {
                     foreach (var doctor in (Doctor[]) objects)
                     {
-                        command = new SqlCommand($"INSERT INTO [{table}] (LastName, FirstName, SurName)" +
-                                                 "OUTPUT INSERTED.Id " +
+                        command = new SQLiteCommand($"INSERT INTO [{table}] (LastName, FirstName, SurName)" +
                                                  "VALUES (@LastName, @FirstName, @SurName)", sqlConnection);
-                        command.Parameters.AddWithValue("LastName", doctor.LastName);
-                        command.Parameters.AddWithValue("FirstName", doctor.FirstName);
-                        command.Parameters.AddWithValue("SurName", doctor.SurName ?? (object) DBNull.Value);
-
-                        ids.Add((int)command.ExecuteScalar());
+                        command.Parameters.AddWithValue("@LastName", doctor.LastName);
+                        command.Parameters.AddWithValue("@FirstName", doctor.FirstName);
+                        command.Parameters.AddWithValue("@SurName", doctor.SurName ?? (object) DBNull.Value);
+                        command.ExecuteScalar();
+                        ids.Add(sqlConnection.LastInsertRowId);
                     }
                 }
                 if (type.IsEquivalentTo(typeof(Patient)))
@@ -218,18 +184,17 @@ namespace ICF_classificator.Extensions
                     foreach (var patient in (Patient[]) objects)
                     {
                         command =
-                            new SqlCommand(
+                            new SQLiteCommand(
                                 $"INSERT INTO [{table}] (LastName, FirstName, SurName, BirthDate, DoctorId, Address)" +
-                                 "OUTPUT INSERTED.Id " +
                                 "VALUES (@LastName, @FirstName, @SurName, @BirthDate, @DoctorId, @Address)", sqlConnection);
-                        command.Parameters.AddWithValue("LastName", patient.LastName);
-                        command.Parameters.AddWithValue("FirstName", patient.FirstName);
-                        command.Parameters.AddWithValue("SurName", patient.SurName ?? (object) DBNull.Value);
-                        command.Parameters.AddWithValue("BirthDate", patient.BirthDate);
-                        command.Parameters.AddWithValue("DoctorId", patient.DoctorId ?? (object) DBNull.Value);
-                        command.Parameters.AddWithValue("Address", patient.Address ?? (object) DBNull.Value);
-
-                        ids.Add((int)command.ExecuteScalar());
+                        command.Parameters.AddWithValue("@LastName", patient.LastName);
+                        command.Parameters.AddWithValue("@FirstName", patient.FirstName);
+                        command.Parameters.AddWithValue("@SurName", patient.SurName ?? (object) DBNull.Value);
+                        command.Parameters.AddWithValue("@BirthDate", patient.BirthDate);
+                        command.Parameters.AddWithValue("@DoctorId", patient.DoctorId ?? (object) DBNull.Value);
+                        command.Parameters.AddWithValue("@Address", patient.Address ?? (object) DBNull.Value);
+                        command.ExecuteScalar();
+                        ids.Add(sqlConnection.LastInsertRowId);
                     }
                 }
                 if (type.IsEquivalentTo(typeof(Derangement)))
@@ -240,17 +205,15 @@ namespace ICF_classificator.Extensions
                 {
                     foreach (var report in (MedicalReport[]) objects)
                     {
-                        command = new SqlCommand(
+                        command = new SQLiteCommand(
                             $"INSERT INTO [{table}] (PatientId, Date, Diagnosis, DoctorId) " +
-                            "OUTPUT INSERTED.Id " +
-                            "VALUES (@PatientId, @Date, @Diagnosis, @DoctorId)",
-                            sqlConnection);
-                        command.Parameters.AddWithValue("PatientId", report.PatientId);
-                        command.Parameters.AddWithValue("Date", report.Date);
-                        command.Parameters.AddWithValue("Diagnosis", report.Diagnosis ?? (object) DBNull.Value);
-                        command.Parameters.AddWithValue("DoctorId", report.DoctorId);
-
-                        ids.Add((int)command.ExecuteScalar());
+                            "VALUES (@PatientId, @Date, @Diagnosis, @DoctorId)", sqlConnection);
+                        command.Parameters.AddWithValue("@PatientId", report.PatientId);
+                        command.Parameters.AddWithValue("@Date", report.Date);
+                        command.Parameters.AddWithValue("@Diagnosis", report.Diagnosis ?? (object) DBNull.Value);
+                        command.Parameters.AddWithValue("@DoctorId", report.DoctorId);
+                        command.ExecuteScalar();
+                        ids.Add(sqlConnection.LastInsertRowId);
                     }
                 }
                 if (type.IsEquivalentTo(typeof(MedicalReportItem)))
@@ -258,16 +221,15 @@ namespace ICF_classificator.Extensions
                     foreach (var reportItem in (MedicalReportItem[]) objects)
                     {
                         command =
-                            new SqlCommand(
+                            new SQLiteCommand(
                                 $"INSERT INTO [{table}] (ReportId, ICFElementCode, ICFElementState, Commentary)" +
-                                "OUTPUT INSERTED.Id " +
                                 "VALUES (@ReportId, @ICFElementCode, @ICFElementState, @Commentary)", sqlConnection);
-                        command.Parameters.AddWithValue("ReportId", reportItem.ReportId);
-                        command.Parameters.AddWithValue("ICFElementCode", reportItem.DerangementCode);
-                        command.Parameters.AddWithValue("ICFElementState", reportItem.DerangementState);
-                        command.Parameters.AddWithValue("Commentary", reportItem.Commentary ?? (object) DBNull.Value);
-
-                        ids.Add((int)command.ExecuteScalar());
+                        command.Parameters.AddWithValue("@ReportId", reportItem.ReportId);
+                        command.Parameters.AddWithValue("@ICFElementCode", reportItem.DerangementCode);
+                        command.Parameters.AddWithValue("@ICFElementState", reportItem.DerangementState);
+                        command.Parameters.AddWithValue("@Commentary", reportItem.Commentary ?? (object) DBNull.Value);
+                        command.ExecuteScalar();
+                        ids.Add(sqlConnection.LastInsertRowId);
                     }
                 }
             }
@@ -276,28 +238,28 @@ namespace ICF_classificator.Extensions
                 sqlConnection.Close();
                 throw;
             }
-            var array = new int[ids.Count];
+            var array = new long[ids.Count];
             for (var i = 0; i < ids.Count; i++)
             {
-                array[i] = (int)ids[i];
+                array[i] = (long)ids[i];
             }
             return array;
         }
 
         public static void TryUpdate<T>(object[] objects)
         {
-            var sqlConnection = NewConnection();
+            var sqlConnection = NewSqLiteConnection();
             sqlConnection.Open();
             var table = GetTableNameFor<T>();
             var type = typeof(T);
             try
             {
-                SqlCommand command = null;
+                SQLiteCommand command;
                 if (type.IsEquivalentTo(typeof(Doctor)))
                 {
                     foreach (var doctor in (Doctor[])objects)
                     {
-                        command = new SqlCommand($"UPDATE [{table}] " +
+                        command = new SQLiteCommand($"UPDATE [{table}] " +
                                                  "SET [LastName] = @LastName, [FirstName] = @FirstName, [SurName] = @SurName " +
                                                  "WHERE [Id] = @Id", sqlConnection);
                         command.Parameters.AddWithValue("@LastName", doctor.LastName);
@@ -313,7 +275,7 @@ namespace ICF_classificator.Extensions
                     foreach (var patient in (Patient[])objects)
                     {
                         command =
-                            new SqlCommand(
+                            new SQLiteCommand(
                                 $"UPDATE [{table}] " +
                                  "SET [LastName] = @LastName, [FirstName] = @FirstName, [SurName] = @SurName, " +
                                 "[BirthDate] = @BirthDate, [DoctorId] = @DoctorId " +
@@ -336,7 +298,7 @@ namespace ICF_classificator.Extensions
                 {
                     foreach (var report in (MedicalReport[])objects)
                     {
-                        command = new SqlCommand(
+                        command = new SQLiteCommand(
                             $"UPDATE [{table}] " +
                             "SET [PatientId] =  @PatientId, [Date] =  @Date, [Diagnosis] = @Diagnosis, [DoctorId] = @DoctorId " +
                             "WHERE [Id] = @Id", sqlConnection);
@@ -354,15 +316,15 @@ namespace ICF_classificator.Extensions
                     foreach (var reportItem in (MedicalReportItem[])objects)
                     {
                         command =
-                            new SqlCommand(
+                            new SQLiteCommand(
                                 $"UPDATE [{table}] " +
                                 "SET [ReportId] = @ReportId, [ICFElementCode] = @ICFElementCode, " +
                                 "[ICFElementState] = @ICFElementState, [Commentary] = @Commentary " +
                                 "WHERE [Id] = @Id", sqlConnection);
-                        command.Parameters.AddWithValue("ReportId", reportItem.ReportId);
-                        command.Parameters.AddWithValue("ICFElementCode", reportItem.DerangementCode);
-                        command.Parameters.AddWithValue("ICFElementState", reportItem.DerangementState);
-                        command.Parameters.AddWithValue("Commentary", reportItem.Commentary ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@ReportId", reportItem.ReportId);
+                        command.Parameters.AddWithValue("@ICFElementCode", reportItem.DerangementCode);
+                        command.Parameters.AddWithValue("@ICFElementState", reportItem.DerangementState);
+                        command.Parameters.AddWithValue("@Commentary", reportItem.Commentary ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@Id", reportItem.Id);
 
                         command.ExecuteNonQuery();
@@ -376,14 +338,14 @@ namespace ICF_classificator.Extensions
             }
         }
 
-        public static void Delete<T>(string columnName, int id)
+        public static void Delete<T>(string columnName, long id)
         {
-            var sqlConnection = NewConnection();
+            var sqlConnection = NewSqLiteConnection();
             sqlConnection.Open();
             try
             {
                 var table = GetTableNameFor<T>();
-                var command = new SqlCommand($"DELETE FROM [{table}]" +
+                var command = new SQLiteCommand($"DELETE FROM [{table}]" +
                                              $"WHERE [{columnName}] = '{id}'", sqlConnection);
                 command.ExecuteNonQuery();
             }

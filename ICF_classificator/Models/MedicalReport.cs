@@ -4,13 +4,13 @@ namespace ICF_classificator.Models
 {
     public class MedicalReport
     {
-        public int Id;
-        public int PatientId;
+        public long Id;
+        public long PatientId;
         public DateTime Date;
         public string Diagnosis;
-        public int DoctorId;
+        public long DoctorId;
 
-        public MedicalReport(int id, int patientId, DateTime date, string diagnosis, int doctorId)
+        public MedicalReport(long id, long patientId, DateTime date, string diagnosis, long doctorId)
         {
             Id = id;
             PatientId = patientId;
