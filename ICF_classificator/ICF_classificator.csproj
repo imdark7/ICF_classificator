@@ -91,6 +91,7 @@
     <Compile Include="AddPatientForm.Designer.cs">
       <DependentUpon>AddPatientForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\EnumHelper.cs" />
     <Compile Include="Extensions\ListBoxExtension.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -103,10 +104,21 @@
     </Compile>
     <Compile Include="Models\Derangement.cs" />
     <Compile Include="Models\DerangementState.cs" />
+    <Compile Include="Extensions\DisplayedNameAttribute.cs" />
+    <Compile Include="Extensions\DisplayedNameHelper.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\MedicalReport.cs" />
     <Compile Include="Models\MedicalReportItem.cs" />
     <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\PatientDataModels\ApgarResult.cs" />
+    <Compile Include="Models\PatientDataModels\CerebralIschemiaDegree.cs" />
+    <Compile Include="Models\PatientDataModels\Gestation.cs" />
+    <Compile Include="Models\PatientDataModels\HospitalizationCount.cs" />
+    <Compile Include="Models\PatientDataModels\IVHDegree.cs" />
+    <Compile Include="Models\PatientDataModels\IVHLocalization.cs" />
+    <Compile Include="Models\PatientDataModels\IVHModel.cs" />
+    <Compile Include="Models\PatientDataModels\NoYesRadioButtonResult.cs" />
+    <Compile Include="Models\PatientDataModels\PatientSex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddDoctorForm.resx">
@@ -132,6 +144,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\ICF_classificator.Models.Patient.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

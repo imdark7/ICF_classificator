@@ -1,31 +1,26 @@
 ﻿using System;
+using System.CodeDom;
 using System.Windows.Forms;
 using ICF_classificator.Extensions;
 using ICF_classificator.Models;
+using ICF_classificator.Models.PatientDataModels;
 
 namespace ICF_classificator
 {
     public partial class AddPatientForm : Form
     {
         private readonly Form _pForm;
+        private static Patient patient;
 
         public AddPatientForm(Form parentForm)
         {
             InitializeComponent();
-            SetDoctors();
             _pForm = parentForm;
-        }
-
-        public void SetDoctors()
-        {
-            var doctors = SqlHelper.Read<Doctor>();
-            DoctorComboBox.DataSource = doctors;
-            DoctorComboBox.SelectedIndex = -1;
         }
 
         private void CreatePatientButton_Click(object sender, EventArgs e)
         {
-            if (PatientLastNameTextBox.Text.Length > 0 && PatientFirstNameTextBox.Text.Length > 0)
+            if (IsDataCorrect())
             {
                 SqlHelper.TryInsert<Patient>(new []
                 {
@@ -34,9 +29,11 @@ namespace ICF_classificator
                         LastName = PatientLastNameTextBox.Text,
                         FirstName = PatientFirstNameTextBox.Text,
                         SurName = PatientSurNameTextBox.Text,
+                        Sex = MaleSexRadioButton.Checked ? PatientSex.Male : PatientSex.Female,
+                        ParentName = ParentFIOTextBox.Text,
+                        Address = PatientAddressTextBox.Text,
                         BirthDate = PatientBirthDatePicker.Value,
-                        DoctorId = ((Doctor)DoctorComboBox.SelectedItem)?.Id,
-                        Address = PatientAddressTextBox.Text
+                        GestationAge = int.Parse(GestationAgeTextBox.Text)
                     }
                 });
                 
@@ -46,6 +43,22 @@ namespace ICF_classificator
             else
             {
                 WarningLabel.Show();
+            }
+        }
+
+        private bool IsDataCorrect()
+        {
+            return
+                PatientLastNameTextBox.Text.Length > 0 &&
+                PatientFirstNameTextBox.Text.Length > 0 &&
+                (MaleSexRadioButton.Checked || FemaleSexRadioButton.Checked);
+        }
+
+        private void PatientFormOnlyIntegerTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != Convert.ToChar(8))
+            {
+                e.Handled = true;
             }
         }
     }

@@ -105,7 +105,7 @@ namespace ICF_classificator
                 patientId = -1;
                 return;
             }
-            patientId = (patientComboBox.SelectedItem as Patient).Id;
+            patientId = (patientComboBox.SelectedItem as Patient).GetId();
             if (doctorId > -1)
             {
                 RefreshReportsListView();

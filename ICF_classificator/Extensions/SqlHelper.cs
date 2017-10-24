@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using ICF_classificator.Models;
 using System.Data.SQLite;
 using System.IO;
+using ICF_classificator.Models.PatientDataModels;
 using ICF_classificator.Properties;
 
 namespace ICF_classificator.Extensions
@@ -73,15 +74,58 @@ namespace ICF_classificator.Extensions
                     }
                     if (type.IsEquivalentTo(typeof(Patient)))
                     {
-                        list.Add(new Patient(
-                            reader.GetInt32(0),
-                            reader.IsDBNull(1) ? null : reader.GetString(1),
-                            reader.IsDBNull(2) ? null : reader.GetString(2),
-                            reader.IsDBNull(3) ? null : reader.GetString(3),
-                            reader.GetDateTime(4),
-                            reader.IsDBNull(5) ? -1 : reader.GetInt32(5),
-                            reader.IsDBNull(6) ? null : reader.GetString(6)
-                            ));
+                        list.Add(new Patient
+                        {
+                            Id = reader.GetInt64(0),
+                            LastName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                            FirstName = reader.IsDBNull(2) ? null : reader.GetString(2),
+                            SurName = reader.IsDBNull(3) ? null : reader.GetString(3),
+                            Sex = (PatientSex) reader.GetInt32(4),
+                            ParentName = reader.GetString(5),
+                            Address = reader.GetString(6),
+                            BirthDate = reader.GetDateTime(7),
+                            GestationAge = reader.GetInt32(8),
+                            BirthWeight = reader.GetInt32(9),
+                            BirthHeight = reader.GetInt32(10),
+                            BirthHeadSize = reader.GetInt32(11),
+                            BirthChestSize = reader.GetInt32(12),
+                            ApgarScale = new ApgarResult
+                            {
+                                AfterBirth = reader.GetInt32(13),
+                                AfterOneMinute = reader.GetInt32(14),
+                                AfterFiveMinute = reader.GetInt32(15)
+                            },
+                            Disability = (NoYesRadioButtonResult)reader.GetInt32(16),
+                            Hospitalization = (HospitalizationCount)reader.GetInt32(17),
+                            HospitalizationDate = reader.GetDateTime(18),
+                            ALVDuration = reader.GetInt32(19),
+                            CPAPDuration = reader.GetInt32(20),
+                            CerebralIschemia = (CerebralIschemiaDegree)reader.GetInt32(21),
+                            IVH = new IVHModel
+                            {
+                              Degree  = (IVHDegree)reader.GetInt32(22),
+                              Localization = (IVHLocalization)reader.GetInt32(23)
+                            },
+                            Meningitis = (NoYesRadioButtonResult)reader.GetInt32(24),
+                            Encephalitis = (NoYesRadioButtonResult)reader.GetInt32(25),
+                            ConvulsiveSyndromeDuration = reader.GetInt32(26),
+                            Sepsis = (NoYesRadioButtonResult)reader.GetInt32(27),
+                            HDN = (NoYesRadioButtonResult)reader.GetInt32(28),
+                            VKDB = (NoYesRadioButtonResult)reader.GetInt32(29),
+                            SevereAnemia = (NoYesRadioButtonResult)reader.GetInt32(30),
+                            Hyperbilirubinemia = (NoYesRadioButtonResult)reader.GetInt32(31),
+                            UNEC = (NoYesRadioButtonResult)reader.GetInt32(32),
+                            BirthDefect = reader.GetString(33),
+                            Surgery = reader.GetString(34)
+                        });
+                        //reader.GetInt32(0),
+                        //reader.IsDBNull(1) ? null : reader.GetString(1),
+                        //reader.IsDBNull(2) ? null : reader.GetString(2),
+                        //reader.IsDBNull(3) ? null : reader.GetString(3),
+                        //reader.GetDateTime(4),
+                        //reader.IsDBNull(5) ? -1 : reader.GetInt32(5),
+                        //reader.IsDBNull(6) ? null : reader.GetString(6)
+                        //));
                     }
                     if (type.IsEquivalentTo(typeof(Derangement)))
                     {
@@ -185,13 +229,12 @@ namespace ICF_classificator.Extensions
                     {
                         command =
                             new SQLiteCommand(
-                                $"INSERT INTO [{table}] (LastName, FirstName, SurName, BirthDate, DoctorId, Address)" +
-                                "VALUES (@LastName, @FirstName, @SurName, @BirthDate, @DoctorId, @Address)", sqlConnection);
+                                $"INSERT INTO [{table}] (LastName, FirstName, SurName, BirthDate, Address)" +
+                                "VALUES (@LastName, @FirstName, @SurName, @BirthDate, @Address)", sqlConnection);
                         command.Parameters.AddWithValue("@LastName", patient.LastName);
                         command.Parameters.AddWithValue("@FirstName", patient.FirstName);
                         command.Parameters.AddWithValue("@SurName", patient.SurName ?? (object) DBNull.Value);
                         command.Parameters.AddWithValue("@BirthDate", patient.BirthDate);
-                        command.Parameters.AddWithValue("@DoctorId", patient.DoctorId ?? (object) DBNull.Value);
                         command.Parameters.AddWithValue("@Address", patient.Address ?? (object) DBNull.Value);
                         command.ExecuteScalar();
                         ids.Add(sqlConnection.LastInsertRowId);
@@ -277,15 +320,17 @@ namespace ICF_classificator.Extensions
                         command =
                             new SQLiteCommand(
                                 $"UPDATE [{table}] " +
-                                 "SET [LastName] = @LastName, [FirstName] = @FirstName, [SurName] = @SurName, " +
-                                "[BirthDate] = @BirthDate, [DoctorId] = @DoctorId " +
+                                 "SET " +
+                                "[LastName] = @LastName, " +
+                                "[FirstName] = @FirstName, " +
+                                "[SurName] = @SurName, " +
+                                "[BirthDate] = @BirthDate " +
                                 "WHERE [Id] = @Id", sqlConnection);
                         command.Parameters.AddWithValue("@LastName", patient.LastName);
                         command.Parameters.AddWithValue("@FirstName", patient.FirstName);
                         command.Parameters.AddWithValue("@SurName", patient.SurName ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@BirthDate", patient.BirthDate);
-                        command.Parameters.AddWithValue("@DoctorId", patient.DoctorId ?? (object)DBNull.Value);
-                        command.Parameters.AddWithValue("@Id", patient.Id);
+                        command.Parameters.AddWithValue("@Id", patient.GetId());
 
                         command.ExecuteNonQuery();
                     }
