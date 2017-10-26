@@ -85,10 +85,10 @@ namespace ICF_classificator.Extensions
                             Address = reader.GetString(6),
                             BirthDate = reader.GetDateTime(7),
                             GestationAge = reader.GetInt32(8),
-                            BirthWeight = reader.GetInt32(9),
-                            BirthHeight = reader.GetInt32(10),
-                            BirthHeadSize = reader.GetInt32(11),
-                            BirthChestSize = reader.GetInt32(12),
+                            WeightNewborn = reader.GetInt32(9),
+                            HeightNewborn = reader.GetInt32(10),
+                            HeadSizeNewborn = reader.GetInt32(11),
+                            ChestSizeNewborn = reader.GetInt32(12),
                             ApgarScale = new ApgarResult
                             {
                                 AfterBirth = reader.GetInt32(13),

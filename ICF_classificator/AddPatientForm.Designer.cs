@@ -73,7 +73,7 @@ namespace ICF_classificator
             this.DisabilityNoRadioButton = new System.Windows.Forms.RadioButton();
             this.DisabilityYesRadioButton = new System.Windows.Forms.RadioButton();
             this.label15 = new System.Windows.Forms.Label();
-            this.ChestSizeTextBox = new System.Windows.Forms.TextBox();
+            this.ChestSizeNewbornTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ChestSizeLabel = new System.Windows.Forms.Label();
             this.HeadSizeNewbornTextBox = new System.Windows.Forms.TextBox();
@@ -87,8 +87,8 @@ namespace ICF_classificator
             this.label17 = new System.Windows.Forms.Label();
             this.CPAPDurationTextBox = new System.Windows.Forms.TextBox();
             this.ALVDutarionTextBox = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.ALVDurationLabel = new System.Windows.Forms.Label();
+            this.CPAPDurationLabel = new System.Windows.Forms.Label();
             this.CerebralIschemiaComboBox = new System.Windows.Forms.ComboBox();
             this.IVHDegreeComboBox = new System.Windows.Forms.ComboBox();
             this.IVHLocalizationComboBox = new System.Windows.Forms.ComboBox();
@@ -114,7 +114,7 @@ namespace ICF_classificator
             this.ConclusiveSyndromeRadioButtonsPanel = new System.Windows.Forms.Panel();
             this.ConclusiveSyndromeNoRadioButton = new System.Windows.Forms.RadioButton();
             this.ConclusiveSyndromeYesRadioButton = new System.Windows.Forms.RadioButton();
-            this.label25 = new System.Windows.Forms.Label();
+            this.ConclusiveSyndromeDurationLabel = new System.Windows.Forms.Label();
             this.ConclusiveSyndromeDurationTextBox = new System.Windows.Forms.TextBox();
             this.SepsisRadioButtonsPanel = new System.Windows.Forms.Panel();
             this.SepsisNoRadioButton = new System.Windows.Forms.RadioButton();
@@ -251,9 +251,9 @@ namespace ICF_classificator
             // WarningLabel
             // 
             this.WarningLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.WarningLabel.Location = new System.Drawing.Point(32, 472);
+            this.WarningLabel.Location = new System.Drawing.Point(12, 443);
             this.WarningLabel.Name = "WarningLabel";
-            this.WarningLabel.Size = new System.Drawing.Size(100, 47);
+            this.WarningLabel.Size = new System.Drawing.Size(120, 98);
             this.WarningLabel.TabIndex = 11;
             this.WarningLabel.Text = "Должны быть заполенны поля Фамилия и Имя";
             this.WarningLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -540,13 +540,13 @@ namespace ICF_classificator
             this.label15.TabIndex = 35;
             this.label15.Text = "Инвалидность";
             // 
-            // ChestSizeTextBox
+            // ChestSizeNewbornTextBox
             // 
-            this.ChestSizeTextBox.Location = new System.Drawing.Point(136, 315);
-            this.ChestSizeTextBox.Name = "ChestSizeTextBox";
-            this.ChestSizeTextBox.Size = new System.Drawing.Size(103, 20);
-            this.ChestSizeTextBox.TabIndex = 49;
-            this.ChestSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
+            this.ChestSizeNewbornTextBox.Location = new System.Drawing.Point(136, 315);
+            this.ChestSizeNewbornTextBox.Name = "ChestSizeNewbornTextBox";
+            this.ChestSizeNewbornTextBox.Size = new System.Drawing.Size(103, 20);
+            this.ChestSizeNewbornTextBox.TabIndex = 49;
+            this.ChestSizeNewbornTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
             // 
             // label3
             // 
@@ -664,25 +664,25 @@ namespace ICF_classificator
             this.ALVDutarionTextBox.TabIndex = 58;
             this.ALVDutarionTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
             // 
-            // label18
+            // ALVDurationLabel
             // 
-            this.label18.AutoSize = true;
-            this.label18.Enabled = false;
-            this.label18.Location = new System.Drawing.Point(581, 30);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(35, 13);
-            this.label18.TabIndex = 60;
-            this.label18.Text = "суток";
+            this.ALVDurationLabel.AutoSize = true;
+            this.ALVDurationLabel.Enabled = false;
+            this.ALVDurationLabel.Location = new System.Drawing.Point(581, 30);
+            this.ALVDurationLabel.Name = "ALVDurationLabel";
+            this.ALVDurationLabel.Size = new System.Drawing.Size(35, 13);
+            this.ALVDurationLabel.TabIndex = 60;
+            this.ALVDurationLabel.Text = "суток";
             // 
-            // label19
+            // CPAPDurationLabel
             // 
-            this.label19.AutoSize = true;
-            this.label19.Enabled = false;
-            this.label19.Location = new System.Drawing.Point(581, 57);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(35, 13);
-            this.label19.TabIndex = 61;
-            this.label19.Text = "суток";
+            this.CPAPDurationLabel.AutoSize = true;
+            this.CPAPDurationLabel.Enabled = false;
+            this.CPAPDurationLabel.Location = new System.Drawing.Point(581, 57);
+            this.CPAPDurationLabel.Name = "CPAPDurationLabel";
+            this.CPAPDurationLabel.Size = new System.Drawing.Size(35, 13);
+            this.CPAPDurationLabel.TabIndex = 61;
+            this.CPAPDurationLabel.Text = "суток";
             // 
             // CerebralIschemiaComboBox
             // 
@@ -816,6 +816,7 @@ namespace ICF_classificator
             this.ALVYesRadioButton.TabIndex = 36;
             this.ALVYesRadioButton.Text = "Да";
             this.ALVYesRadioButton.UseVisualStyleBackColor = true;
+            this.ALVYesRadioButton.CheckedChanged += new System.EventHandler(this.ALVYesRadioButton_CheckedChanged);
             // 
             // CPAPRadioButtonsPanel
             // 
@@ -847,6 +848,7 @@ namespace ICF_classificator
             this.CPAPYesRadioButton.TabIndex = 36;
             this.CPAPYesRadioButton.Text = "Да";
             this.CPAPYesRadioButton.UseVisualStyleBackColor = true;
+            this.CPAPYesRadioButton.CheckedChanged += new System.EventHandler(this.CPAPYesRadioButton_CheckedChanged);
             // 
             // EncephalitisRadioButtonsPanel
             // 
@@ -940,16 +942,17 @@ namespace ICF_classificator
             this.ConclusiveSyndromeYesRadioButton.TabIndex = 36;
             this.ConclusiveSyndromeYesRadioButton.Text = "Да";
             this.ConclusiveSyndromeYesRadioButton.UseVisualStyleBackColor = true;
+            this.ConclusiveSyndromeYesRadioButton.CheckedChanged += new System.EventHandler(this.ConclusiveSyndromeYesRadioButton_CheckedChanged);
             // 
-            // label25
+            // ConclusiveSyndromeDurationLabel
             // 
-            this.label25.AutoSize = true;
-            this.label25.Enabled = false;
-            this.label25.Location = new System.Drawing.Point(581, 213);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(35, 13);
-            this.label25.TabIndex = 78;
-            this.label25.Text = "суток";
+            this.ConclusiveSyndromeDurationLabel.AutoSize = true;
+            this.ConclusiveSyndromeDurationLabel.Enabled = false;
+            this.ConclusiveSyndromeDurationLabel.Location = new System.Drawing.Point(581, 213);
+            this.ConclusiveSyndromeDurationLabel.Name = "ConclusiveSyndromeDurationLabel";
+            this.ConclusiveSyndromeDurationLabel.Size = new System.Drawing.Size(35, 13);
+            this.ConclusiveSyndromeDurationLabel.TabIndex = 78;
+            this.ConclusiveSyndromeDurationLabel.Text = "суток";
             // 
             // ConclusiveSyndromeDurationTextBox
             // 
@@ -1176,6 +1179,7 @@ namespace ICF_classificator
             this.BirthDefectYesRadioButton.TabIndex = 36;
             this.BirthDefectYesRadioButton.Text = "Да";
             this.BirthDefectYesRadioButton.UseVisualStyleBackColor = true;
+            this.BirthDefectYesRadioButton.CheckedChanged += new System.EventHandler(this.BirthDefectYesRadioButton_CheckedChanged);
             // 
             // SurgeryRadioButtonsPanel
             // 
@@ -1207,6 +1211,7 @@ namespace ICF_classificator
             this.SurgeryYesRadioButton.TabIndex = 36;
             this.SurgeryYesRadioButton.Text = "Да";
             this.SurgeryYesRadioButton.UseVisualStyleBackColor = true;
+            this.SurgeryYesRadioButton.CheckedChanged += new System.EventHandler(this.SurgeryYesRadioButton_CheckedChanged);
             // 
             // panel15
             // 
@@ -1254,7 +1259,7 @@ namespace ICF_classificator
             this.Controls.Add(this.HDNRadioButtosPanel);
             this.Controls.Add(this.SepsisRadioButtonsPanel);
             this.Controls.Add(this.ConclusiveSyndromeRadioButtonsPanel);
-            this.Controls.Add(this.label25);
+            this.Controls.Add(this.ConclusiveSyndromeDurationLabel);
             this.Controls.Add(this.ConclusiveSyndromeDurationTextBox);
             this.Controls.Add(this.MeningitisRadioButtonsPanel);
             this.Controls.Add(this.EncephalitisRadioButtonsPanel);
@@ -1270,8 +1275,8 @@ namespace ICF_classificator
             this.Controls.Add(this.IVHLocalizationComboBox);
             this.Controls.Add(this.IVHDegreeComboBox);
             this.Controls.Add(this.CerebralIschemiaComboBox);
-            this.Controls.Add(this.label19);
-            this.Controls.Add(this.label18);
+            this.Controls.Add(this.CPAPDurationLabel);
+            this.Controls.Add(this.ALVDurationLabel);
             this.Controls.Add(this.CPAPDurationTextBox);
             this.Controls.Add(this.ALVDutarionTextBox);
             this.Controls.Add(this.HospitalizationDatePicker);
@@ -1287,7 +1292,7 @@ namespace ICF_classificator
             this.Controls.Add(this.GestationAgeLabel);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.SexRadioButtonsPanel);
-            this.Controls.Add(this.ChestSizeTextBox);
+            this.Controls.Add(this.ChestSizeNewbornTextBox);
             this.Controls.Add(this.sexPatientLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ChestSizeLabel);
@@ -1413,7 +1418,7 @@ namespace ICF_classificator
         private System.Windows.Forms.RadioButton DisabilityNoRadioButton;
         private System.Windows.Forms.RadioButton DisabilityYesRadioButton;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox ChestSizeTextBox;
+        private System.Windows.Forms.TextBox ChestSizeNewbornTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label ChestSizeLabel;
         private Label label16;
@@ -1421,8 +1426,8 @@ namespace ICF_classificator
         private Label label17;
         private TextBox CPAPDurationTextBox;
         private TextBox ALVDutarionTextBox;
-        private Label label18;
-        private Label label19;
+        private Label ALVDurationLabel;
+        private Label CPAPDurationLabel;
         private ComboBox CerebralIschemiaComboBox;
         private ComboBox IVHDegreeComboBox;
         private ComboBox IVHLocalizationComboBox;
@@ -1448,7 +1453,7 @@ namespace ICF_classificator
         private Panel ConclusiveSyndromeRadioButtonsPanel;
         private RadioButton ConclusiveSyndromeNoRadioButton;
         private RadioButton ConclusiveSyndromeYesRadioButton;
-        private Label label25;
+        private Label ConclusiveSyndromeDurationLabel;
         private TextBox ConclusiveSyndromeDurationTextBox;
         private Panel SepsisRadioButtonsPanel;
         private RadioButton SepsisNoRadioButton;

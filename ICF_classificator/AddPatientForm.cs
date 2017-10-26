@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Windows.Forms;
 using ICF_classificator.Extensions;
 using ICF_classificator.Models;
@@ -48,10 +47,117 @@ namespace ICF_classificator
 
         private bool IsDataCorrect()
         {
-            return
-                PatientLastNameTextBox.Text.Length > 0 &&
-                PatientFirstNameTextBox.Text.Length > 0 &&
-                (MaleSexRadioButton.Checked || FemaleSexRadioButton.Checked);
+            if (PatientLastNameTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.LastName).DisplayedName());
+                return false;
+            }
+            if (PatientFirstNameTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.FirstName).DisplayedName());
+                return false;
+            }
+            if (!MaleSexRadioButton.Checked && !FemaleSexRadioButton.Checked)
+            {
+                ShowErrorMessage(nameof(patient.Sex).DisplayedName());
+                return false;
+            }
+            if (ParentFIOTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.ParentName).DisplayedName());
+                return false;
+            }
+            if (PatientAddressTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.Address).DisplayedName());
+                return false;
+            }
+            if (PatientBirthDatePicker.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.BirthDate).DisplayedName());
+                return false;
+            }
+            if (GestationAgeTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.GestationAge).DisplayedName());
+                return false;
+            }
+            if (WeightNewbornTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.WeightNewborn).DisplayedName());
+                return false;
+            }
+            if (HeightNewbornTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.HeightNewborn).DisplayedName());
+                return false;
+            }
+            if (HeadSizeNewbornTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.HeadSizeNewborn).DisplayedName());
+                return false;
+            }
+            if (ChestSizeNewbornTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.ChestSizeNewborn).DisplayedName());
+                return false;
+            }
+            if (ApgarTextBox1.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.ApgarScale).DisplayedName());
+                return false;
+            }
+            if (ApgarTextBox2.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.ApgarScale).DisplayedName());
+                return false;
+            }
+            if (ApgarTextBox3.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.ApgarScale).DisplayedName());
+                return false;
+            }
+            if (HospitalizationDatePicker.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.HospitalizationDate).DisplayedName());
+                return false;
+            }
+            if (ALVYesRadioButton.Checked && ALVDutarionTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.ALVDuration).DisplayedName());
+                return false;
+            }
+            if (CPAPYesRadioButton.Checked && CPAPDurationTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.CPAPDuration).DisplayedName());
+                return false;
+            }
+            if (CerebralIschemiaComboBox.SelectedIndex < 0)
+            {
+                ShowErrorMessage(nameof(patient.CerebralIschemia).DisplayedName());
+                return false;
+            }
+            if (IVHDegreeComboBox.SelectedIndex < 0 && IVHLocalizationComboBox.SelectedIndex < 0)
+            {
+                ShowErrorMessage(nameof(patient.IVH).DisplayedName());
+                return false;
+            }
+            if (ConclusiveSyndromeYesRadioButton.Checked && ConclusiveSyndromeDurationTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.ConvulsiveSyndromeDuration).DisplayedName());
+                return false;
+            }
+            if (BirthDefectYesRadioButton.Checked && BirthDefectTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.BirthDefect).DisplayedName());
+                return false;
+            }
+            if (SurgeryYesRadioButton.Checked && SurgeryTextBox.Text.Length > 0 == false)
+            {
+                ShowErrorMessage(nameof(patient.Surgery).DisplayedName());
+                return false;
+            }
+            return true;
         }
 
         private void PatientFormOnlyIntegerTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -60,6 +166,52 @@ namespace ICF_classificator
             {
                 e.Handled = true;
             }
+        }
+
+        private void ShowErrorMessage(string fieldName)
+        {
+            WarningLabel.Text = $@"Необходимо заполнить поле {fieldName}";
+            WarningLabel.Show();
+        }
+
+        private void RadioButtonCheckedCharged(RadioButton yesRadioButton, TextBox textBox, Label label = null)
+        {
+            if (yesRadioButton.Checked)
+            {
+                textBox.Enabled = true;
+                if (label != null) label.Enabled = true;
+            }
+            else
+            {
+                textBox.Enabled = false;
+                textBox.Clear();
+                if(label != null) label.Enabled = false;
+            }
+        }
+
+        private void ALVYesRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButtonCheckedCharged(((RadioButton) sender), ALVDutarionTextBox, ALVDurationLabel);
+        }
+
+        private void CPAPYesRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButtonCheckedCharged(((RadioButton)sender), CPAPDurationTextBox, CPAPDurationLabel);
+        }
+
+        private void ConclusiveSyndromeYesRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButtonCheckedCharged(((RadioButton)sender), ConclusiveSyndromeDurationTextBox, ConclusiveSyndromeDurationLabel);
+        }
+
+        private void BirthDefectYesRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButtonCheckedCharged(((RadioButton)sender), BirthDefectTextBox);
+        }
+
+        private void SurgeryYesRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButtonCheckedCharged(((RadioButton)sender), SurgeryTextBox);
         }
     }
 }
