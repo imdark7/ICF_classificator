@@ -9,7 +9,7 @@ namespace ICF_classificator
 {
     public partial class MainForm : Form
     {
-        private long patientId;
+        private Patient patient;
         private long doctorId;
         private long? reportId;
 
@@ -102,10 +102,10 @@ namespace ICF_classificator
             reportsListView.Items.Clear();
             if (patientComboBox.SelectedIndex < 0)
             {
-                patientId = -1;
+                patient = null;
                 return;
             }
-            patientId = (patientComboBox.SelectedItem as Patient).GetId();
+            patient = (patientComboBox.SelectedItem as Patient);
             if (doctorId > -1)
             {
                 RefreshReportsListView();
@@ -122,7 +122,7 @@ namespace ICF_classificator
                 config.AppSettings.Settings.Add("DoctorId", $"{doctorId}");
                 config.Save(ConfigurationSaveMode.Minimal);
             }
-            if (patientId > -1)
+            if (patient?.Id != null)
             {
                 RefreshReportsListView();
             }
@@ -160,7 +160,7 @@ namespace ICF_classificator
                 }
                 var report = new MedicalReport
                 {
-                    PatientId = patientId,
+                    PatientId = patient.Id,
                     Date = dateTimePicker1.Value,
                     Diagnosis = commentReportTextBox.Text,
                     DoctorId = doctorId
@@ -223,7 +223,7 @@ namespace ICF_classificator
         {
             patientComboBox.DataSource = SqlHelper.Read<Patient>();
             patientComboBox.SelectedIndex = -1;
-            patientId = -1;
+            patient = null;
         }
 
         public void RefreshDoctorCombobox()
@@ -284,7 +284,7 @@ namespace ICF_classificator
         {
             reportsGroupBox.Visible = !(doctorComboBox.SelectedIndex < 0) && !(patientComboBox.SelectedIndex < 0);
             reportsListView.Items.Clear();
-            var reports = SqlHelper.Read<MedicalReport>($"PatientId = {patientId}");
+            var reports = SqlHelper.Read<MedicalReport>($"PatientId = {patient.Id}");
             foreach (MedicalReport report in reports)
             {
                 var item = new ListViewItem(report.Id.ToString());
@@ -343,6 +343,11 @@ namespace ICF_classificator
             {
                 GetReportsContextMenu().Show(reportsListView, e.Location);
             }
+        }
+
+        private void addCaseHistory_Click(object sender, EventArgs e)
+        {
+            new AddPatientHistoryToPatient(patient).Show();
         }
     }
 }

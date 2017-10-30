@@ -157,7 +157,8 @@ Anemia INTEGER,
 Hyperbilirubinemia INTEGER,
 UNEC INTEGER,
 BirthDefect TEXT,
-Surgery TEXT
+Surgery TEXT,
+PatientHistory TEXT
 );
 
 INSERT INTO [ICFElements] ([Code], [Name], [Description], [ParentCode]) VALUES 

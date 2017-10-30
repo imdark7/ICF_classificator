@@ -143,6 +143,8 @@ namespace ICF_classificator
             this.panel15 = new System.Windows.Forms.Panel();
             this.HospitalizationFirstTimeRadioButton = new System.Windows.Forms.RadioButton();
             this.HospitalizationNotFirstTimeRadioButton = new System.Windows.Forms.RadioButton();
+            this.CaseHistoryLabel = new System.Windows.Forms.Label();
+            this.PatientHistoryTextBox = new System.Windows.Forms.TextBox();
             this.SexRadioButtonsPanel.SuspendLayout();
             this.disabilityRadioButtonsPanel.SuspendLayout();
             this.ALVRadioButtonsPanel.SuspendLayout();
@@ -1245,11 +1247,29 @@ namespace ICF_classificator
             this.HospitalizationNotFirstTimeRadioButton.Text = "Вторичная";
             this.HospitalizationNotFirstTimeRadioButton.UseVisualStyleBackColor = true;
             // 
+            // CaseHistoryLabel
+            // 
+            this.CaseHistoryLabel.AutoSize = true;
+            this.CaseHistoryLabel.Location = new System.Drawing.Point(326, 496);
+            this.CaseHistoryLabel.Name = "CaseHistoryLabel";
+            this.CaseHistoryLabel.Size = new System.Drawing.Size(109, 13);
+            this.CaseHistoryLabel.TabIndex = 85;
+            this.CaseHistoryLabel.Text = "№ Истории болезни";
+            // 
+            // PatientHistoryTextBox
+            // 
+            this.PatientHistoryTextBox.Location = new System.Drawing.Point(452, 493);
+            this.PatientHistoryTextBox.Name = "PatientHistoryTextBox";
+            this.PatientHistoryTextBox.Size = new System.Drawing.Size(161, 20);
+            this.PatientHistoryTextBox.TabIndex = 86;
+            // 
             // AddPatientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(657, 550);
+            this.Controls.Add(this.PatientHistoryTextBox);
+            this.Controls.Add(this.CaseHistoryLabel);
             this.Controls.Add(this.panel15);
             this.Controls.Add(this.SurgeryRadioButtonsPanel);
             this.Controls.Add(this.BirthDefectRadioButtonsPanel);
@@ -1483,5 +1503,7 @@ namespace ICF_classificator
         private Panel panel15;
         private RadioButton HospitalizationFirstTimeRadioButton;
         private RadioButton HospitalizationNotFirstTimeRadioButton;
+        private Label CaseHistoryLabel;
+        private TextBox PatientHistoryTextBox;
     }
 }

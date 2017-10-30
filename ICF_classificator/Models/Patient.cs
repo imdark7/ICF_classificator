@@ -60,7 +60,7 @@ namespace ICF_classificator.Models
         /// </summary>
         [DisplayedName("ВПР")] public string BirthDefect;
         [DisplayedName("Оперативное вмешательство")] public string Surgery;
-        [DisplayedName("№ Истории болезни")] public string PatientHistory;
+        [DisplayedName("№ Историй болезни")] public string PatientHistory;
         
         public Patient
             (

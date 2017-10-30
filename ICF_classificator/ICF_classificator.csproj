@@ -79,6 +79,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddPatientHistoryToPatient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddPatientHistoryToPatient.Designer.cs">
+      <DependentUpon>AddPatientHistoryToPatient.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddDoctorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +127,9 @@
     <Compile Include="Models\PatientDataModels\PatientSex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddPatientHistoryToPatient.resx">
+      <DependentUpon>AddPatientHistoryToPatient.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddDoctorForm.resx">
       <DependentUpon>AddDoctorForm.cs</DependentUpon>
     </EmbeddedResource>

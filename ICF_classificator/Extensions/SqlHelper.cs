@@ -116,16 +116,9 @@ namespace ICF_classificator.Extensions
                             Hyperbilirubinemia = (NoYesRadioButtonResult)reader.GetInt32(31),
                             UNEC = (NoYesRadioButtonResult)reader.GetInt32(32),
                             BirthDefect = reader.GetString(33),
-                            Surgery = reader.GetString(34)
+                            Surgery = reader.GetString(34),
+                            PatientHistory = reader.GetString(35)
                         });
-                        //reader.GetInt32(0),
-                        //reader.IsDBNull(1) ? null : reader.GetString(1),
-                        //reader.IsDBNull(2) ? null : reader.GetString(2),
-                        //reader.IsDBNull(3) ? null : reader.GetString(3),
-                        //reader.GetDateTime(4),
-                        //reader.IsDBNull(5) ? -1 : reader.GetInt32(5),
-                        //reader.IsDBNull(6) ? null : reader.GetString(6)
-                        //));
                     }
                     if (type.IsEquivalentTo(typeof(Derangement)))
                     {
@@ -234,12 +227,12 @@ namespace ICF_classificator.Extensions
                                 "BirthWeight, BirthHeight, BirthHeadSize, BirthChestSize, ApgarFirst, ApgarSecond, ApgarThird, " +
                                 "HasDisability, IsNotFirstHospitalization, HospitalizationDate, ALVDuration, CPAPDuration, CerebralIschemia, " +
                                 "IVHDegree, IVHLocalization, Meningitis, Encephalitis, ConvulsiveSyndromeDuration, Sepsis, HDN, VKDB, " +
-                                "Anemia, Hyperbilirubinemia, UNEC, BirthDefect, Surgery) " +
+                                "Anemia, Hyperbilirubinemia, UNEC, BirthDefect, Surgery, PatientHistory) " +
                                 "VALUES (@LastName, @FirstName, @SurName, @Sex, @ParentName, @Address, @BirthDate, @GestationAge, " +
                                 " @BirthWeight, @BirthHeight, @BirthHeadSize, @BirthChestSize, @ApgarFirst, @ApgarSecond, @ApgarThird, " +
                                 " @HasDisability, @IsNotFirstHospitalization, @HospitalizationDate, @ALVDuration, @CPAPDuration, @CerebralIschemia, " +
                                 " @IVHDegree, @IVHLocalization, @Meningitis, @Encephalitis, @ConvulsiveSyndromeDuration, @Sepsis, @HDN, @VKDB, " +
-                                " @Anemia, @Hyperbilirubinemia, @UNEC, @BirthDefect, @Surgery)", sqlConnection);
+                                " @Anemia, @Hyperbilirubinemia, @UNEC, @BirthDefect, @Surgery, @PatientHistory)", sqlConnection);
                         command.Parameters.AddWithValue("LastName", patient.LastName);
                         command.Parameters.AddWithValue("FirstName", patient.FirstName);
                         command.Parameters.AddWithValue("SurName", patient.SurName ?? (object)DBNull.Value);
@@ -274,6 +267,7 @@ namespace ICF_classificator.Extensions
                         command.Parameters.AddWithValue("UNEC", patient.UNEC);
                         command.Parameters.AddWithValue("BirthDefect", patient.BirthDefect);
                         command.Parameters.AddWithValue("Surgery", patient.Surgery);
+                        command.Parameters.AddWithValue("PatientHistory", patient.PatientHistory);
                         command.ExecuteScalar();
                         ids.Add(sqlConnection.LastInsertRowId);
                     }
@@ -375,24 +369,25 @@ namespace ICF_classificator.Extensions
                                 "[ApgarSecond] = @ApgarSecond, " +
                                 "[ApgarThird] = @ApgarThird, " +
                                 "[HasDisability] = @HasDisability, " +
-                                "[IsFirstHospitalization] = @IsFirstHospitalization, " +
-                                "[ArriveDate, " + "[ArriveDate, " +
-                                "[ALVDuration, " + "[ALVDuration, " +
-                                "[CPAPDuration, " + "[CPAPDuration, " +
-                                "[CerebralIschemia, " + "[CerebralIschemia, " +
-                                "[IVHDegree, " + "[IVHDegree, " +
-                                "[IVHLocalization, " + "[IVHLocalization, " +
-                                "[Meningitis, " + "[Meningitis, " +
-                                "[Encephalitis, " + "[Encephalitis, " +
-                                "[ConvulsiveSyndromeDuration, " + "[ConvulsiveSyndromeDuration, " +
-                                "[Sepsis, " + "[Sepsis, " +
-                                "[HDN, " + "[HDN, " +
-                                "[VKDB, " + "[VKDB, " +
-                                "[Anemia, " + "[Anemia, " +
-                                "[Hyperbilirubinemia, " + "[Hyperbilirubinemia, " +
-                                "[UNEC, " + "[UNEC, " +
-                                "[BirthDefect, " + "[BirthDefect, " +
+                                "[IsNotFirstHospitalization] = @IsNotFirstHospitalization, " +
+                                "[HospitalizationDate] = @HospitalizationDate, " +
+                                "[ALVDuration] = @ALVDuration, " +
+                                "[CPAPDuration] = @CPAPDuration, " +
+                                "[CerebralIschemia] = @CerebralIschemia, " +
+                                "[IVHDegree] = @IVHDegree, " +
+                                "[IVHLocalization] = @IVHLocalization, " +
+                                "[Meningitis] = @Meningitis, " +
+                                "[Encephalitis] = @Encephalitis, " +
+                                "[ConvulsiveSyndromeDuration] = @ConvulsiveSyndromeDuration, " +
+                                "[Sepsis] = @Sepsis, " +
+                                "[HDN] = @HDN, " +
+                                "[VKDB] = @VKDB, " +
+                                "[Anemia] = @Anemia, " +
+                                "[Hyperbilirubinemia] = @Hyperbilirubinemia, " +
+                                "[UNEC] = @UNEC, " +
+                                "[BirthDefect] = @BirthDefect, " +
                                 "[Surgery] = @Surgery, " +
+                                "[PatientHistory] = @PatientHistory " +
                                 "WHERE [Id] = @Id", sqlConnection);
                         command.Parameters.AddWithValue("@Id", patient.GetId());
                         command.Parameters.AddWithValue("LastName", patient.LastName);
@@ -429,6 +424,7 @@ namespace ICF_classificator.Extensions
                         command.Parameters.AddWithValue("UNEC", patient.UNEC);
                         command.Parameters.AddWithValue("BirthDefect", patient.BirthDefect);
                         command.Parameters.AddWithValue("Surgery", patient.Surgery);
+                        command.Parameters.AddWithValue("PatientHistory", patient.PatientHistory);
 
                         command.ExecuteNonQuery();
                     }

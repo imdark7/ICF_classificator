@@ -66,7 +66,8 @@ namespace ICF_classificator
                         Hyperbilirubinemia = HyperbilirubinemiaNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
                         UNEC = UNECNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
                         BirthDefect = BirthDefectTextBox.Text,
-                        Surgery = SurgeryTextBox.Text
+                        Surgery = SurgeryTextBox.Text,
+                        PatientHistory = PatientHistoryTextBox.Text
                     }
                 });
                 
