@@ -80,22 +80,22 @@ namespace ICF_classificator.Extensions
                             LastName = reader.IsDBNull(1) ? null : reader.GetString(1),
                             FirstName = reader.IsDBNull(2) ? null : reader.GetString(2),
                             SurName = reader.IsDBNull(3) ? null : reader.GetString(3),
-                            Sex = (PatientSex) reader.GetInt32(4),
+                            Sex = (PatientSex) Enum.ToObject(typeof(PatientSex), reader.GetInt32(4)),
                             ParentName = reader.GetString(5),
                             Address = reader.GetString(6),
                             BirthDate = reader.GetDateTime(7),
                             GestationAge = reader.GetInt32(8),
-                            WeightNewborn = reader.GetInt32(9),
-                            HeightNewborn = reader.GetInt32(10),
-                            HeadSizeNewborn = reader.GetInt32(11),
-                            ChestSizeNewborn = reader.GetInt32(12),
+                            BirthWeight = reader.GetInt32(9),
+                            BirthHeight = reader.GetInt32(10),
+                            BirthHeadSize = reader.GetInt32(11),
+                            BirthChestSize = reader.GetInt32(12),
                             ApgarScale = new ApgarResult
                             {
                                 AfterBirth = reader.GetInt32(13),
                                 AfterOneMinute = reader.GetInt32(14),
                                 AfterFiveMinute = reader.GetInt32(15)
                             },
-                            Disability = (NoYesRadioButtonResult)reader.GetInt32(16),
+                            HasDisability = (NoYesRadioButtonResult)reader.GetInt32(16),
                             Hospitalization = (HospitalizationCount)reader.GetInt32(17),
                             HospitalizationDate = reader.GetDateTime(18),
                             ALVDuration = reader.GetInt32(19),
@@ -103,8 +103,8 @@ namespace ICF_classificator.Extensions
                             CerebralIschemia = (CerebralIschemiaDegree)reader.GetInt32(21),
                             IVH = new IVHModel
                             {
-                              Degree  = (IVHDegree)reader.GetInt32(22),
-                              Localization = (IVHLocalization)reader.GetInt32(23)
+                                Degree = (IVHDegree)reader.GetInt32(22),
+                                Localization = (IVHLocalization)reader.GetInt32(23)
                             },
                             Meningitis = (NoYesRadioButtonResult)reader.GetInt32(24),
                             Encephalitis = (NoYesRadioButtonResult)reader.GetInt32(25),
@@ -112,7 +112,7 @@ namespace ICF_classificator.Extensions
                             Sepsis = (NoYesRadioButtonResult)reader.GetInt32(27),
                             HDN = (NoYesRadioButtonResult)reader.GetInt32(28),
                             VKDB = (NoYesRadioButtonResult)reader.GetInt32(29),
-                            SevereAnemia = (NoYesRadioButtonResult)reader.GetInt32(30),
+                            Anemia = (NoYesRadioButtonResult)reader.GetInt32(30),
                             Hyperbilirubinemia = (NoYesRadioButtonResult)reader.GetInt32(31),
                             UNEC = (NoYesRadioButtonResult)reader.GetInt32(32),
                             BirthDefect = reader.GetString(33),
@@ -229,13 +229,51 @@ namespace ICF_classificator.Extensions
                     {
                         command =
                             new SQLiteCommand(
-                                $"INSERT INTO [{table}] (LastName, FirstName, SurName, BirthDate, Address)" +
-                                "VALUES (@LastName, @FirstName, @SurName, @BirthDate, @Address)", sqlConnection);
-                        command.Parameters.AddWithValue("@LastName", patient.LastName);
-                        command.Parameters.AddWithValue("@FirstName", patient.FirstName);
-                        command.Parameters.AddWithValue("@SurName", patient.SurName ?? (object) DBNull.Value);
-                        command.Parameters.AddWithValue("@BirthDate", patient.BirthDate);
-                        command.Parameters.AddWithValue("@Address", patient.Address ?? (object) DBNull.Value);
+                                $"INSERT INTO [{table}] (" +
+                                "LastName, FirstName, SurName, Sex, ParentName, Address, BirthDate, GestationAge, " +
+                                "BirthWeight, BirthHeight, BirthHeadSize, BirthChestSize, ApgarFirst, ApgarSecond, ApgarThird, " +
+                                "HasDisability, IsNotFirstHospitalization, HospitalizationDate, ALVDuration, CPAPDuration, CerebralIschemia, " +
+                                "IVHDegree, IVHLocalization, Meningitis, Encephalitis, ConvulsiveSyndromeDuration, Sepsis, HDN, VKDB, " +
+                                "Anemia, Hyperbilirubinemia, UNEC, BirthDefect, Surgery) " +
+                                "VALUES (@LastName, @FirstName, @SurName, @Sex, @ParentName, @Address, @BirthDate, @GestationAge, " +
+                                " @BirthWeight, @BirthHeight, @BirthHeadSize, @BirthChestSize, @ApgarFirst, @ApgarSecond, @ApgarThird, " +
+                                " @HasDisability, @IsNotFirstHospitalization, @HospitalizationDate, @ALVDuration, @CPAPDuration, @CerebralIschemia, " +
+                                " @IVHDegree, @IVHLocalization, @Meningitis, @Encephalitis, @ConvulsiveSyndromeDuration, @Sepsis, @HDN, @VKDB, " +
+                                " @Anemia, @Hyperbilirubinemia, @UNEC, @BirthDefect, @Surgery)", sqlConnection);
+                        command.Parameters.AddWithValue("LastName", patient.LastName);
+                        command.Parameters.AddWithValue("FirstName", patient.FirstName);
+                        command.Parameters.AddWithValue("SurName", patient.SurName ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("Sex", patient.Sex);
+                        command.Parameters.AddWithValue("ParentName", patient.ParentName);
+                        command.Parameters.AddWithValue("Address", patient.Address);
+                        command.Parameters.AddWithValue("BirthDate", patient.BirthDate);
+                        command.Parameters.AddWithValue("GestationAge", patient.GestationAge);
+                        command.Parameters.AddWithValue("BirthWeight", patient.BirthWeight);
+                        command.Parameters.AddWithValue("BirthHeight", patient.BirthHeight);
+                        command.Parameters.AddWithValue("BirthHeadSize", patient.BirthHeadSize);
+                        command.Parameters.AddWithValue("BirthChestSize", patient.BirthChestSize);
+                        command.Parameters.AddWithValue("ApgarFirst", patient.ApgarScale.AfterBirth);
+                        command.Parameters.AddWithValue("ApgarSecond", patient.ApgarScale.AfterOneMinute);
+                        command.Parameters.AddWithValue("ApgarThird", patient.ApgarScale.AfterFiveMinute);
+                        command.Parameters.AddWithValue("HasDisability", patient.HasDisability);
+                        command.Parameters.AddWithValue("IsNotFirstHospitalization", patient.Hospitalization);
+                        command.Parameters.AddWithValue("HospitalizationDate", patient.HospitalizationDate);
+                        command.Parameters.AddWithValue("ALVDuration", patient.ALVDuration);
+                        command.Parameters.AddWithValue("CPAPDuration", patient.CPAPDuration);
+                        command.Parameters.AddWithValue("CerebralIschemia", patient.CerebralIschemia);
+                        command.Parameters.AddWithValue("IVHDegree", patient.IVH.Degree);
+                        command.Parameters.AddWithValue("IVHLocalization", patient.IVH.Localization);
+                        command.Parameters.AddWithValue("Meningitis", patient.Meningitis);
+                        command.Parameters.AddWithValue("Encephalitis", patient.Encephalitis);
+                        command.Parameters.AddWithValue("ConvulsiveSyndromeDuration", patient.ConvulsiveSyndromeDuration);
+                        command.Parameters.AddWithValue("Sepsis", patient.Sepsis);
+                        command.Parameters.AddWithValue("HDN", patient.HDN);
+                        command.Parameters.AddWithValue("VKDB", patient.VKDB);
+                        command.Parameters.AddWithValue("Anemia", patient.Anemia);
+                        command.Parameters.AddWithValue("Hyperbilirubinemia", patient.Hyperbilirubinemia);
+                        command.Parameters.AddWithValue("UNEC", patient.UNEC);
+                        command.Parameters.AddWithValue("BirthDefect", patient.BirthDefect);
+                        command.Parameters.AddWithValue("Surgery", patient.Surgery);
                         command.ExecuteScalar();
                         ids.Add(sqlConnection.LastInsertRowId);
                     }
@@ -320,17 +358,77 @@ namespace ICF_classificator.Extensions
                         command =
                             new SQLiteCommand(
                                 $"UPDATE [{table}] " +
-                                 "SET " +
+                                "SET " +
                                 "[LastName] = @LastName, " +
                                 "[FirstName] = @FirstName, " +
                                 "[SurName] = @SurName, " +
-                                "[BirthDate] = @BirthDate " +
+                                "[Sex] = @Sex, " +
+                                "[ParentName] = @ParentName, " +
+                                "[Address] = @Address, " +
+                                "[BirthDate] = @BirthDate, " +
+                                "[GestationAge] = @GestationAge, " +
+                                "[BirthWeight] = @BirthWeight, " +
+                                "[BirthHeight] = @BirthHeight, " +
+                                "[BirthHeadSize] = @BirthHeadSize, " +
+                                "[BirthChestSize] = @BirthChestSize, " +
+                                "[ApgarFirst] = @ApgarFirst, " +
+                                "[ApgarSecond] = @ApgarSecond, " +
+                                "[ApgarThird] = @ApgarThird, " +
+                                "[HasDisability] = @HasDisability, " +
+                                "[IsFirstHospitalization] = @IsFirstHospitalization, " +
+                                "[ArriveDate, " + "[ArriveDate, " +
+                                "[ALVDuration, " + "[ALVDuration, " +
+                                "[CPAPDuration, " + "[CPAPDuration, " +
+                                "[CerebralIschemia, " + "[CerebralIschemia, " +
+                                "[IVHDegree, " + "[IVHDegree, " +
+                                "[IVHLocalization, " + "[IVHLocalization, " +
+                                "[Meningitis, " + "[Meningitis, " +
+                                "[Encephalitis, " + "[Encephalitis, " +
+                                "[ConvulsiveSyndromeDuration, " + "[ConvulsiveSyndromeDuration, " +
+                                "[Sepsis, " + "[Sepsis, " +
+                                "[HDN, " + "[HDN, " +
+                                "[VKDB, " + "[VKDB, " +
+                                "[Anemia, " + "[Anemia, " +
+                                "[Hyperbilirubinemia, " + "[Hyperbilirubinemia, " +
+                                "[UNEC, " + "[UNEC, " +
+                                "[BirthDefect, " + "[BirthDefect, " +
+                                "[Surgery] = @Surgery, " +
                                 "WHERE [Id] = @Id", sqlConnection);
-                        command.Parameters.AddWithValue("@LastName", patient.LastName);
-                        command.Parameters.AddWithValue("@FirstName", patient.FirstName);
-                        command.Parameters.AddWithValue("@SurName", patient.SurName ?? (object)DBNull.Value);
-                        command.Parameters.AddWithValue("@BirthDate", patient.BirthDate);
                         command.Parameters.AddWithValue("@Id", patient.GetId());
+                        command.Parameters.AddWithValue("LastName", patient.LastName);
+                        command.Parameters.AddWithValue("FirstName", patient.FirstName);
+                        command.Parameters.AddWithValue("SurName", patient.SurName ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("Sex", patient.Sex);
+                        command.Parameters.AddWithValue("ParentName", patient.ParentName);
+                        command.Parameters.AddWithValue("Address", patient.Address);
+                        command.Parameters.AddWithValue("BirthDate", patient.BirthDate);
+                        command.Parameters.AddWithValue("GestationAge", patient.GestationAge);
+                        command.Parameters.AddWithValue("BirthWeight", patient.BirthWeight);
+                        command.Parameters.AddWithValue("BirthHeight", patient.BirthHeight);
+                        command.Parameters.AddWithValue("BirthHeadSize", patient.BirthHeadSize);
+                        command.Parameters.AddWithValue("BirthChestSize", patient.BirthChestSize);
+                        command.Parameters.AddWithValue("ApgarFirst", patient.ApgarScale.AfterBirth);
+                        command.Parameters.AddWithValue("ApgarSecond", patient.ApgarScale.AfterOneMinute);
+                        command.Parameters.AddWithValue("ApgarThird", patient.ApgarScale.AfterFiveMinute);
+                        command.Parameters.AddWithValue("HasDisability", patient.HasDisability);
+                        command.Parameters.AddWithValue("IsNotFirstHospitalization", patient.Hospitalization);
+                        command.Parameters.AddWithValue("HospitalizationDate", patient.HospitalizationDate);
+                        command.Parameters.AddWithValue("ALVDuration", patient.ALVDuration);
+                        command.Parameters.AddWithValue("CPAPDuration", patient.CPAPDuration);
+                        command.Parameters.AddWithValue("CerebralIschemia", patient.CerebralIschemia);
+                        command.Parameters.AddWithValue("IVHDegree", patient.IVH.Degree);
+                        command.Parameters.AddWithValue("IVHLocalization", patient.IVH.Localization);
+                        command.Parameters.AddWithValue("Meningitis", patient.Meningitis);
+                        command.Parameters.AddWithValue("Encephalitis", patient.Encephalitis);
+                        command.Parameters.AddWithValue("ConvulsiveSyndromeDuration", patient.ConvulsiveSyndromeDuration);
+                        command.Parameters.AddWithValue("Sepsis", patient.Sepsis);
+                        command.Parameters.AddWithValue("HDN", patient.HDN);
+                        command.Parameters.AddWithValue("VKDB", patient.VKDB);
+                        command.Parameters.AddWithValue("Anemia", patient.Anemia);
+                        command.Parameters.AddWithValue("Hyperbilirubinemia", patient.Hyperbilirubinemia);
+                        command.Parameters.AddWithValue("UNEC", patient.UNEC);
+                        command.Parameters.AddWithValue("BirthDefect", patient.BirthDefect);
+                        command.Parameters.AddWithValue("Surgery", patient.Surgery);
 
                         command.ExecuteNonQuery();
                     }

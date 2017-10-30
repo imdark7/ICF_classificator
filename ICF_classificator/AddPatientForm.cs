@@ -15,6 +15,8 @@ namespace ICF_classificator
         {
             InitializeComponent();
             _pForm = parentForm;
+            CerebralIschemiaComboBox.SelectedIndex = 0;
+            IVHDegreeComboBox.SelectedIndex = 0;
         }
 
         private void CreatePatientButton_Click(object sender, EventArgs e)
@@ -32,7 +34,39 @@ namespace ICF_classificator
                         ParentName = ParentFIOTextBox.Text,
                         Address = PatientAddressTextBox.Text,
                         BirthDate = PatientBirthDatePicker.Value,
-                        GestationAge = int.Parse(GestationAgeTextBox.Text)
+                        GestationAge = int.Parse(GestationAgeTextBox.Text),
+                        BirthWeight = int.Parse(BirthWeightTextBox.Text),
+                        BirthHeight = int.Parse(BirthHeightTextBox.Text),
+                        BirthHeadSize = int.Parse(BirthHeadSizeTextBox.Text),
+                        BirthChestSize = int.Parse(BirthChestSizeTextBox.Text),
+                        ApgarScale = new ApgarResult
+                        {
+                            AfterBirth = int.Parse(ApgarTextBox1.Text),
+                            AfterOneMinute = int.Parse(ApgarTextBox2.Text),
+                            AfterFiveMinute = int.Parse(ApgarTextBox3.Text)
+                        },
+                        HasDisability = DisabilityNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        Hospitalization = HospitalizationFirstTimeRadioButton.Checked ? HospitalizationCount.First : HospitalizationCount.NotFirst,
+                        HospitalizationDate = HospitalizationDatePicker.Value,
+                        ALVDuration = ALVYesRadioButton.Checked && ALVDutarionTextBox.Text.Length > 0 ? int.Parse(ALVDutarionTextBox.Text) : 0,
+                        CPAPDuration = CPAPYesRadioButton.Checked && CPAPDurationTextBox.Text.Length > 0 ? int.Parse(CPAPDurationTextBox.Text) : 0,
+                        CerebralIschemia = (CerebralIschemiaDegree)CerebralIschemiaComboBox.SelectedIndex,
+                        IVH = new IVHModel
+                        {
+                            Degree = (IVHDegree)IVHDegreeComboBox.SelectedIndex,
+                            Localization = (IVHLocalization)IVHLocalizationComboBox.SelectedIndex
+                        },
+                        Meningitis = MeningitisNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        Encephalitis = EncephalitisNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        ConvulsiveSyndromeDuration = ConvulsiveSyndromeYesRadioButton.Checked && ConvulsiveSyndromeDurationTextBox.Text.Length > 0 ? int.Parse(ConvulsiveSyndromeDurationTextBox.Text) : 0,
+                        Sepsis = SepsisNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        HDN = HDNNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        VKDB = VKDBNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        Anemia = AnemiaNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        Hyperbilirubinemia = HyperbilirubinemiaNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        UNEC = UNECNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
+                        BirthDefect = BirthDefectTextBox.Text,
+                        Surgery = SurgeryTextBox.Text
                     }
                 });
                 
@@ -82,24 +116,24 @@ namespace ICF_classificator
                 ShowErrorMessage(nameof(patient.GestationAge).DisplayedName());
                 return false;
             }
-            if (WeightNewbornTextBox.Text.Length > 0 == false)
+            if (BirthWeightTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.WeightNewborn).DisplayedName());
+                ShowErrorMessage(nameof(patient.BirthWeight).DisplayedName());
                 return false;
             }
-            if (HeightNewbornTextBox.Text.Length > 0 == false)
+            if (BirthHeightTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.HeightNewborn).DisplayedName());
+                ShowErrorMessage(nameof(patient.BirthHeight).DisplayedName());
                 return false;
             }
-            if (HeadSizeNewbornTextBox.Text.Length > 0 == false)
+            if (BirthHeadSizeTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.HeadSizeNewborn).DisplayedName());
+                ShowErrorMessage(nameof(patient.BirthHeadSize).DisplayedName());
                 return false;
             }
-            if (ChestSizeNewbornTextBox.Text.Length > 0 == false)
+            if (BirthChestSizeTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.ChestSizeNewborn).DisplayedName());
+                ShowErrorMessage(nameof(patient.BirthChestSize).DisplayedName());
                 return false;
             }
             if (ApgarTextBox1.Text.Length > 0 == false)
@@ -142,7 +176,7 @@ namespace ICF_classificator
                 ShowErrorMessage(nameof(patient.IVH).DisplayedName());
                 return false;
             }
-            if (ConclusiveSyndromeYesRadioButton.Checked && ConclusiveSyndromeDurationTextBox.Text.Length > 0 == false)
+            if (ConvulsiveSyndromeYesRadioButton.Checked && ConvulsiveSyndromeDurationTextBox.Text.Length > 0 == false)
             {
                 ShowErrorMessage(nameof(patient.ConvulsiveSyndromeDuration).DisplayedName());
                 return false;
@@ -201,7 +235,7 @@ namespace ICF_classificator
 
         private void ConclusiveSyndromeYesRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButtonCheckedCharged(((RadioButton)sender), ConclusiveSyndromeDurationTextBox, ConclusiveSyndromeDurationLabel);
+            RadioButtonCheckedCharged(((RadioButton)sender), ConvulsiveSyndromeDurationTextBox, ConclusiveSyndromeDurationLabel);
         }
 
         private void BirthDefectYesRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -212,6 +246,18 @@ namespace ICF_classificator
         private void SurgeryYesRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             RadioButtonCheckedCharged(((RadioButton)sender), SurgeryTextBox);
+        }
+
+        private void IVHDegreeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (IVHDegreeComboBox.SelectedIndex != 0)
+            {
+                IVHLocalizationComboBox.Enabled = true;
+            }
+            else
+            {
+                IVHLocalizationComboBox.Enabled = false;
+            }
         }
     }
 }

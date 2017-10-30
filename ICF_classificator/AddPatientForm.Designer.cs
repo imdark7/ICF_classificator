@@ -63,7 +63,7 @@ namespace ICF_classificator
             this.GestationAgeTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.WeightNewbornLabel = new System.Windows.Forms.Label();
-            this.WeightNewbornTextBox = new System.Windows.Forms.TextBox();
+            this.BirthWeightTextBox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.ApgarTextBox3 = new System.Windows.Forms.TextBox();
             this.ApgarTextBox2 = new System.Windows.Forms.TextBox();
@@ -73,13 +73,13 @@ namespace ICF_classificator
             this.DisabilityNoRadioButton = new System.Windows.Forms.RadioButton();
             this.DisabilityYesRadioButton = new System.Windows.Forms.RadioButton();
             this.label15 = new System.Windows.Forms.Label();
-            this.ChestSizeNewbornTextBox = new System.Windows.Forms.TextBox();
+            this.BirthChestSizeTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ChestSizeLabel = new System.Windows.Forms.Label();
-            this.HeadSizeNewbornTextBox = new System.Windows.Forms.TextBox();
+            this.BirthHeadSizeTextBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.HeadSizeNewbornLabel = new System.Windows.Forms.Label();
-            this.HeightNewbornTextBox = new System.Windows.Forms.TextBox();
+            this.BirthHeightTextBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.HeightNewbornLabel = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -113,9 +113,9 @@ namespace ICF_classificator
             this.MeningitisYesRadioButton = new System.Windows.Forms.RadioButton();
             this.ConclusiveSyndromeRadioButtonsPanel = new System.Windows.Forms.Panel();
             this.ConclusiveSyndromeNoRadioButton = new System.Windows.Forms.RadioButton();
-            this.ConclusiveSyndromeYesRadioButton = new System.Windows.Forms.RadioButton();
+            this.ConvulsiveSyndromeYesRadioButton = new System.Windows.Forms.RadioButton();
             this.ConclusiveSyndromeDurationLabel = new System.Windows.Forms.Label();
-            this.ConclusiveSyndromeDurationTextBox = new System.Windows.Forms.TextBox();
+            this.ConvulsiveSyndromeDurationTextBox = new System.Windows.Forms.TextBox();
             this.SepsisRadioButtonsPanel = new System.Windows.Forms.Panel();
             this.SepsisNoRadioButton = new System.Windows.Forms.RadioButton();
             this.SepsisYesRadioButton = new System.Windows.Forms.RadioButton();
@@ -447,13 +447,13 @@ namespace ICF_classificator
             this.WeightNewbornLabel.TabIndex = 39;
             this.WeightNewbornLabel.Text = "Масса тела \r\nпри рождении";
             // 
-            // WeightNewbornTextBox
+            // BirthWeightTextBox
             // 
-            this.WeightNewbornTextBox.Location = new System.Drawing.Point(136, 237);
-            this.WeightNewbornTextBox.Name = "WeightNewbornTextBox";
-            this.WeightNewbornTextBox.Size = new System.Drawing.Size(103, 20);
-            this.WeightNewbornTextBox.TabIndex = 40;
-            this.WeightNewbornTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
+            this.BirthWeightTextBox.Location = new System.Drawing.Point(136, 237);
+            this.BirthWeightTextBox.Name = "BirthWeightTextBox";
+            this.BirthWeightTextBox.Size = new System.Drawing.Size(103, 20);
+            this.BirthWeightTextBox.TabIndex = 40;
+            this.BirthWeightTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
             // 
             // label11
             // 
@@ -540,13 +540,13 @@ namespace ICF_classificator
             this.label15.TabIndex = 35;
             this.label15.Text = "Инвалидность";
             // 
-            // ChestSizeNewbornTextBox
+            // BirthChestSizeTextBox
             // 
-            this.ChestSizeNewbornTextBox.Location = new System.Drawing.Point(136, 315);
-            this.ChestSizeNewbornTextBox.Name = "ChestSizeNewbornTextBox";
-            this.ChestSizeNewbornTextBox.Size = new System.Drawing.Size(103, 20);
-            this.ChestSizeNewbornTextBox.TabIndex = 49;
-            this.ChestSizeNewbornTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
+            this.BirthChestSizeTextBox.Location = new System.Drawing.Point(136, 315);
+            this.BirthChestSizeTextBox.Name = "BirthChestSizeTextBox";
+            this.BirthChestSizeTextBox.Size = new System.Drawing.Size(103, 20);
+            this.BirthChestSizeTextBox.TabIndex = 49;
+            this.BirthChestSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
             // 
             // label3
             // 
@@ -566,13 +566,13 @@ namespace ICF_classificator
             this.ChestSizeLabel.TabIndex = 48;
             this.ChestSizeLabel.Text = "Окружность грудной\r\nклетки при рождении";
             // 
-            // HeadSizeNewbornTextBox
+            // BirthHeadSizeTextBox
             // 
-            this.HeadSizeNewbornTextBox.Location = new System.Drawing.Point(136, 289);
-            this.HeadSizeNewbornTextBox.Name = "HeadSizeNewbornTextBox";
-            this.HeadSizeNewbornTextBox.Size = new System.Drawing.Size(103, 20);
-            this.HeadSizeNewbornTextBox.TabIndex = 46;
-            this.HeadSizeNewbornTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
+            this.BirthHeadSizeTextBox.Location = new System.Drawing.Point(136, 289);
+            this.BirthHeadSizeTextBox.Name = "BirthHeadSizeTextBox";
+            this.BirthHeadSizeTextBox.Size = new System.Drawing.Size(103, 20);
+            this.BirthHeadSizeTextBox.TabIndex = 46;
+            this.BirthHeadSizeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
             // 
             // label14
             // 
@@ -592,13 +592,13 @@ namespace ICF_classificator
             this.HeadSizeNewbornLabel.TabIndex = 45;
             this.HeadSizeNewbornLabel.Text = "Окружность головы\r\nпри рождении";
             // 
-            // HeightNewbornTextBox
+            // BirthHeightTextBox
             // 
-            this.HeightNewbornTextBox.Location = new System.Drawing.Point(136, 263);
-            this.HeightNewbornTextBox.Name = "HeightNewbornTextBox";
-            this.HeightNewbornTextBox.Size = new System.Drawing.Size(103, 20);
-            this.HeightNewbornTextBox.TabIndex = 43;
-            this.HeightNewbornTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
+            this.BirthHeightTextBox.Location = new System.Drawing.Point(136, 263);
+            this.BirthHeightTextBox.Name = "BirthHeightTextBox";
+            this.BirthHeightTextBox.Size = new System.Drawing.Size(103, 20);
+            this.BirthHeightTextBox.TabIndex = 43;
+            this.BirthHeightTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
             // 
             // label12
             // 
@@ -710,6 +710,7 @@ namespace ICF_classificator
             this.IVHDegreeComboBox.Name = "IVHDegreeComboBox";
             this.IVHDegreeComboBox.Size = new System.Drawing.Size(161, 21);
             this.IVHDegreeComboBox.TabIndex = 62;
+            this.IVHDegreeComboBox.SelectedIndexChanged += new System.EventHandler(this.IVHDegreeComboBox_SelectedIndexChanged);
             // 
             // IVHLocalizationComboBox
             // 
@@ -915,7 +916,7 @@ namespace ICF_classificator
             // ConclusiveSyndromeRadioButtonsPanel
             // 
             this.ConclusiveSyndromeRadioButtonsPanel.Controls.Add(this.ConclusiveSyndromeNoRadioButton);
-            this.ConclusiveSyndromeRadioButtonsPanel.Controls.Add(this.ConclusiveSyndromeYesRadioButton);
+            this.ConclusiveSyndromeRadioButtonsPanel.Controls.Add(this.ConvulsiveSyndromeYesRadioButton);
             this.ConclusiveSyndromeRadioButtonsPanel.Location = new System.Drawing.Point(452, 209);
             this.ConclusiveSyndromeRadioButtonsPanel.Name = "ConclusiveSyndromeRadioButtonsPanel";
             this.ConclusiveSyndromeRadioButtonsPanel.Size = new System.Drawing.Size(91, 20);
@@ -933,16 +934,16 @@ namespace ICF_classificator
             this.ConclusiveSyndromeNoRadioButton.Text = "Нет";
             this.ConclusiveSyndromeNoRadioButton.UseVisualStyleBackColor = true;
             // 
-            // ConclusiveSyndromeYesRadioButton
+            // ConvulsiveSyndromeYesRadioButton
             // 
-            this.ConclusiveSyndromeYesRadioButton.AutoSize = true;
-            this.ConclusiveSyndromeYesRadioButton.Location = new System.Drawing.Point(48, 2);
-            this.ConclusiveSyndromeYesRadioButton.Name = "ConclusiveSyndromeYesRadioButton";
-            this.ConclusiveSyndromeYesRadioButton.Size = new System.Drawing.Size(40, 17);
-            this.ConclusiveSyndromeYesRadioButton.TabIndex = 36;
-            this.ConclusiveSyndromeYesRadioButton.Text = "Да";
-            this.ConclusiveSyndromeYesRadioButton.UseVisualStyleBackColor = true;
-            this.ConclusiveSyndromeYesRadioButton.CheckedChanged += new System.EventHandler(this.ConclusiveSyndromeYesRadioButton_CheckedChanged);
+            this.ConvulsiveSyndromeYesRadioButton.AutoSize = true;
+            this.ConvulsiveSyndromeYesRadioButton.Location = new System.Drawing.Point(48, 2);
+            this.ConvulsiveSyndromeYesRadioButton.Name = "ConvulsiveSyndromeYesRadioButton";
+            this.ConvulsiveSyndromeYesRadioButton.Size = new System.Drawing.Size(40, 17);
+            this.ConvulsiveSyndromeYesRadioButton.TabIndex = 36;
+            this.ConvulsiveSyndromeYesRadioButton.Text = "Да";
+            this.ConvulsiveSyndromeYesRadioButton.UseVisualStyleBackColor = true;
+            this.ConvulsiveSyndromeYesRadioButton.CheckedChanged += new System.EventHandler(this.ConclusiveSyndromeYesRadioButton_CheckedChanged);
             // 
             // ConclusiveSyndromeDurationLabel
             // 
@@ -954,14 +955,14 @@ namespace ICF_classificator
             this.ConclusiveSyndromeDurationLabel.TabIndex = 78;
             this.ConclusiveSyndromeDurationLabel.Text = "суток";
             // 
-            // ConclusiveSyndromeDurationTextBox
+            // ConvulsiveSyndromeDurationTextBox
             // 
-            this.ConclusiveSyndromeDurationTextBox.Enabled = false;
-            this.ConclusiveSyndromeDurationTextBox.Location = new System.Drawing.Point(546, 209);
-            this.ConclusiveSyndromeDurationTextBox.Name = "ConclusiveSyndromeDurationTextBox";
-            this.ConclusiveSyndromeDurationTextBox.Size = new System.Drawing.Size(32, 20);
-            this.ConclusiveSyndromeDurationTextBox.TabIndex = 77;
-            this.ConclusiveSyndromeDurationTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
+            this.ConvulsiveSyndromeDurationTextBox.Enabled = false;
+            this.ConvulsiveSyndromeDurationTextBox.Location = new System.Drawing.Point(546, 209);
+            this.ConvulsiveSyndromeDurationTextBox.Name = "ConvulsiveSyndromeDurationTextBox";
+            this.ConvulsiveSyndromeDurationTextBox.Size = new System.Drawing.Size(32, 20);
+            this.ConvulsiveSyndromeDurationTextBox.TabIndex = 77;
+            this.ConvulsiveSyndromeDurationTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PatientFormOnlyIntegerTextBox_KeyPress);
             // 
             // SepsisRadioButtonsPanel
             // 
@@ -1260,7 +1261,7 @@ namespace ICF_classificator
             this.Controls.Add(this.SepsisRadioButtonsPanel);
             this.Controls.Add(this.ConclusiveSyndromeRadioButtonsPanel);
             this.Controls.Add(this.ConclusiveSyndromeDurationLabel);
-            this.Controls.Add(this.ConclusiveSyndromeDurationTextBox);
+            this.Controls.Add(this.ConvulsiveSyndromeDurationTextBox);
             this.Controls.Add(this.MeningitisRadioButtonsPanel);
             this.Controls.Add(this.EncephalitisRadioButtonsPanel);
             this.Controls.Add(this.CPAPRadioButtonsPanel);
@@ -1292,20 +1293,20 @@ namespace ICF_classificator
             this.Controls.Add(this.GestationAgeLabel);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.SexRadioButtonsPanel);
-            this.Controls.Add(this.ChestSizeNewbornTextBox);
+            this.Controls.Add(this.BirthChestSizeTextBox);
             this.Controls.Add(this.sexPatientLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ChestSizeLabel);
-            this.Controls.Add(this.HeadSizeNewbornTextBox);
+            this.Controls.Add(this.BirthHeadSizeTextBox);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.HeadSizeNewbornLabel);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.HeightNewbornTextBox);
+            this.Controls.Add(this.BirthHeightTextBox);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.HeightNewbornLabel);
-            this.Controls.Add(this.WeightNewbornTextBox);
+            this.Controls.Add(this.BirthWeightTextBox);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.WeightNewbornLabel);
@@ -1402,12 +1403,12 @@ namespace ICF_classificator
         private System.Windows.Forms.TextBox GestationAgeTextBox;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label WeightNewbornLabel;
-        private System.Windows.Forms.TextBox WeightNewbornTextBox;
+        private System.Windows.Forms.TextBox BirthWeightTextBox;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox HeadSizeNewbornTextBox;
+        private System.Windows.Forms.TextBox BirthHeadSizeTextBox;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label HeadSizeNewbornLabel;
-        private System.Windows.Forms.TextBox HeightNewbornTextBox;
+        private System.Windows.Forms.TextBox BirthHeightTextBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label HeightNewbornLabel;
         private System.Windows.Forms.TextBox ApgarTextBox3;
@@ -1418,7 +1419,7 @@ namespace ICF_classificator
         private System.Windows.Forms.RadioButton DisabilityNoRadioButton;
         private System.Windows.Forms.RadioButton DisabilityYesRadioButton;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox ChestSizeNewbornTextBox;
+        private System.Windows.Forms.TextBox BirthChestSizeTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label ChestSizeLabel;
         private Label label16;
@@ -1452,9 +1453,9 @@ namespace ICF_classificator
         private RadioButton MeningitisYesRadioButton;
         private Panel ConclusiveSyndromeRadioButtonsPanel;
         private RadioButton ConclusiveSyndromeNoRadioButton;
-        private RadioButton ConclusiveSyndromeYesRadioButton;
+        private RadioButton ConvulsiveSyndromeYesRadioButton;
         private Label ConclusiveSyndromeDurationLabel;
-        private TextBox ConclusiveSyndromeDurationTextBox;
+        private TextBox ConvulsiveSyndromeDurationTextBox;
         private Panel SepsisRadioButtonsPanel;
         private RadioButton SepsisNoRadioButton;
         private RadioButton SepsisYesRadioButton;

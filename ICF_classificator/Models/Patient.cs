@@ -16,27 +16,48 @@ namespace ICF_classificator.Models
         [DisplayedName("ФИО родителя (сопровождающего)")] public string ParentName;
         [DisplayedName("Дата рождения")] public DateTime BirthDate;
         [DisplayedName("Гестационный возраст")] public int GestationAge;
-        [DisplayedName("Масса тела при рождении)")] public int WeightNewborn;
-        [DisplayedName("Длина при рождении")] public int HeightNewborn;
-        [DisplayedName("Окружность головы при рождении")] public int HeadSizeNewborn;
-        [DisplayedName("Окружность грудной клетки при рождении")] public int ChestSizeNewborn;
+        [DisplayedName("Масса тела при рождении)")] public int BirthWeight;
+        [DisplayedName("Длина при рождении")] public int BirthHeight;
+        [DisplayedName("Окружность головы при рождении")] public int BirthHeadSize;
+        [DisplayedName("Окружность грудной клетки при рождении")] public int BirthChestSize;
         [DisplayedName("Оценка по Апгар")] public ApgarResult ApgarScale;
-        [DisplayedName("Инвалидность")] public NoYesRadioButtonResult Disability;
+        [DisplayedName("Инвалидность")] public NoYesRadioButtonResult HasDisability;
         [DisplayedName("Госпитализация")] public HospitalizationCount Hospitalization;
         [DisplayedName("Дата поступления")] public DateTime HospitalizationDate;
+        /// <summary>
+        /// Искусственная вентиляция легких
+        /// </summary>
         [DisplayedName("ИВЛ")] public int ALVDuration;
         [DisplayedName("CPAP")] public int CPAPDuration;
         [DisplayedName("Церебральная ишемия")] public CerebralIschemiaDegree CerebralIschemia;
+        /// <summary>
+        /// Внутрижелудочковое кровотечение
+        /// </summary>
         [DisplayedName("ВЖК")] public IVHModel IVH;
         [DisplayedName("Менингит")] public NoYesRadioButtonResult Meningitis;
         [DisplayedName("Энцефалит")] public NoYesRadioButtonResult Encephalitis;
+        /// <summary>
+        /// Судорожный синдром
+        /// </summary>
         [DisplayedName("Судорожный синдром")] public int ConvulsiveSyndromeDuration;
         [DisplayedName("Сепсис")] public NoYesRadioButtonResult Sepsis;
+        /// <summary>
+        /// Гемолитическая болезнь новорожденных
+        /// </summary>
         [DisplayedName("ГБН")] public NoYesRadioButtonResult HDN;
+        /// <summary>
+        /// Геморрагический синдром
+        /// </summary>
         [DisplayedName("Геморрагический синдром")] public NoYesRadioButtonResult VKDB;
-        [DisplayedName("Анемия тяжелой степени")] public NoYesRadioButtonResult SevereAnemia;
+        [DisplayedName("Анемия тяжелой степени")] public NoYesRadioButtonResult Anemia;
         [DisplayedName("Гипербилирубинемия")] public NoYesRadioButtonResult Hyperbilirubinemia;
+        /// <summary>
+        /// Язвенно-некротический энтероколит
+        /// </summary>
         [DisplayedName("ЯНЭК")] public NoYesRadioButtonResult UNEC;
+        /// <summary>
+        /// Врожденный порок развития
+        /// </summary>
         [DisplayedName("ВПР")] public string BirthDefect;
         [DisplayedName("Оперативное вмешательство")] public string Surgery;
         [DisplayedName("№ Истории болезни")] public string PatientHistory;

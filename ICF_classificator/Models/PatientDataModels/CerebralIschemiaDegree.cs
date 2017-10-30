@@ -2,7 +2,7 @@
 {
     public enum CerebralIschemiaDegree
     {
-        Missing,
+        None,
         Easy,
         Medium,
         Severe

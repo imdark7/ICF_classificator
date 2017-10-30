@@ -4,10 +4,6 @@ CREATE TABLE MedicalReport ( Id INTEGER PRIMARY KEY AUTOINCREMENT, PatientId INT
 CREATE TABLE MedicalReportItems ( Id INTEGER PRIMARY KEY AUTOINCREMENT, ReportId INTEGER, ICFElementCode TEXT, ICFElementState INTEGER, Commentary TEXT );
 CREATE TABLE Patients ( 
 Id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-
-
-
 LastName TEXT,
 FirstName TEXT,
 SurName TEXT,
@@ -24,8 +20,8 @@ ApgarFirst INTEGER,
 ApgarSecond INTEGER,
 ApgarThird INTEGER,
 HasDisability INTEGER,
-IsFirstHospitalization INTEGER,
-ArriveDate INTEGER,
+IsNotFirstHospitalization INTEGER,
+HospitalizationDate INTEGER,
 ALVDuration  INTEGER,
 CPAPDuration INTEGER,
 CerebralIschemia INTEGER,
@@ -33,7 +29,7 @@ IVHDegree INTEGER,
 IVHLocalization INTEGER,
 Meningitis INTEGER,
 Encephalitis INTEGER,
-ConclusiveSyndromeDuration INTEGER,
+ConvulsiveSyndromeDuration INTEGER,
 Sepsis INTEGER,
 HDN INTEGER,
 VKDB INTEGER,

@@ -122,7 +122,43 @@
 CREATE TABLE ICFElements (Code TEXT, Name TEXT, Description TEXT, ParentCode TEXT, PRIMARY KEY(Code) );
 CREATE TABLE MedicalReport ( Id INTEGER PRIMARY KEY AUTOINCREMENT, PatientId INTEGER, Date INTEGER, Diagnosis TEXT, DoctorId INTEGER );
 CREATE TABLE MedicalReportItems ( Id INTEGER PRIMARY KEY AUTOINCREMENT, ReportId INTEGER, ICFElementCode TEXT, ICFElementState INTEGER, Commentary TEXT );
-CREATE TABLE Patients ( Id INTEGER PRIMARY KEY AUTOINCREMENT, LastName TEXT, FirstName TEXT, SurName TEXT, BirthDate INTEGER, DoctorId INTEGER, Address TEXT );
+CREATE TABLE Patients ( 
+Id INTEGER PRIMARY KEY AUTOINCREMENT,
+LastName TEXT,
+FirstName TEXT,
+SurName TEXT,
+Sex INTEGER,
+ParentName TEXT,
+Address TEXT,
+BirthDate INTEGER,
+GestationAge INTEGER,
+BirthWeight INTEGER,
+BirthHeight INTEGER,
+BirthHeadSize INTEGER,
+BirthChestSize INTEGER,
+ApgarFirst INTEGER,
+ApgarSecond INTEGER,
+ApgarThird INTEGER,
+HasDisability INTEGER,
+IsNotFirstHospitalization INTEGER,
+HospitalizationDate INTEGER,
+ALVDuration  INTEGER,
+CPAPDuration INTEGER,
+CerebralIschemia INTEGER,
+IVHDegree INTEGER,
+IVHLocalization INTEGER,
+Meningitis INTEGER,
+Encephalitis INTEGER,
+ConvulsiveSyndromeDuration INTEGER,
+Sepsis INTEGER,
+HDN INTEGER,
+VKDB INTEGER,
+Anemia INTEGER,
+Hyperbilirubinemia INTEGER,
+UNEC INTEGER,
+BirthDefect TEXT,
+Surgery TEXT
+);
 
 INSERT INTO [ICFElements] ([Code], [Name], [Description], [ParentCode]) VALUES 
 ('b', 'ФУНКЦИИ ОРГАНИЗМА', NULL, NULL)
