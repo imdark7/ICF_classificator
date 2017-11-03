@@ -85,7 +85,7 @@ namespace ICF_classificator
 
         private void пациентаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var addPatientForm = new AddPatientForm(this);
+            var addPatientForm = new PatientForm(this);
             addPatientForm.Hide();
             addPatientForm.Show();
         }
@@ -103,8 +103,10 @@ namespace ICF_classificator
             if (patientComboBox.SelectedIndex < 0)
             {
                 patient = null;
+                patientEditButton.Enabled = false;
                 return;
             }
+            patientEditButton.Enabled = true;
             patient = (patientComboBox.SelectedItem as Patient);
             if (doctorId > -1)
             {
@@ -348,6 +350,14 @@ namespace ICF_classificator
         private void addCaseHistory_Click(object sender, EventArgs e)
         {
             new AddPatientHistoryToPatient(patient).Show();
+        }
+
+        private void patientEditButton_Click(object sender, EventArgs e)
+        {
+            if (patientComboBox.SelectedIndex > -1)
+            {
+                new PatientForm(this, (Patient)patientComboBox.SelectedItem).Show();
+            }
         }
     }
 }

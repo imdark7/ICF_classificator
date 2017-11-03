@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace ICF_classificator
 {
-    partial class AddPatientForm
+    partial class PatientForm
     {
         /// <summary>
         /// Required designer variable.
@@ -1263,7 +1263,7 @@ namespace ICF_classificator
             this.PatientHistoryTextBox.Size = new System.Drawing.Size(161, 20);
             this.PatientHistoryTextBox.TabIndex = 86;
             // 
-            // AddPatientForm
+            // PatientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1350,7 +1350,7 @@ namespace ICF_classificator
             this.Controls.Add(this.PatientSurNameLabel);
             this.Controls.Add(this.PatientFirstNameLabel);
             this.Controls.Add(this.PatientLastNameLabel);
-            this.Name = "AddPatientForm";
+            this.Name = "PatientForm";
             this.Text = "Новый пациент";
             this.SexRadioButtonsPanel.ResumeLayout(false);
             this.SexRadioButtonsPanel.PerformLayout();

@@ -43,6 +43,7 @@ namespace ICF_classificator
             this.врачаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patientComboBox = new System.Windows.Forms.ComboBox();
             this.reportsGroupBox = new System.Windows.Forms.GroupBox();
+            this.AddCaseHistory = new System.Windows.Forms.Button();
             this.createNewReport = new System.Windows.Forms.Button();
             this.reportsListView = new System.Windows.Forms.ListView();
             this.ReportId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -61,10 +62,10 @@ namespace ICF_classificator
             this.label1 = new System.Windows.Forms.Label();
             this.dateLabel = new System.Windows.Forms.Label();
             this.patientGroupBox = new System.Windows.Forms.GroupBox();
+            this.patientEditButton = new System.Windows.Forms.Button();
             this.reportItemGroupBox = new System.Windows.Forms.GroupBox();
             this.doctorGroupBox = new System.Windows.Forms.GroupBox();
             this.doctorComboBox = new System.Windows.Forms.ComboBox();
-            this.AddCaseHistory = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.reportsGroupBox.SuspendLayout();
             this.newReportGroupBox.SuspendLayout();
@@ -184,7 +185,7 @@ namespace ICF_classificator
             this.patientComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.patientComboBox.Location = new System.Drawing.Point(10, 19);
             this.patientComboBox.Name = "patientComboBox";
-            this.patientComboBox.Size = new System.Drawing.Size(343, 21);
+            this.patientComboBox.Size = new System.Drawing.Size(250, 21);
             this.patientComboBox.TabIndex = 5;
             this.patientComboBox.TabStop = false;
             this.patientComboBox.Text = "Выбрать..";
@@ -202,6 +203,17 @@ namespace ICF_classificator
             this.reportsGroupBox.TabStop = false;
             this.reportsGroupBox.Text = "Заведенные отчеты";
             this.reportsGroupBox.Visible = false;
+            // 
+            // AddCaseHistory
+            // 
+            this.AddCaseHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.AddCaseHistory.Location = new System.Drawing.Point(7, 205);
+            this.AddCaseHistory.Name = "AddCaseHistory";
+            this.AddCaseHistory.Size = new System.Drawing.Size(145, 37);
+            this.AddCaseHistory.TabIndex = 1;
+            this.AddCaseHistory.Text = "Добавить историю болезни";
+            this.AddCaseHistory.UseVisualStyleBackColor = true;
+            this.AddCaseHistory.Click += new System.EventHandler(this.addCaseHistory_Click);
             // 
             // createNewReport
             // 
@@ -361,6 +373,7 @@ namespace ICF_classificator
             // 
             // patientGroupBox
             // 
+            this.patientGroupBox.Controls.Add(this.patientEditButton);
             this.patientGroupBox.Controls.Add(this.patientComboBox);
             this.patientGroupBox.Location = new System.Drawing.Point(12, 89);
             this.patientGroupBox.Name = "patientGroupBox";
@@ -368,6 +381,18 @@ namespace ICF_classificator
             this.patientGroupBox.TabIndex = 9;
             this.patientGroupBox.TabStop = false;
             this.patientGroupBox.Text = "Пациент";
+            // 
+            // patientEditButton
+            // 
+            this.patientEditButton.Enabled = false;
+            this.patientEditButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.patientEditButton.Location = new System.Drawing.Point(266, 19);
+            this.patientEditButton.Name = "patientEditButton";
+            this.patientEditButton.Size = new System.Drawing.Size(87, 21);
+            this.patientEditButton.TabIndex = 6;
+            this.patientEditButton.Text = "Редактировать";
+            this.patientEditButton.UseVisualStyleBackColor = true;
+            this.patientEditButton.Click += new System.EventHandler(this.patientEditButton_Click);
             // 
             // reportItemGroupBox
             // 
@@ -404,17 +429,6 @@ namespace ICF_classificator
             this.doctorComboBox.TabIndex = 5;
             this.doctorComboBox.TabStop = false;
             this.doctorComboBox.SelectedIndexChanged += new System.EventHandler(this.doctorComboBox_SelectedIndexChanged);
-            // 
-            // AddCaseHistory
-            // 
-            this.AddCaseHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.AddCaseHistory.Location = new System.Drawing.Point(7, 205);
-            this.AddCaseHistory.Name = "AddCaseHistory";
-            this.AddCaseHistory.Size = new System.Drawing.Size(145, 37);
-            this.AddCaseHistory.TabIndex = 1;
-            this.AddCaseHistory.Text = "Добавить историю болезни";
-            this.AddCaseHistory.UseVisualStyleBackColor = true;
-            this.AddCaseHistory.Click += new System.EventHandler(this.addCaseHistory_Click);
             // 
             // MainForm
             // 
@@ -480,6 +494,7 @@ namespace ICF_classificator
         private DataGridViewComboBoxColumn Column3;
         private DataGridViewTextBoxColumn Column4;
         private Button AddCaseHistory;
+        private Button patientEditButton;
     }
 }
 
