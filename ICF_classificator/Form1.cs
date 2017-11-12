@@ -264,19 +264,25 @@ namespace ICF_classificator
             contextMenu.Items.Add(new ToolStripMenuItem {Text = @"Удалить отчет"});
             contextMenu.Items[0].Click += (sender, args) =>
             {
-                var reportId = int.Parse(reportsListView.SelectedItems[0].Text);
-                var reportDate = reportsListView.SelectedItems[0].SubItems[1].Text;
-                var patientName = patientComboBox.SelectedItem.ToString();
-                var dialog = MessageBox.Show(reportsListView, $@"Вы действительно хотите удалить отчет пациента {patientName} за {reportDate} ?", @"Удаление отчета", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (reportsListView.SelectedItems.Count > 0)
+                {
+                    var reportId = int.Parse(reportsListView.SelectedItems[0].Text);
+                    var reportDate = reportsListView.SelectedItems[0].SubItems[1].Text;
+                    var patientName = patientComboBox.SelectedItem.ToString();
+                    var dialog = MessageBox.Show(reportsListView,
+                        $@"Вы действительно хотите удалить отчет пациента {patientName} за {reportDate} ?",
+                        @"Удаление отчета", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                        MessageBoxDefaultButton.Button2);
 
-                if (dialog == DialogResult.No)
-                {
-                    return;
-                }
-                if (dialog == DialogResult.Yes)
-                {
-                    SqlHelper.Delete<MedicalReport>("Id", reportId);
-                    RefreshReportsListView();
+                    if (dialog == DialogResult.No)
+                    {
+                        return;
+                    }
+                    if (dialog == DialogResult.Yes)
+                    {
+                        SqlHelper.Delete<MedicalReport>("Id", reportId);
+                        RefreshReportsListView();
+                    }
                 }
             };
             return contextMenu;

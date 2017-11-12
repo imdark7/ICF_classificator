@@ -9,7 +9,7 @@ namespace ICF_classificator
     public partial class PatientForm : Form
     {
         private readonly Form _pForm;
-        private Patient patient;
+        private readonly Patient _patient;
 
         public PatientForm(Form parentForm, Patient patient = null)
         {
@@ -19,7 +19,7 @@ namespace ICF_classificator
             IVHDegreeComboBox.SelectedIndex = 0;
             if (patient != null)
             {
-                this.patient = patient;
+                _patient = patient;
                 CreatePatientButton.Text = @"Редактировать";
 
                 PatientLastNameTextBox.Text = patient.LastName;
@@ -54,7 +54,7 @@ namespace ICF_classificator
                         DisabilityNoRadioButton.Checked = true;
                         break;
                 }
-                switch (patient.Hospitalization)
+                switch (patient.IsNotFirstHospitalization)
                 {
                     case HospitalizationCount.First:
                         HospitalizationFirstTimeRadioButton.Checked = true;
@@ -194,7 +194,7 @@ namespace ICF_classificator
                     },
                     HasDisability =
                         DisabilityNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
-                    Hospitalization =
+                    IsNotFirstHospitalization =
                         HospitalizationFirstTimeRadioButton.Checked
                             ? HospitalizationCount.First
                             : HospitalizationCount.NotFirst,
@@ -211,7 +211,7 @@ namespace ICF_classificator
                     IVH = new IVHModel
                     {
                         Degree = (IVHDegree) IVHDegreeComboBox.SelectedIndex,
-                        Localization = (IVHLocalization) IVHLocalizationComboBox.SelectedIndex
+                        Localization = (IVHLocalization)IVHLocalizationComboBox.SelectedIndex 
                     },
                     Meningitis =
                         MeningitisNoRadioButton.Checked ? NoYesRadioButtonResult.No : NoYesRadioButtonResult.Yes,
@@ -232,14 +232,14 @@ namespace ICF_classificator
                     Surgery = SurgeryTextBox.Text,
                     PatientHistory = PatientHistoryTextBox.Text
                 };
-                if (patient != null)
+                if (_patient != null)
                 {
-                    patientModel.Id = patient.Id;
-                    SqlHelper.TryUpdate<Patient>(new[] {patientModel});
+                    patientModel.Id = _patient.Id;
+                    SqlHelper.TryUpdate<Patient>(new object[] {patientModel});
                 }
                 else
                 {
-                    SqlHelper.TryInsert<Patient>(new[] {patientModel});
+                    SqlHelper.TryInsert<Patient>(new object[] {patientModel});
                 }
                 
                 Close();
@@ -255,112 +255,112 @@ namespace ICF_classificator
         {
             if (PatientLastNameTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.LastName).DisplayedName());
+                ShowErrorMessage(nameof(_patient.LastName).DisplayedName());
                 return false;
             }
             if (PatientFirstNameTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.FirstName).DisplayedName());
+                ShowErrorMessage(nameof(_patient.FirstName).DisplayedName());
                 return false;
             }
             if (!MaleSexRadioButton.Checked && !FemaleSexRadioButton.Checked)
             {
-                ShowErrorMessage(nameof(patient.Sex).DisplayedName());
+                ShowErrorMessage(nameof(_patient.Sex).DisplayedName());
                 return false;
             }
             if (ParentFIOTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.ParentName).DisplayedName());
+                ShowErrorMessage(nameof(_patient.ParentName).DisplayedName());
                 return false;
             }
             if (PatientAddressTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.Address).DisplayedName());
+                ShowErrorMessage(nameof(_patient.Address).DisplayedName());
                 return false;
             }
             if (PatientBirthDatePicker.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.BirthDate).DisplayedName());
+                ShowErrorMessage(nameof(_patient.BirthDate).DisplayedName());
                 return false;
             }
             if (GestationAgeTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.GestationAge).DisplayedName());
+                ShowErrorMessage(nameof(_patient.GestationAge).DisplayedName());
                 return false;
             }
             if (BirthWeightTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.BirthWeight).DisplayedName());
+                ShowErrorMessage(nameof(_patient.BirthWeight).DisplayedName());
                 return false;
             }
             if (BirthHeightTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.BirthHeight).DisplayedName());
+                ShowErrorMessage(nameof(_patient.BirthHeight).DisplayedName());
                 return false;
             }
             if (BirthHeadSizeTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.BirthHeadSize).DisplayedName());
+                ShowErrorMessage(nameof(_patient.BirthHeadSize).DisplayedName());
                 return false;
             }
             if (BirthChestSizeTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.BirthChestSize).DisplayedName());
+                ShowErrorMessage(nameof(_patient.BirthChestSize).DisplayedName());
                 return false;
             }
             if (ApgarTextBox1.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.ApgarScale).DisplayedName());
+                ShowErrorMessage(nameof(_patient.ApgarScale).DisplayedName());
                 return false;
             }
             if (ApgarTextBox2.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.ApgarScale).DisplayedName());
+                ShowErrorMessage(nameof(_patient.ApgarScale).DisplayedName());
                 return false;
             }
             if (ApgarTextBox3.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.ApgarScale).DisplayedName());
+                ShowErrorMessage(nameof(_patient.ApgarScale).DisplayedName());
                 return false;
             }
             if (HospitalizationDatePicker.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.HospitalizationDate).DisplayedName());
+                ShowErrorMessage(nameof(_patient.HospitalizationDate).DisplayedName());
                 return false;
             }
             if (ALVYesRadioButton.Checked && ALVDutarionTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.ALVDuration).DisplayedName());
+                ShowErrorMessage(nameof(_patient.ALVDuration).DisplayedName());
                 return false;
             }
             if (CPAPYesRadioButton.Checked && CPAPDurationTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.CPAPDuration).DisplayedName());
+                ShowErrorMessage(nameof(_patient.CPAPDuration).DisplayedName());
                 return false;
             }
             if (CerebralIschemiaComboBox.SelectedIndex < 0)
             {
-                ShowErrorMessage(nameof(patient.CerebralIschemia).DisplayedName());
+                ShowErrorMessage(nameof(_patient.CerebralIschemia).DisplayedName());
                 return false;
             }
             if (IVHDegreeComboBox.SelectedIndex < 0 && IVHLocalizationComboBox.SelectedIndex < 0)
             {
-                ShowErrorMessage(nameof(patient.IVH).DisplayedName());
+                ShowErrorMessage(nameof(_patient.IVH).DisplayedName());
                 return false;
             }
             if (ConvulsiveSyndromeYesRadioButton.Checked && ConvulsiveSyndromeDurationTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.ConvulsiveSyndromeDuration).DisplayedName());
+                ShowErrorMessage(nameof(_patient.ConvulsiveSyndromeDuration).DisplayedName());
                 return false;
             }
             if (BirthDefectYesRadioButton.Checked && BirthDefectTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.BirthDefect).DisplayedName());
+                ShowErrorMessage(nameof(_patient.BirthDefect).DisplayedName());
                 return false;
             }
             if (SurgeryYesRadioButton.Checked && SurgeryTextBox.Text.Length > 0 == false)
             {
-                ShowErrorMessage(nameof(patient.Surgery).DisplayedName());
+                ShowErrorMessage(nameof(_patient.Surgery).DisplayedName());
                 return false;
             }
             return true;
@@ -422,14 +422,7 @@ namespace ICF_classificator
 
         private void IVHDegreeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (IVHDegreeComboBox.SelectedIndex != 0)
-            {
-                IVHLocalizationComboBox.Enabled = true;
-            }
-            else
-            {
-                IVHLocalizationComboBox.Enabled = false;
-            }
+            IVHLocalizationComboBox.Enabled = IVHDegreeComboBox.SelectedIndex != 0;
         }
     }
 }

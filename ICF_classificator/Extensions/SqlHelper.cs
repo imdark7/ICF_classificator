@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using ICF_classificator.Models;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using ICF_classificator.Models.PatientDataModels;
 using ICF_classificator.Properties;
 
@@ -46,7 +48,7 @@ namespace ICF_classificator.Extensions
             }
         }
 
-        public static ArrayList Read<T>(string requestCondition = null)
+        public static List<T> Read<T>(string requestCondition = null)
         {
             var sqlConnection = NewSqLiteConnection();
             sqlConnection.Open();
@@ -96,7 +98,7 @@ namespace ICF_classificator.Extensions
                                 AfterFiveMinute = reader.GetInt32(15)
                             },
                             HasDisability = (NoYesRadioButtonResult)reader.GetInt32(16),
-                            Hospitalization = (HospitalizationCount)reader.GetInt32(17),
+                            IsNotFirstHospitalization = (HospitalizationCount)reader.GetInt32(17),
                             HospitalizationDate = reader.GetDateTime(18),
                             ALVDuration = reader.GetInt32(19),
                             CPAPDuration = reader.GetInt32(20),
@@ -160,7 +162,7 @@ namespace ICF_classificator.Extensions
                 reader.Close();
                 sqlConnection.Close();
             }
-            return list;
+            return list.Cast<T>().ToList();
         }
 
         private static string GetTableNameFor<T>()
@@ -193,7 +195,7 @@ namespace ICF_classificator.Extensions
             throw new Exception("Не удалось найти подходящую таблицу данных");
         }
 
-        public static long[] TryInsert<T>(object[] objects)
+        public static List<long> TryInsert<T>(object[] objects)
         {
             var sqlConnection = NewSqLiteConnection();
             sqlConnection.Open();
@@ -249,7 +251,7 @@ namespace ICF_classificator.Extensions
                         command.Parameters.AddWithValue("ApgarSecond", patient.ApgarScale.AfterOneMinute);
                         command.Parameters.AddWithValue("ApgarThird", patient.ApgarScale.AfterFiveMinute);
                         command.Parameters.AddWithValue("HasDisability", patient.HasDisability);
-                        command.Parameters.AddWithValue("IsNotFirstHospitalization", patient.Hospitalization);
+                        command.Parameters.AddWithValue("IsNotFirstHospitalization", patient.IsNotFirstHospitalization);
                         command.Parameters.AddWithValue("HospitalizationDate", patient.HospitalizationDate);
                         command.Parameters.AddWithValue("ALVDuration", patient.ALVDuration);
                         command.Parameters.AddWithValue("CPAPDuration", patient.CPAPDuration);
@@ -313,12 +315,7 @@ namespace ICF_classificator.Extensions
                 sqlConnection.Close();
                 throw;
             }
-            var array = new long[ids.Count];
-            for (var i = 0; i < ids.Count; i++)
-            {
-                array[i] = (long)ids[i];
-            }
-            return array;
+            return ids.Cast<long>().ToList();
         }
 
         public static void TryUpdate<T>(object[] objects)
@@ -406,7 +403,7 @@ namespace ICF_classificator.Extensions
                         command.Parameters.AddWithValue("ApgarSecond", patient.ApgarScale.AfterOneMinute);
                         command.Parameters.AddWithValue("ApgarThird", patient.ApgarScale.AfterFiveMinute);
                         command.Parameters.AddWithValue("HasDisability", patient.HasDisability);
-                        command.Parameters.AddWithValue("IsNotFirstHospitalization", patient.Hospitalization);
+                        command.Parameters.AddWithValue("IsNotFirstHospitalization", patient.IsNotFirstHospitalization);
                         command.Parameters.AddWithValue("HospitalizationDate", patient.HospitalizationDate);
                         command.Parameters.AddWithValue("ALVDuration", patient.ALVDuration);
                         command.Parameters.AddWithValue("CPAPDuration", patient.CPAPDuration);

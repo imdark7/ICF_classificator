@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using ICF_classificator.Extensions;
 using ICF_classificator.Models.PatientDataModels;
 
@@ -16,13 +19,13 @@ namespace ICF_classificator.Models
         [DisplayedName("ФИО родителя (сопровождающего)")] public string ParentName;
         [DisplayedName("Дата рождения")] public DateTime BirthDate;
         [DisplayedName("Гестационный возраст")] public int GestationAge;
-        [DisplayedName("Масса тела при рождении)")] public int BirthWeight;
+        [DisplayedName("Масса тела при рождении")] public int BirthWeight;
         [DisplayedName("Длина при рождении")] public int BirthHeight;
         [DisplayedName("Окружность головы при рождении")] public int BirthHeadSize;
         [DisplayedName("Окружность грудной клетки при рождении")] public int BirthChestSize;
         [DisplayedName("Оценка по Апгар")] public ApgarResult ApgarScale;
         [DisplayedName("Инвалидность")] public NoYesRadioButtonResult HasDisability;
-        [DisplayedName("Госпитализация")] public HospitalizationCount Hospitalization;
+        [DisplayedName("Госпитализация")] public HospitalizationCount IsNotFirstHospitalization;
         [DisplayedName("Дата поступления")] public DateTime HospitalizationDate;
         /// <summary>
         /// Искусственная вентиляция легких
@@ -87,9 +90,24 @@ namespace ICF_classificator.Models
         public long GetId() => Id;
         public void SetId(long id) => Id = id;
 
-        public override string ToString()
+        public string GetFullNameAndBirthDate()
         {
             return System.Text.RegularExpressions.Regex.Replace(LastName + " " + FirstName + " " + SurName + " - " + BirthDate.ToShortDateString(), @"\s+", " ");
+        }
+
+        public string GetFullName()
+        {
+            return System.Text.RegularExpressions.Regex.Replace(LastName + " " + FirstName + " " + SurName, @"\s+", " ");
+        }
+
+        public FieldInfo GetFieldInfo(string fieldName)
+        {
+            return (from field in typeof(Patient).GetFields() where field.Name == fieldName select field).First();
+        }
+
+        public static List<FieldInfo> GetFieldInfos()
+        {
+            return typeof(Patient).GetFields().ToList();
         }
     }
 }

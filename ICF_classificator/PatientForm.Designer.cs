@@ -720,13 +720,15 @@ namespace ICF_classificator
             this.IVHLocalizationComboBox.FormattingEnabled = true;
             this.IVHLocalizationComboBox.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.IVHLocalizationComboBox.Items.AddRange(new object[] {
-            "справа",
-            "слева",
-            "с обеих сторон"});
+            "Не определено",
+            "Справа",
+            "Слева",
+            "С обеих сторон"});
             this.IVHLocalizationComboBox.Location = new System.Drawing.Point(452, 131);
             this.IVHLocalizationComboBox.Name = "IVHLocalizationComboBox";
             this.IVHLocalizationComboBox.Size = new System.Drawing.Size(161, 21);
             this.IVHLocalizationComboBox.TabIndex = 62;
+            this.IVHLocalizationComboBox.Text = "справа";
             // 
             // label20
             // 
@@ -1242,9 +1244,9 @@ namespace ICF_classificator
             this.HospitalizationNotFirstTimeRadioButton.AutoSize = true;
             this.HospitalizationNotFirstTimeRadioButton.Location = new System.Drawing.Point(83, 2);
             this.HospitalizationNotFirstTimeRadioButton.Name = "HospitalizationNotFirstTimeRadioButton";
-            this.HospitalizationNotFirstTimeRadioButton.Size = new System.Drawing.Size(78, 17);
+            this.HospitalizationNotFirstTimeRadioButton.Size = new System.Drawing.Size(80, 17);
             this.HospitalizationNotFirstTimeRadioButton.TabIndex = 36;
-            this.HospitalizationNotFirstTimeRadioButton.Text = "Вторичная";
+            this.HospitalizationNotFirstTimeRadioButton.Text = "Повторная";
             this.HospitalizationNotFirstTimeRadioButton.UseVisualStyleBackColor = true;
             // 
             // CaseHistoryLabel

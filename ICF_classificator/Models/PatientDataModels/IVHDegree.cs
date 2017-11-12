@@ -1,12 +1,14 @@
-﻿namespace ICF_classificator.Models.PatientDataModels
+﻿using ICF_classificator.Extensions;
+
+namespace ICF_classificator.Models.PatientDataModels
 {
     // ReSharper disable InconsistentNaming
     public enum IVHDegree
     {
-        Missing,
-        I,
-        II,
-        III,
-        IV
+        [DisplayedName("Нет")] Missing,
+        [DisplayedName("I степень")] I,
+        [DisplayedName("II степень")] II,
+        [DisplayedName("III степень")] III,
+        [DisplayedName("IV степень")] IV
     }
 }

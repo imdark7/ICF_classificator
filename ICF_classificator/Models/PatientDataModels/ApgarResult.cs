@@ -5,5 +5,7 @@
         public int AfterBirth;
         public int AfterOneMinute;
         public int AfterFiveMinute;
+
+        public string GetReportString() => $"{AfterBirth} - {AfterOneMinute} - {AfterFiveMinute}";
     }
 }
