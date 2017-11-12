@@ -76,16 +76,19 @@
             // 
             // ResultDataGridView
             // 
+            this.ResultDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ResultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ResultDataGridView.Location = new System.Drawing.Point(57, 137);
+            this.ResultDataGridView.Location = new System.Drawing.Point(12, 117);
             this.ResultDataGridView.Name = "ResultDataGridView";
-            this.ResultDataGridView.Size = new System.Drawing.Size(1116, 326);
+            this.ResultDataGridView.Size = new System.Drawing.Size(744, 326);
             this.ResultDataGridView.TabIndex = 0;
             // 
             // FilteredValuesComboBox
             // 
             this.FilteredValuesComboBox.FormattingEnabled = true;
-            this.FilteredValuesComboBox.Location = new System.Drawing.Point(57, 35);
+            this.FilteredValuesComboBox.Location = new System.Drawing.Point(12, 15);
             this.FilteredValuesComboBox.Name = "FilteredValuesComboBox";
             this.FilteredValuesComboBox.Size = new System.Drawing.Size(195, 21);
             this.FilteredValuesComboBox.TabIndex = 1;
@@ -94,7 +97,7 @@
             // ConditionComboBox
             // 
             this.ConditionComboBox.FormattingEnabled = true;
-            this.ConditionComboBox.Location = new System.Drawing.Point(268, 35);
+            this.ConditionComboBox.Location = new System.Drawing.Point(223, 15);
             this.ConditionComboBox.Name = "ConditionComboBox";
             this.ConditionComboBox.Size = new System.Drawing.Size(121, 21);
             this.ConditionComboBox.TabIndex = 2;
@@ -102,13 +105,14 @@
             // RequestComboBox
             // 
             this.RequestComboBox.FormattingEnabled = true;
-            this.RequestComboBox.Location = new System.Drawing.Point(409, 35);
+            this.RequestComboBox.Location = new System.Drawing.Point(364, 15);
             this.RequestComboBox.Name = "RequestComboBox";
             this.RequestComboBox.Size = new System.Drawing.Size(145, 21);
             this.RequestComboBox.TabIndex = 3;
             // 
             // CheckBoxesGroupBox
             // 
+            this.CheckBoxesGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CheckBoxesGroupBox.Controls.Add(this.BirthDefect);
             this.CheckBoxesGroupBox.Controls.Add(this.ConvulsiveSyndrome);
             this.CheckBoxesGroupBox.Controls.Add(this.HospitalizationDate);
@@ -139,7 +143,7 @@
             this.CheckBoxesGroupBox.Controls.Add(this.ALVDuration);
             this.CheckBoxesGroupBox.Controls.Add(this.Height);
             this.CheckBoxesGroupBox.Controls.Add(this.PatientName);
-            this.CheckBoxesGroupBox.Location = new System.Drawing.Point(57, 469);
+            this.CheckBoxesGroupBox.Location = new System.Drawing.Point(12, 449);
             this.CheckBoxesGroupBox.Name = "CheckBoxesGroupBox";
             this.CheckBoxesGroupBox.Size = new System.Drawing.Size(610, 195);
             this.CheckBoxesGroupBox.TabIndex = 4;
@@ -447,9 +451,9 @@
             // 
             // filterButton
             // 
-            this.filterButton.Location = new System.Drawing.Point(578, 34);
+            this.filterButton.Location = new System.Drawing.Point(533, 14);
             this.filterButton.Name = "filterButton";
-            this.filterButton.Size = new System.Drawing.Size(131, 23);
+            this.filterButton.Size = new System.Drawing.Size(120, 37);
             this.filterButton.TabIndex = 5;
             this.filterButton.Text = "Фильтровать";
             this.filterButton.UseVisualStyleBackColor = true;
@@ -457,16 +461,17 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(578, 77);
+            this.button2.Location = new System.Drawing.Point(533, 57);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(131, 23);
+            this.button2.Size = new System.Drawing.Size(120, 36);
             this.button2.TabIndex = 5;
-            this.button2.Text = "button1";
+            this.button2.Text = "Уточнить показанные данные";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // RefreshReportDataGridButton
             // 
-            this.RefreshReportDataGridButton.Location = new System.Drawing.Point(687, 538);
+            this.RefreshReportDataGridButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.RefreshReportDataGridButton.Location = new System.Drawing.Point(642, 518);
             this.RefreshReportDataGridButton.Name = "RefreshReportDataGridButton";
             this.RefreshReportDataGridButton.Size = new System.Drawing.Size(105, 64);
             this.RefreshReportDataGridButton.TabIndex = 6;
@@ -476,7 +481,8 @@
             // 
             // FillCheckBoxesButton
             // 
-            this.FillCheckBoxesButton.Location = new System.Drawing.Point(687, 481);
+            this.FillCheckBoxesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.FillCheckBoxesButton.Location = new System.Drawing.Point(642, 461);
             this.FillCheckBoxesButton.Name = "FillCheckBoxesButton";
             this.FillCheckBoxesButton.Size = new System.Drawing.Size(105, 40);
             this.FillCheckBoxesButton.TabIndex = 5;
@@ -486,21 +492,21 @@
             // 
             // RequestTextBox
             // 
-            this.RequestTextBox.Location = new System.Drawing.Point(409, 62);
+            this.RequestTextBox.Location = new System.Drawing.Point(364, 42);
             this.RequestTextBox.Name = "RequestTextBox";
             this.RequestTextBox.Size = new System.Drawing.Size(83, 20);
             this.RequestTextBox.TabIndex = 7;
             // 
             // RequestDateTimePicker
             // 
-            this.RequestDateTimePicker.Location = new System.Drawing.Point(409, 88);
+            this.RequestDateTimePicker.Location = new System.Drawing.Point(364, 68);
             this.RequestDateTimePicker.Name = "RequestDateTimePicker";
             this.RequestDateTimePicker.Size = new System.Drawing.Size(145, 20);
             this.RequestDateTimePicker.TabIndex = 8;
             // 
             // RequestDigitTextBox
             // 
-            this.RequestDigitTextBox.Location = new System.Drawing.Point(409, 111);
+            this.RequestDigitTextBox.Location = new System.Drawing.Point(258, 42);
             this.RequestDigitTextBox.Name = "RequestDigitTextBox";
             this.RequestDigitTextBox.Size = new System.Drawing.Size(83, 20);
             this.RequestDigitTextBox.TabIndex = 9;
@@ -510,7 +516,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1296, 667);
+            this.ClientSize = new System.Drawing.Size(768, 667);
             this.Controls.Add(this.RequestDigitTextBox);
             this.Controls.Add(this.RequestDateTimePicker);
             this.Controls.Add(this.RequestTextBox);

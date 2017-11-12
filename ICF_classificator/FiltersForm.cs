@@ -58,12 +58,10 @@ namespace ICF_classificator
                 new DataGridViewTextBoxColumn {Name = "PatientHistory", HeaderText = @"№ Истории болезни"}
             };
             ResultDataGridView.Columns.AddRange(columns);
+            ResultDataGridView.ReadOnly = true;
             CheckAllCheckboxes();
-
-
             SqlHelper.Read<Patient>();
             FilteredValuesComboBox.DataSource = EnumHelper<FilteredValues>.GetDisplayedValues();
-
         }
 
         private void Show(Control control)

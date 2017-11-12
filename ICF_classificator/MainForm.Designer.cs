@@ -66,6 +66,8 @@ namespace ICF_classificator
             this.reportItemGroupBox = new System.Windows.Forms.GroupBox();
             this.doctorGroupBox = new System.Windows.Forms.GroupBox();
             this.doctorComboBox = new System.Windows.Forms.ComboBox();
+            this.данныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.пациентовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.reportsGroupBox.SuspendLayout();
             this.newReportGroupBox.SuspendLayout();
@@ -149,7 +151,8 @@ namespace ICF_classificator
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.добавитьToolStripMenuItem});
+            this.добавитьToolStripMenuItem,
+            this.данныеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1417, 24);
@@ -168,14 +171,14 @@ namespace ICF_classificator
             // пациентаToolStripMenuItem
             // 
             this.пациентаToolStripMenuItem.Name = "пациентаToolStripMenuItem";
-            this.пациентаToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.пациентаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.пациентаToolStripMenuItem.Text = "Пациента";
             this.пациентаToolStripMenuItem.Click += new System.EventHandler(this.пациентаToolStripMenuItem_Click);
             // 
             // врачаToolStripMenuItem
             // 
             this.врачаToolStripMenuItem.Name = "врачаToolStripMenuItem";
-            this.врачаToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.врачаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.врачаToolStripMenuItem.Text = "Врача";
             this.врачаToolStripMenuItem.Click += new System.EventHandler(this.врачаToolStripMenuItem_Click);
             // 
@@ -430,6 +433,21 @@ namespace ICF_classificator
             this.doctorComboBox.TabStop = false;
             this.doctorComboBox.SelectedIndexChanged += new System.EventHandler(this.doctorComboBox_SelectedIndexChanged);
             // 
+            // данныеToolStripMenuItem
+            // 
+            this.данныеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.пациентовToolStripMenuItem});
+            this.данныеToolStripMenuItem.Name = "данныеToolStripMenuItem";
+            this.данныеToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.данныеToolStripMenuItem.Text = "Данные...";
+            // 
+            // пациентовToolStripMenuItem
+            // 
+            this.пациентовToolStripMenuItem.Name = "пациентовToolStripMenuItem";
+            this.пациентовToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.пациентовToolStripMenuItem.Text = "Пациентов";
+            this.пациентовToolStripMenuItem.Click += new System.EventHandler(this.пациентовToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -495,6 +513,8 @@ namespace ICF_classificator
         private DataGridViewTextBoxColumn Column4;
         private Button AddCaseHistory;
         private Button patientEditButton;
+        private ToolStripMenuItem данныеToolStripMenuItem;
+        private ToolStripMenuItem пациентовToolStripMenuItem;
     }
 }
 

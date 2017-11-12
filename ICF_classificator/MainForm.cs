@@ -365,5 +365,10 @@ namespace ICF_classificator
                 new PatientForm(this, (Patient)patientComboBox.SelectedItem).Show();
             }
         }
+
+        private void пациентовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FiltersForm().Show();
+        }
     }
 }
