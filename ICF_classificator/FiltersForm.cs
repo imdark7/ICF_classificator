@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using ICF_classificator.Extensions;
 using ICF_classificator.Models;
@@ -14,16 +16,14 @@ namespace ICF_classificator
         private const string SelectAllCheckboxesText = "Отметить все галочки";
         private const string UnselectAllCheckboxesText = "Снять все галочки";
         private string _column;
+        private readonly List<ConditionRow> conditionRows = new List<ConditionRow>();
 
         public FiltersForm()
         {
             InitializeComponent();
-            RequestTextBox.Location = RequestComboBox.Location;
-            RequestTextBox.Size = RequestComboBox.Size;
-            RequestDateTimePicker.Location = RequestComboBox.Location;
-            RequestDateTimePicker.Size = RequestComboBox.Size;
-            RequestDigitTextBox.Location = RequestComboBox.Location;
-            RequestDigitTextBox.Size = RequestComboBox.Size;
+            var filterCondition = new ConditionRow(new Point(12, 14), this, false);
+            conditionRows.Add(filterCondition);
+
             var columns = new[]
             {
                 new DataGridViewTextBoxColumn {Name = "PatientName", HeaderText = @"ФИО Пациента"},
@@ -60,250 +60,12 @@ namespace ICF_classificator
             ResultDataGridView.Columns.AddRange(columns);
             ResultDataGridView.ReadOnly = true;
             CheckAllCheckboxes();
-            SqlHelper.Read<Patient>();
-            FilteredValuesComboBox.DataSource = EnumHelper<FilteredValues>.GetDisplayedValues();
-        }
-
-        private void Show(Control control)
-        {
-            if (control.Equals(RequestComboBox))
-            {
-                RequestComboBox.ResetText();
-                RequestComboBox.Show();
-                RequestDateTimePicker.Hide();
-                RequestDigitTextBox.Hide();
-                RequestTextBox.Hide();
-            }
-            else if (control.Equals(RequestDateTimePicker))
-            {
-                RequestDateTimePicker.ResetText();
-                RequestDateTimePicker.Show();
-                RequestComboBox.Hide();
-                RequestDigitTextBox.Hide();
-                RequestTextBox.Hide();
-            }
-            else if (control.Equals(RequestTextBox))
-            {
-                RequestTextBox.ResetText();
-                RequestTextBox.Show();
-                RequestDateTimePicker.Hide();
-                RequestDigitTextBox.Hide();
-                RequestComboBox.Hide();
-            }
-            else if (control.Equals(RequestDigitTextBox))
-            {
-                RequestDigitTextBox.ResetText();
-                RequestDigitTextBox.Show();
-                RequestTextBox.Hide();
-                RequestComboBox.Hide();
-                RequestDateTimePicker.Hide();
-            }
-        }
-
-        private void FilteredValuesComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selectedValue = (FilteredValues)FilteredValuesComboBox.SelectedIndex;
-            _column = Enum.GetName(typeof(FilteredValues), selectedValue);
-            if
-            (
-                selectedValue == FilteredValues.LastName ||
-                selectedValue == FilteredValues.FirstName ||
-                selectedValue == FilteredValues.SurName ||
-                selectedValue == FilteredValues.Address ||
-                selectedValue == FilteredValues.ParentName ||
-                selectedValue == FilteredValues.BirthDefect ||
-                selectedValue == FilteredValues.Surgery ||
-                selectedValue == FilteredValues.PatientHistory
-            )
-            {
-                ConditionComboBox.DataSource = EnumHelper<ContainsConditionOperators>.GetDisplayedValues();
-                Show(RequestTextBox);
-            }
-            else if
-            (
-                selectedValue == FilteredValues.Sex ||
-                selectedValue == FilteredValues.HasDisability ||
-                selectedValue == FilteredValues.IsNotFirstHospitalization ||
-                selectedValue == FilteredValues.CerebralIschemia ||
-                selectedValue == FilteredValues.IVH ||
-                selectedValue == FilteredValues.Meningitis ||
-                selectedValue == FilteredValues.Encephalitis ||
-                selectedValue == FilteredValues.Sepsis ||
-                selectedValue == FilteredValues.HDN ||
-                selectedValue == FilteredValues.VKDB ||
-                selectedValue == FilteredValues.Anemia ||
-                selectedValue == FilteredValues.Hyperbilirubinemia ||
-                selectedValue == FilteredValues.UNEC
-            )
-            {
-                ConditionComboBox.DataSource = EnumHelper<EqualsConditionOperators>.GetDisplayedValues();
-                Show(RequestComboBox);
-                switch (selectedValue)
-                {
-                    case FilteredValues.Sex:
-                        RequestComboBox.DataSource = EnumHelper<PatientSex>.GetDisplayedValues();
-                        break;
-                    case FilteredValues.IsNotFirstHospitalization:
-                        RequestComboBox.DataSource = EnumHelper<HospitalizationCount>.GetDisplayedValues();
-                        break;
-                    case FilteredValues.CerebralIschemia:
-                        RequestComboBox.DataSource = EnumHelper<CerebralIschemiaDegree>.GetDisplayedValues();
-                        break;
-                    case FilteredValues.IVH:
-                        RequestComboBox.DataSource = IVHModel.GetDisplayedValues();
-                        break;
-                    default:
-                        RequestComboBox.DataSource = EnumHelper<NoYesRadioButtonResult>.GetDisplayedValues();
-                        break;
-                }
-            }
-            else if
-            (
-                selectedValue == FilteredValues.BirthDate ||
-                selectedValue == FilteredValues.HospitalizationDate
-            )
-            {
-                ConditionComboBox.DataSource = EnumHelper<CompareConditionOperators>.GetDisplayedValues();
-                Show(RequestDateTimePicker);
-            }
-            else if
-            (
-                selectedValue == FilteredValues.ALVDuration ||
-                selectedValue == FilteredValues.CPAPDuration ||
-                selectedValue == FilteredValues.ConvulsiveSyndromeDuration ||
-                selectedValue == FilteredValues.GestationAge ||
-                selectedValue == FilteredValues.BirthWeight ||
-                selectedValue == FilteredValues.BirthHeight ||
-                selectedValue == FilteredValues.BirthHeadSize ||
-                selectedValue == FilteredValues.BirthChestSize ||
-                selectedValue == FilteredValues.ApgarFirst ||
-                selectedValue == FilteredValues.ApgarSecond ||
-                selectedValue == FilteredValues.ApgarThird ||
-                selectedValue == FilteredValues.BirthWeight
-            )
-            {
-                ConditionComboBox.DataSource = EnumHelper<CompareConditionOperators>.GetDisplayedValues();
-                Show(RequestDigitTextBox);
-            }
         }
 
         private void filterButton_Click(object sender, EventArgs e)
         {
-
-            string requestCondition = null;
-            if ((string)ConditionComboBox.SelectedValue == ContainsConditionOperators.Contain.GetDisplayedName())
-            {
-                requestCondition = $"{_column} LIKE '%{RequestTextBox.Text}%'";
-            }
-            else if ((string)ConditionComboBox.SelectedValue == ContainsConditionOperators.NotContain.GetDisplayedName())
-            {
-                requestCondition = $"{_column} NOT LIKE '%{RequestTextBox.Text}%'";
-            }
-            else if ((string)ConditionComboBox.SelectedValue == CompareConditionOperators.Equal.GetDisplayedName())
-            {
-                if (_column == "IVH")
-                {
-                    requestCondition =
-                        $"IVHDegree LIKE '{GetRequestConditionFor("IVHDegree")}' AND IVHLocalization LIKE '{GetRequestConditionFor("IVHLocalization")}'";
-                }
-                else if (_column == "BirthDate" || _column == "HospitalizationDate")
-                {
-                    requestCondition =
-                        $"{_column} > '{GetRequestConditionFor(_column)}' AND {_column} < '{GetRequestConditionFor(_column, true)}'";
-                }
-                else
-                {
-                    requestCondition =
-                        $"{_column} LIKE '{GetRequestConditionFor(_column)}'";
-                }
-            }
-            else if ((string)ConditionComboBox.SelectedValue == CompareConditionOperators.NotEqual.GetDisplayedName())
-            {
-                if (_column == "IVH")
-                {
-                    requestCondition =
-                        $"IVHDegree NOT LIKE '{GetRequestConditionFor("IVHDegree")}' AND IVHLocalization NOT LIKE '{GetRequestConditionFor("IVHLocalization")}'";
-                }
-                else if (_column == "BirthDate" || _column == "HospitalizationDate")
-                {
-                    requestCondition =
-                        $"{_column} < '{GetRequestConditionFor(_column)}' OR {_column} > '{GetRequestConditionFor(_column, true)}'";
-                }
-                else
-                {
-                    requestCondition =
-                        $"{_column} NOT LIKE '{GetRequestConditionFor(_column)}'";
-                }
-            }
-            else if ((string)ConditionComboBox.SelectedValue == CompareConditionOperators.Less.GetDisplayedName())
-            {
-                requestCondition = $"{_column} < '{GetRequestConditionFor(_column)}'";
-            }
-            else if ((string)ConditionComboBox.SelectedValue == CompareConditionOperators.More.GetDisplayedName())
-            {
-                requestCondition = $"{_column} > '{GetRequestConditionFor(_column)}'";
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-
+            var requestCondition = conditionRows.Aggregate("", (current, conditionRow) => current + conditionRow.GetFilterCondition());
             ShowPatientsData(SqlHelper.Read<Patient>(requestCondition));
-        }
-
-        private string GetRequestConditionFor(string columnName, bool needDayPlus = false)
-        {
-            if (_textBoxFieldNames.Contains(columnName))
-            {
-                return RequestTextBox.Text;
-            }
-            if (_digitFieldNames.Contains(columnName))
-            {
-                return RequestDigitTextBox.Text;
-            }
-            if (_dateTimeFieldNames.Contains(columnName))
-            {
-                return needDayPlus ? RequestDateTimePicker.Value.AddDays(1).ToString("yyyy-MM-dd") : RequestDateTimePicker.Value.ToString("yyyy-MM-dd");
-            }
-            if (_noYesFieldNames.Contains(columnName))
-            {
-                return
-                ((int)
-                    EnumHelper<NoYesRadioButtonResult>.ParseByDisplayedNameAttributeValue(
-                        (string)RequestComboBox.SelectedValue)).ToString();
-            }
-            if (columnName == "Sex")
-            {
-                return
-                    ((int)
-                        EnumHelper<PatientSex>.ParseByDisplayedNameAttributeValue((string)RequestComboBox.SelectedValue))
-                    .ToString();
-            }
-            if (columnName == "IsNotFirstHospitalization")
-            {
-                return
-                ((int)
-                    EnumHelper<HospitalizationCount>.ParseByDisplayedNameAttributeValue(
-                        (string)RequestComboBox.SelectedValue)).ToString();
-            }
-            if (columnName == "CerebralIschemia")
-            {
-                return
-                ((int)
-                    EnumHelper<CerebralIschemiaDegree>.ParseByDisplayedNameAttributeValue(
-                        (string)RequestComboBox.SelectedValue)).ToString();
-            }
-            if (columnName == "IVHDegree")
-            {
-                var model = IVHModel.GetModelByReportString((string)RequestComboBox.SelectedValue);
-                return ((int)model.Degree).ToString();
-            }
-            if (columnName == "IVHLocalization")
-            {
-                var model = IVHModel.GetModelByReportString((string)RequestComboBox.SelectedValue);
-                return ((int)model.Localization).ToString();
-            }
-            throw new NotImplementedException($"Не найден столбец {columnName}");
         }
 
         private void ShowPatientsData(IList patients)
@@ -356,7 +118,7 @@ namespace ICF_classificator
 
         private void FillCheckBoxesButton_Click(object sender, EventArgs e)
         {
-            var button = (Button)sender;
+            var button = (Button) sender;
             foreach (CheckBox checkBox in CheckBoxesGroupBox.Controls)
             {
                 checkBox.Checked = button.Text == SelectAllCheckboxesText;
@@ -373,61 +135,51 @@ namespace ICF_classificator
             FillCheckBoxesButton.Text = UnselectAllCheckboxesText;
         }
 
-        private readonly List<string> _textBoxFieldNames = new List<string>
+        private void addConditionButton_Click(object sender, EventArgs e)
         {
-            "LastName",
-            "FirstName",
-            "SurName",
-            "Address",
-            "ParentName",
-            "BirthDefect",
-            "Surgery",
-            "PatientHistory"
-        };
+            var lastRow = conditionRows.Last();
+            var conditionRow =
+                new ConditionRow(
+                    new Point(lastRow.filteredValuesComboBox.Left, lastRow.filteredValuesComboBox.Bottom + 10), this);
+            conditionRows.Add(conditionRow);
+            conditionRow.filteredValuesComboBox.SelectedIndex = 1;
+            conditionRow.filteredValuesComboBox.SelectedIndex = 0;
+            addConditionButton.Location = new Point(conditionRow.filteredValuesComboBox.Left,
+                conditionRow.filteredValuesComboBox.Bottom + 10);
+            deleteConditionButton.Location = new Point(addConditionButton.Right + 10, addConditionButton.Top);
+        }
 
-        private readonly List<string> _dateTimeFieldNames = new List<string>
+        private void deleteConditionButton_Click(object sender, EventArgs e)
         {
-            "HospitalizationDate",
-            "BirthDate"
-        };
-
-        private readonly List<string> _digitFieldNames = new List<string>
-        {
-            "ALVDuration",
-            "CPAPDuration",
-            "ConvulsiveSyndromeDuration",
-            "GestationAge",
-            "BirthWeight",
-            "BirthHeight",
-            "BirthHeadSize",
-            "BirthChestSize",
-            "ApgarFirst",
-            "ApgarSecond",
-            "ApgarThird",
-            "BirthWeight"
-        };
-
-        private readonly List<string> _noYesFieldNames = new List<string>
-        {
-            "HasDisability",
-            "Meningitis",
-            "Encephalitis",
-            "Sepsis",
-            "HDN",
-            "VKDB",
-            "Anemia",
-            "Hyperbilirubinemia",
-            "UNEC"
-        };
-
-        private void RequestDigitTextBox_KeyPress(object obj, KeyPressEventArgs args)
-        {
-            if (!char.IsDigit(args.KeyChar) && args.KeyChar != Convert.ToChar(8))
+            if (conditionRows.Count > 1)
             {
-                args.Handled = true;
+                var lastRow = conditionRows.Last();
+                var lastIndex = conditionRows.Count - 1;
+                lastRow.RemoveAllControls();
+                conditionRows.RemoveAt(lastIndex);
+
+                lastRow = conditionRows.Last();
+                addConditionButton.Location = new Point(lastRow.filteredValuesComboBox.Left,
+                    lastRow.filteredValuesComboBox.Bottom + 10);
+                deleteConditionButton.Location = new Point(addConditionButton.Right + 10, addConditionButton.Top);
             }
+        }
+
+        private void FiltersForm_Load(object sender, EventArgs e)
+        {
+            conditionRows.First().filteredValuesComboBox.SelectedIndex = 2;
+            conditionRows.First().filteredValuesComboBox.SelectedIndex = 0;
+        }
+
+        private void addConditionButton_LocationChanged(object sender, EventArgs e)
+        {
+            var btn = (Button)sender;
+            ResultDataGridView.Location = new Point(btn.Left, btn.Bottom + 20);
+        }
+
+        private void ResultDataGridView_LocationChanged(object sender, EventArgs e)
+        {
+            ResultDataGridView.Height = CheckBoxesGroupBox.Top - ResultDataGridView.Top - 5;
         }
     }
 }
-
-

@@ -17,6 +17,8 @@ namespace ICF_classificator
             _pForm = parentForm;
             CerebralIschemiaComboBox.SelectedIndex = 0;
             IVHDegreeComboBox.SelectedIndex = 0;
+            PatientBirthDatePicker.Value = DateTime.Now;
+            HospitalizationDatePicker.Value = DateTime.Now;
             if (patient != null)
             {
                 _patient = patient;

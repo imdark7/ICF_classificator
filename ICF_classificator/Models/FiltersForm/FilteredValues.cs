@@ -2,7 +2,6 @@
 
 namespace ICF_classificator.Models.FiltersForm
 {
-    // Resharper
     public enum FilteredValues
     {
         [DisplayedName("Фамилия Пациента")] LastName,

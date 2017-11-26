@@ -10,17 +10,19 @@ namespace ICF_classificator.Extensions
             string age;
             if (diff < 30)
             {
-                age = $"{diff} (дни)";
+                age = $"{diff} д";
             }
-            else if (diff / 30 < 365)
+            else if (diff < 365)
             {
-                age = $"{Math.Floor(diff / 30)} (месяцы)";
+                var month = (int) Math.Floor(diff / 30);
+                var days = (int) Math.Floor(diff % 30);
+                age = $"{month} м" + (days != 0 ? $", {days} д" : "");
             }
             else
             {
                 var years = (int)Math.Floor(diff / 365);
                 var month = (int)Math.Floor(diff % 365 / 30);
-                age = month == 0 ? $"{years} (годы)" : $"{years} (годы), {month} (месяцы)";
+                age = $"{years} г" + (month != 0 ? $", {month} м" : "");
             }
             return $"{birthDate:dd.MM.yyyy} ({age})";
         }

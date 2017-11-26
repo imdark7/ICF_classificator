@@ -99,8 +99,12 @@
     <Compile Include="FiltersForm.Designer.cs">
       <DependentUpon>FiltersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\FiltersForm\AndOr.cs" />
     <Compile Include="Models\FiltersForm\ConditionOperators.cs" />
     <Compile Include="Models\FiltersForm\FilteredValues.cs" />
+    <Compile Include="Models\FiltersForm\ConditionRow.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PatientForm.cs">
       <SubType>Form</SubType>
     </Compile>

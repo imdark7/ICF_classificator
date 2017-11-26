@@ -207,7 +207,7 @@ namespace ICF_classificator.Extensions
                 SQLiteCommand command;
                 if (type.IsEquivalentTo(typeof(Doctor)))
                 {
-                    foreach (var doctor in (Doctor[]) objects)
+                    foreach (Doctor doctor in objects)
                     {
                         command = new SQLiteCommand($"INSERT INTO [{table}] (LastName, FirstName, SurName)" +
                                                  "VALUES (@LastName, @FirstName, @SurName)", sqlConnection);
@@ -220,7 +220,7 @@ namespace ICF_classificator.Extensions
                 }
                 if (type.IsEquivalentTo(typeof(Patient)))
                 {
-                    foreach (var patient in (Patient[]) objects)
+                    foreach (Patient patient in objects)
                     {
                         command =
                             new SQLiteCommand(
@@ -280,7 +280,7 @@ namespace ICF_classificator.Extensions
                 }
                 if (type.IsEquivalentTo(typeof(MedicalReport)))
                 {
-                    foreach (var report in (MedicalReport[]) objects)
+                    foreach (MedicalReport report in objects)
                     {
                         command = new SQLiteCommand(
                             $"INSERT INTO [{table}] (PatientId, Date, Diagnosis, DoctorId) " +
@@ -295,7 +295,7 @@ namespace ICF_classificator.Extensions
                 }
                 if (type.IsEquivalentTo(typeof(MedicalReportItem)))
                 {
-                    foreach (var reportItem in (MedicalReportItem[]) objects)
+                    foreach (MedicalReportItem reportItem in objects)
                     {
                         command =
                             new SQLiteCommand(
@@ -329,7 +329,7 @@ namespace ICF_classificator.Extensions
                 SQLiteCommand command;
                 if (type.IsEquivalentTo(typeof(Doctor)))
                 {
-                    foreach (var doctor in (Doctor[])objects)
+                    foreach (Doctor doctor in objects)
                     {
                         command = new SQLiteCommand($"UPDATE [{table}] " +
                                                  "SET [LastName] = @LastName, [FirstName] = @FirstName, [SurName] = @SurName " +
@@ -344,7 +344,7 @@ namespace ICF_classificator.Extensions
                 }
                 if (type.IsEquivalentTo(typeof(Patient)))
                 {
-                    foreach (var patient in (Patient[])objects)
+                    foreach (Patient patient in objects)
                     {
                         command =
                             new SQLiteCommand(
@@ -432,7 +432,7 @@ namespace ICF_classificator.Extensions
                 }
                 if (type.IsEquivalentTo(typeof(MedicalReport)))
                 {
-                    foreach (var report in (MedicalReport[])objects)
+                    foreach (MedicalReport report in objects)
                     {
                         command = new SQLiteCommand(
                             $"UPDATE [{table}] " +
@@ -449,7 +449,7 @@ namespace ICF_classificator.Extensions
                 }
                 if (type.IsEquivalentTo(typeof(MedicalReportItem)))
                 {
-                    foreach (var reportItem in (MedicalReportItem[])objects)
+                    foreach (MedicalReportItem reportItem in objects)
                     {
                         command =
                             new SQLiteCommand(

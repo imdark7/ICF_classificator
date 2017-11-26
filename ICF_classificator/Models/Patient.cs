@@ -109,5 +109,10 @@ namespace ICF_classificator.Models
         {
             return typeof(Patient).GetFields().ToList();
         }
+
+        public override string ToString()
+        {
+            return GetFullNameAndBirthDate();
+        }
     }
 }

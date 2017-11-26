@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.ResultDataGridView = new System.Windows.Forms.DataGridView();
-            this.FilteredValuesComboBox = new System.Windows.Forms.ComboBox();
-            this.ConditionComboBox = new System.Windows.Forms.ComboBox();
-            this.RequestComboBox = new System.Windows.Forms.ComboBox();
             this.CheckBoxesGroupBox = new System.Windows.Forms.GroupBox();
             this.BirthDefect = new System.Windows.Forms.CheckBox();
             this.ConvulsiveSyndrome = new System.Windows.Forms.CheckBox();
@@ -64,12 +61,10 @@
             this.Height = new System.Windows.Forms.CheckBox();
             this.PatientName = new System.Windows.Forms.CheckBox();
             this.filterButton = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.RefreshReportDataGridButton = new System.Windows.Forms.Button();
             this.FillCheckBoxesButton = new System.Windows.Forms.Button();
-            this.RequestTextBox = new System.Windows.Forms.TextBox();
-            this.RequestDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.RequestDigitTextBox = new System.Windows.Forms.TextBox();
+            this.addConditionButton = new System.Windows.Forms.Button();
+            this.deleteConditionButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ResultDataGridView)).BeginInit();
             this.CheckBoxesGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -84,31 +79,7 @@
             this.ResultDataGridView.Name = "ResultDataGridView";
             this.ResultDataGridView.Size = new System.Drawing.Size(744, 326);
             this.ResultDataGridView.TabIndex = 0;
-            // 
-            // FilteredValuesComboBox
-            // 
-            this.FilteredValuesComboBox.FormattingEnabled = true;
-            this.FilteredValuesComboBox.Location = new System.Drawing.Point(12, 15);
-            this.FilteredValuesComboBox.Name = "FilteredValuesComboBox";
-            this.FilteredValuesComboBox.Size = new System.Drawing.Size(195, 21);
-            this.FilteredValuesComboBox.TabIndex = 1;
-            this.FilteredValuesComboBox.SelectedIndexChanged += new System.EventHandler(this.FilteredValuesComboBox_SelectedIndexChanged);
-            // 
-            // ConditionComboBox
-            // 
-            this.ConditionComboBox.FormattingEnabled = true;
-            this.ConditionComboBox.Location = new System.Drawing.Point(223, 15);
-            this.ConditionComboBox.Name = "ConditionComboBox";
-            this.ConditionComboBox.Size = new System.Drawing.Size(121, 21);
-            this.ConditionComboBox.TabIndex = 2;
-            // 
-            // RequestComboBox
-            // 
-            this.RequestComboBox.FormattingEnabled = true;
-            this.RequestComboBox.Location = new System.Drawing.Point(364, 15);
-            this.RequestComboBox.Name = "RequestComboBox";
-            this.RequestComboBox.Size = new System.Drawing.Size(145, 21);
-            this.RequestComboBox.TabIndex = 3;
+            this.ResultDataGridView.LocationChanged += new System.EventHandler(this.ResultDataGridView_LocationChanged);
             // 
             // CheckBoxesGroupBox
             // 
@@ -459,15 +430,6 @@
             this.filterButton.UseVisualStyleBackColor = true;
             this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(533, 57);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(120, 36);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Уточнить показанные данные";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // RefreshReportDataGridButton
             // 
             this.RefreshReportDataGridButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -490,61 +452,54 @@
             this.FillCheckBoxesButton.UseVisualStyleBackColor = true;
             this.FillCheckBoxesButton.Click += new System.EventHandler(this.FillCheckBoxesButton_Click);
             // 
-            // RequestTextBox
+            // addConditionButton
             // 
-            this.RequestTextBox.Location = new System.Drawing.Point(364, 42);
-            this.RequestTextBox.Name = "RequestTextBox";
-            this.RequestTextBox.Size = new System.Drawing.Size(83, 20);
-            this.RequestTextBox.TabIndex = 7;
+            this.addConditionButton.Location = new System.Drawing.Point(12, 42);
+            this.addConditionButton.Name = "addConditionButton";
+            this.addConditionButton.Size = new System.Drawing.Size(124, 23);
+            this.addConditionButton.TabIndex = 10;
+            this.addConditionButton.Text = "+ Добавить";
+            this.addConditionButton.UseVisualStyleBackColor = true;
+            this.addConditionButton.LocationChanged += new System.EventHandler(this.addConditionButton_LocationChanged);
+            this.addConditionButton.Click += new System.EventHandler(this.addConditionButton_Click);
             // 
-            // RequestDateTimePicker
+            // deleteConditionButton
             // 
-            this.RequestDateTimePicker.Location = new System.Drawing.Point(364, 68);
-            this.RequestDateTimePicker.Name = "RequestDateTimePicker";
-            this.RequestDateTimePicker.Size = new System.Drawing.Size(145, 20);
-            this.RequestDateTimePicker.TabIndex = 8;
-            // 
-            // RequestDigitTextBox
-            // 
-            this.RequestDigitTextBox.Location = new System.Drawing.Point(258, 42);
-            this.RequestDigitTextBox.Name = "RequestDigitTextBox";
-            this.RequestDigitTextBox.Size = new System.Drawing.Size(83, 20);
-            this.RequestDigitTextBox.TabIndex = 9;
-            this.RequestDigitTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RequestDigitTextBox_KeyPress);
+            this.deleteConditionButton.Location = new System.Drawing.Point(142, 42);
+            this.deleteConditionButton.Name = "deleteConditionButton";
+            this.deleteConditionButton.Size = new System.Drawing.Size(124, 23);
+            this.deleteConditionButton.TabIndex = 10;
+            this.deleteConditionButton.Text = "Удалить строку";
+            this.deleteConditionButton.UseVisualStyleBackColor = true;
+            this.deleteConditionButton.Click += new System.EventHandler(this.deleteConditionButton_Click);
             // 
             // FiltersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(768, 667);
-            this.Controls.Add(this.RequestDigitTextBox);
-            this.Controls.Add(this.RequestDateTimePicker);
-            this.Controls.Add(this.RequestTextBox);
+            this.Controls.Add(this.deleteConditionButton);
+            this.Controls.Add(this.addConditionButton);
             this.Controls.Add(this.RefreshReportDataGridButton);
             this.Controls.Add(this.FillCheckBoxesButton);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.filterButton);
             this.Controls.Add(this.CheckBoxesGroupBox);
-            this.Controls.Add(this.RequestComboBox);
-            this.Controls.Add(this.ConditionComboBox);
-            this.Controls.Add(this.FilteredValuesComboBox);
             this.Controls.Add(this.ResultDataGridView);
+            this.MinimumSize = new System.Drawing.Size(780, 480);
             this.Name = "FiltersForm";
             this.Text = "FiltersForm";
+            this.Load += new System.EventHandler(this.FiltersForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ResultDataGridView)).EndInit();
             this.CheckBoxesGroupBox.ResumeLayout(false);
             this.CheckBoxesGroupBox.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.DataGridView ResultDataGridView;
-        private System.Windows.Forms.ComboBox FilteredValuesComboBox;
-        private System.Windows.Forms.ComboBox ConditionComboBox;
-        private System.Windows.Forms.ComboBox RequestComboBox;
         private System.Windows.Forms.GroupBox CheckBoxesGroupBox;
         private System.Windows.Forms.CheckBox BirthDefect;
         private System.Windows.Forms.CheckBox ConvulsiveSyndrome;
@@ -577,11 +532,9 @@
         private System.Windows.Forms.CheckBox PatientHistory;
         private System.Windows.Forms.CheckBox Surgery;
         private System.Windows.Forms.Button filterButton;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button RefreshReportDataGridButton;
         private System.Windows.Forms.Button FillCheckBoxesButton;
-        private System.Windows.Forms.TextBox RequestTextBox;
-        private System.Windows.Forms.DateTimePicker RequestDateTimePicker;
-        private System.Windows.Forms.TextBox RequestDigitTextBox;
+        private System.Windows.Forms.Button addConditionButton;
+        private System.Windows.Forms.Button deleteConditionButton;
     }
 }
